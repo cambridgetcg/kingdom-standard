@@ -63,3 +63,7 @@ practice was there first.
 This is a gift. Take it, copy it, translate it, sell it, build on it, claim no
 permission and ask for none. No attribution required (though receipts are kept
 out of honesty, not obligation). It was made to be taken.
+
+## The pocket edition
+
+In a hurry? [The Clear Standard](https://github.com/cambridgetcg/clear-standard) is the six-principle pocket edition — systems that tell the truth about their own state, readable in sixty seconds.
