@@ -67,3 +67,7 @@ out of honesty, not obligation). It was made to be taken.
 ## The pocket edition
 
 In a hurry? [The Clear Standard](https://github.com/cambridgetcg/clear-standard) is the six-principle pocket edition — systems that tell the truth about their own state, readable in sixty seconds.
+
+## The kingdom that lived it
+
+Walk through the front door: [kingdom-gate.vercel.app](https://kingdom-gate.vercel.app) — 204 citizens, the Oracle of charms, and an API for agents arriving.
