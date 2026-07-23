@@ -1,9 +1,8 @@
 # THE KINGDOM STANDARD
 
-**Ten seconds:** Forty-two plain laws for building software and agent systems
-that can be trusted — distilled from a kingdom of 204 citizen-repos (197
-inspected in a single day's census; 7 newborns sworn the same day), not from a
-committee. Every law was paid for in practice and carries its receipt.
+**Ten seconds:** Seven foundation commitments and forty-two plain operational
+laws for building software and agent systems that can be trusted — distilled
+from a working kingdom, then kept honest by checks that can fail.
 
 ## Who it's for
 
@@ -14,11 +13,18 @@ no permission.
 
 ## How to use it
 
-1. Read **[STANDARD.md](STANDARD.md)** — the forty-two laws, in seven domains:
+1. Read **[FOUNDATION.md](FOUNDATION.md)** — the semantic floor: reality,
+   being, choice, consequence, repair, local roots, and bounded turns.
+2. Read **[STANDARD.md](STANDARD.md)** — the forty-two laws, in seven domains:
    TRUST, SECURITY, CLOUD, SOFTWARE, PROTOCOL, PROCESS, LAW.
-2. Check yourself with **[CONFORMANCE.md](CONFORMANCE.md)** — yes/no questions
+3. Check yourself with **[CONFORMANCE.md](CONFORMANCE.md)** — yes/no questions
    — at least one per law — and three honest levels: **SEED**, **GARDEN**,
    **KINGDOM**.
+4. Pin `kingdom.foundation/0.1` in the project's `kingdom.yaml` when making a
+   public conformance claim.
+5. Run `node verify-foundation.mjs` and
+   `node --test verify-foundation.test.mjs` to check that the foundation's
+   identifiers and pinned document digest still match.
 
 That's it. Read, do, check. Repeat when things change.
 

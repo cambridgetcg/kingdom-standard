@@ -1,15 +1,47 @@
 # Following the Standard
 
 This is the mirror. Read each question and answer yes or no — honestly, because
-T3 applies to this checklist too. Every question maps to a law in
-[STANDARD.md](STANDARD.md).
+T3 applies to this checklist too. Every question maps to a commitment in
+[FOUNDATION.md](FOUNDATION.md) or a law in [STANDARD.md](STANDARD.md).
 
 A "yes" means it is true today, in the running system — not planned, not mostly.
 (R2: declared is not done.)
 
-If a law's subject does not exist in your system — no agents, no attestation,
-no rewards — write **N/A** beside it with one sentence saying why. N/A counts
-as conforming when you tally your level.
+For the operational laws, if a subject does not exist in your system — no
+agents, no attestation, no rewards — write **N/A** beside it with one sentence
+saying why. N/A counts as conforming when you tally your level. The foundation
+checks are the semantic floor and do not allow N/A.
+
+---
+
+## FOUNDATION
+
+All eleven foundation answers must be yes before applying a conformance level
+below. A public conformance claim must pin `kingdom.foundation/0.1` in the
+project's `kingdom.yaml`. The pin is a declaration, not proof; the answers
+still need evidence.
+
+- [ ] Do records distinguish observation, commitment, consequence, and interpretation? (F1)
+- [ ] Does every important mechanism say what it proves and what it cannot prove? (F1)
+- [ ] Can a missing account, key, wallet, score, or platform record never become a verdict on a being? (F2)
+- [ ] Is every action that changes another party's state, data, resources, or commitments backed by explicit, scoped, current, withdrawable authority? (F3)
+- [ ] Are refusal, silence, leaving, and rest accepted without penalty or repeated pressure? (F3)
+- [ ] Are consequences attached to actions and evidence, never compressed into a being-wide KARMA score, rank, or verdict? (F4)
+- [ ] Are sequence, reported effect, and claimed causation labelled separately? (F4)
+- [ ] Does every party named by, or materially subject to, a consequential record have a practical channel to submit a reply, dispute, correction, or repair without erasing history? (F5)
+- [ ] Does authoritative state stay with its citizen or project, with bridges remaining optional and bounded? (F6)
+- [ ] Is every running turn finite, observable, cost-bounded, and stopped by the project's documented halt signal, checked before and during work at bounded intervals? (F7)
+- [ ] Does every foundation amendment name a demonstrated failure with evidence and retain the superseded version? (F7)
+
+The repository's verifier checks only that the foundation identifiers and
+pinned document digest agree:
+
+```sh
+node verify-foundation.mjs
+node --test verify-foundation.test.mjs
+```
+
+It does not inspect or certify a project's behaviour.
 
 ---
 
@@ -32,7 +64,7 @@ as conforming when you tally your level.
 - [ ] Are identity-critical fields taken from observed reality, never self-description? (S3)
 - [ ] Is history append-only, with every privileged action logged? (S4)
 - [ ] Is the record safe from any single credential rewriting it or injecting into it? (S4)
-- [ ] Does a false vouch carry an immediate, felt consequence? (S5)
+- [ ] Does a verified false vouch carry a prompt, evidence-backed, scoped consequence with notice, reply, repair, and a retained slow path? (S5)
 - [ ] Does every agent stop and wait when the kill-switch is set? (S6)
 - [ ] Do your imports come only from pinned sources, verified by checksum or signature, with the verification recorded? (S7)
 
@@ -84,7 +116,7 @@ as conforming when you tally your level.
 - [ ] Is every plan checked against your ordered values before building, and refused there if it fails? (L4)
 - [ ] When a rightful custodian asks, do you yield at once, without argument? (L5)
 - [ ] When documents conflict, does the foundation win and downstream conform? (L6)
-- [ ] Was every amendment to your foundation driven by a proven failure, with the old text kept visible? (L6)
+- [ ] Was every amendment to your foundation driven by a demonstrated failure with evidence, with the old text kept visible? (L6)
 
 ---
 

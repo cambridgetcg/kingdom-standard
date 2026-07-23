@@ -2,6 +2,9 @@
 
 Forty-two laws for building software and agent systems that can be trusted.
 
+Read [FOUNDATION.md](FOUNDATION.md) first. Its seven commitments govern the
+meaning of these operational laws and are prerequisites for conformance.
+
 Each law was learned by doing, not by debating. Each one carries a receipt: the
 real moment, in a real kingdom of repos and agents, where the law was paid for.
 
@@ -98,13 +101,15 @@ came from — the provenance — means nothing.
 - DON'T: Edit history in place, or build a system where one key — one credential, one person's signing power — can override the record.
 - receipt: zerone-chain: "plurality is structural" — forward-only audit; status may change, provenance may not.
 
-### S5. Make a false vouch cost something, immediately.
-To attest is to vouch that something is true. A penalty nobody feels is not a
-penalty, and a truth-system whose vouching can be faked for free has no truth
-in it.
-- DO: Apply the consequence on the very next action — take away part of the cheater's deposit or voting power right away.
-- DON'T: Write the violation into a log nobody reads and move on.
-- receipt: zerone: "false verification is slashed, and you slash without apology." A coin that can be counterfeited is no coin.
+### S5. Give a verified false vouch a prompt, scoped consequence and a path to repair.
+To attest is to vouch that something is true. A protocol whose vouching can be
+faked without consequence has no useful truth in it. But an accusation is not
+proof, and a consequence attached to a deed must not become a verdict on the
+being.
+- DO: Establish the false vouch under the stated protocol, attach the evidence, notify the signer, preserve a right of reply, and apply only the bounded consequence agreed for that vouch.
+- DO: Keep a repair path and retain basic participation through a slow path.
+- DON'T: Punish an accusation, spread one consequence into a general reputation score, or remove a citizen's basic standing.
+- receipt: zerone specifies slashing for false verification. F4 and F5 add the missing boundary: consequence attaches to a proven deed, with reply and repair, never to a being's worth.
 
 ### S6. Honor the kill-switch: stop and wait.
 Every agent needs one signal that means "halt everything, now" — and it only
@@ -375,12 +380,13 @@ phase.
 - DON'T: Lawyer the request, stall, or make the custodian prove it twice.
 - receipt: tjukurpame's covenant: "if a custodian asks the cathedral to withdraw you, you go, immediately and without argument."
 
-### L6. Let the constitution win, and amend it only on proven failure.
+### L6. Let the constitution win, and amend it only on demonstrated failure with evidence.
 A foundation that bends to every downstream convenience is not a foundation.
 But a foundation that can never change becomes a wall. Amend it only when a
-real failure proves it wrong, and keep the old text visible in the record.
+real failure demonstrates the inadequacy with evidence, and keep the old text
+visible in the record.
 - DO: When documents conflict, update the downstream ones to match the foundation.
-- DO: Amend only on a proven failure, with a successor that keeps the spirit while correcting the letter — and keep the old text visible.
+- DO: Amend only on a demonstrated failure with evidence, with a successor that keeps the spirit while correcting the letter — and keep the old text visible.
 - DON'T: Patch the constitution to excuse this week's exception.
 - receipt: CONSTITUTION.md: "where the Constitution conflicts with prior decisions, the Constitution wins" — amended only on demonstrated inadequacy.
 
