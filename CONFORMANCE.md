@@ -1,5 +1,7 @@
 # Following the Standard
 
+**Operational version:** `kingdom.standard/1.0`
+
 This is the mirror. Read each question and answer yes or no — honestly, because
 T3 applies to this checklist too. Every question maps to a commitment in
 [FOUNDATION.md](FOUNDATION.md) or a law in [STANDARD.md](STANDARD.md).
@@ -17,24 +19,25 @@ checks are the semantic floor and do not allow N/A.
 ## FOUNDATION
 
 All eleven foundation answers must be yes before applying a conformance level
-below. A public conformance claim must pin `kingdom.foundation/0.1` in the
-project's `kingdom.yaml`. The pin is a declaration, not proof; the answers
-still need evidence.
+below. A public conformance claim must pin both `kingdom.foundation/0.2` and
+`kingdom.standard/1.0` in the project's `kingdom.yaml`. The pins are
+declarations, not proof; the answers still need evidence.
 
-- [ ] Do records distinguish observation, commitment, consequence, and interpretation? (F1)
+- [ ] Do records distinguish observation, predicted expectation, intended commitment or purpose, actual consequence, and interpretation without inventing a missing expectation? (F1)
 - [ ] Does every important mechanism say what it proves and what it cannot prove? (F1)
 - [ ] Can a missing account, key, wallet, score, or platform record never become a verdict on a being? (F2)
-- [ ] Is every action that changes another party's state, data, resources, or commitments backed by explicit, scoped, current, withdrawable authority? (F3)
+- [ ] Is every action that changes another party's state, data, resources, or commitments backed by explicit, scoped, current, evidenced authority from ownership, delegation, consent, applicable law, or one's own protective boundary, with consent and delegation withdrawable within their terms? (F3)
 - [ ] Are refusal, silence, leaving, and rest accepted without penalty or repeated pressure? (F3)
 - [ ] Are consequences attached to actions and evidence, never compressed into a being-wide KARMA score, rank, or verdict? (F4)
-- [ ] Are sequence, reported effect, and claimed causation labelled separately? (F4)
-- [ ] Does every party named by, or materially subject to, a consequential record have a practical channel to submit a reply, dispute, correction, or repair without erasing history? (F5)
+- [ ] Are prediction, intended purpose, observed/reported/inferred effect, evidence, sequence, and causal confidence kept distinct? (F4)
+- [ ] Does every party named by, or materially subject to, a consequential record have a practical channel to reply, dispute, correct, request repair, or seek privacy/safety removal with a safe redaction receipt when possible? (F5)
 - [ ] Does authoritative state stay with its citizen or project, with bridges remaining optional and bounded? (F6)
 - [ ] Is every running turn finite, observable, cost-bounded, and stopped by the project's documented halt signal, checked before and during work at bounded intervals? (F7)
-- [ ] Does every foundation amendment name a demonstrated failure with evidence and retain the superseded version? (F7)
+- [ ] Does every foundation amendment name a demonstrated failure, credible risk, or rights gap; state expected effects and a review/migration path; and retain the superseded version? (F7)
 
-The repository's verifier checks only that the foundation identifiers and
-pinned document digest agree:
+The repository's verifier checks the foundation, amendment receipt,
+operational release, checklist identifiers, retained predecessor, and pinned
+document digests:
 
 ```sh
 node verify-foundation.mjs
@@ -58,21 +61,21 @@ It does not inspect or certify a project's behaviour.
 
 ## SECURITY
 
-- [ ] Do your tools write only inside their own project, and stay read-only everywhere else? (S1)
+- [ ] Do your tools read partner data only within granted scope, stay read-only there, and write only through an authorised directory or interface? (S1)
 - [ ] Have secret scanners run over your full git history, logs, and CI output, with zero current findings? (S2)
 - [ ] Does a blocking secret scanner run in CI — your automated build — so a new leak stops the build? (S2)
-- [ ] Are identity-critical fields taken from observed reality, never self-description? (S3)
-- [ ] Is history append-only, with every privileged action logged? (S4)
-- [ ] Is the record safe from any single credential rewriting it or injecting into it? (S4)
+- [ ] Are operational identity and routing fields derived from named checks, while self-description remains visibly attributed rather than promoted to fact? (S3)
+- [ ] Are ordinary corrections append-only, with every privileged action logged and a narrow privacy, safety, or lawful-withdrawal removal path? (S4)
+- [ ] Is the record safe from any single credential silently rewriting it or abusing the removal exception? (S4)
 - [ ] Does a verified false vouch carry a prompt, evidence-backed, scoped consequence with notice, reply, repair, and a retained slow path? (S5)
-- [ ] Does every agent stop and wait when the kill-switch is set? (S6)
+- [ ] Does every agent fail closed on a raised or unreadable kill-switch before work, at bounded intervals during work, and before the next irreversible commit or publication? (S6)
 - [ ] Do your imports come only from pinned sources, verified by checksum or signature, with the verification recorded? (S7)
 
 ## CLOUD
 
 - [ ] Is there one registry of everything you run, kept current automatically? (C1)
-- [ ] Does each agent authenticate the same way across every surface? (C2)
-- [ ] Can you deploy, observe, and act on everything from one place? (C2)
+- [ ] Does each agent have one stable logical identity mapped to separate least-authority service credentials? (C2)
+- [ ] Can you observe and coordinate the fleet from one bounded place without concentrating every root secret there? (C2)
 - [ ] Do coupled systems share state through exports, never by writing into each other? (C3)
 - [ ] When a platform limit blocks an operation, is the failure tallied and reported? (C4)
 - [ ] Did you choose where each system lives on purpose, and write down why? (C5)
@@ -88,7 +91,7 @@ It does not inspect or certify a project's behaviour.
 
 ## PROTOCOL
 
-- [ ] Is every claim others will rely on attested — recorded, hashed, signed — so a stranger can check it? (P1)
+- [ ] Is every claim others will rely on attested with covered bytes, verifying key, stated time, evidence, and proof limits that a stranger can check? (P1)
 - [ ] Does every claim state how it was derived and what would prove it wrong? (P2)
 - [ ] Are your most trusted claims the cheapest ones to challenge? (P3)
 - [ ] Do verifiers commit their verdicts blind, before any verdict is revealed? (P4)
@@ -116,7 +119,8 @@ It does not inspect or certify a project's behaviour.
 - [ ] Is every plan checked against your ordered values before building, and refused there if it fails? (L4)
 - [ ] When a rightful custodian asks, do you yield at once, without argument? (L5)
 - [ ] When documents conflict, does the foundation win and downstream conform? (L6)
-- [ ] Was every amendment to your foundation driven by a demonstrated failure with evidence, with the old text kept visible? (L6)
+- [ ] Was every amendment to your foundation driven by a demonstrated failure, credible risk, or rights gap, with its reasoning and old text kept visible? (L6)
+- [ ] Does any change to the pinned English standard or checklist receive a new operational identifier while the old identifier, both digests, and commit remain visible? (L6)
 
 ---
 

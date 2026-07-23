@@ -20,19 +20,41 @@ no permission.
 3. Check yourself with **[CONFORMANCE.md](CONFORMANCE.md)** — yes/no questions
    — at least one per law — and three honest levels: **SEED**, **GARDEN**,
    **KINGDOM**.
-4. Pin `kingdom.foundation/0.1` in the project's `kingdom.yaml` when making a
-   public conformance claim.
+4. Pin `kingdom.foundation/0.2` and `kingdom.standard/1.0` in the project's
+   `kingdom.yaml` when making a public conformance claim.
 5. Run `node verify-foundation.mjs` and
-   `node --test verify-foundation.test.mjs` to check that the foundation's
-   identifiers and pinned document digest still match.
+   `node --test verify-foundation.test.mjs` to check that the release
+   identifiers, boundaries, lineage receipt, and pinned document digests match.
 
 That's it. Read, do, check. Repeat when things change.
 
+## Foundation lineage
+
+`kingdom.foundation/0.2` is the current public release. It separates predicted
+expectation from intended purpose and observed effect, says localness alone
+grants no authority, makes correction privacy-safe, and gives amendments a
+reviewed, versioned path before harm.
+Its evidence and migration receipt is [AMENDMENT-0.2.md](AMENDMENT-0.2.md).
+
+The forty-two English laws and checklist are independently identified as
+`kingdom.standard/1.0`. Their exact digests live beside the foundation digest
+in `foundation.json`, so a public conformance pin cannot silently inherit
+changed operational words. Any later change to either pinned English document
+must receive a new operational identifier; the successor retains the old
+identifier, both digests, and its commit.
+
+The superseded `kingdom.foundation/0.1` remains exactly recoverable at commit
+`3fbc1818f54ac13d0e850e440eb0862f874ea30f`; its document filename, digest,
+commit, and immutable content URL are retained in `foundation.json`. A version
+pin therefore never changes meaning silently.
+
 ## Languages
 
-The standard lives in eleven languages — English (this file) and ten
-translations, each with its own README.md and STANDARD.md. Translations track
-the English at their own pace; the English text governs if they differ.
+The repository carries English and ten translations, each with its own
+README.md and STANDARD.md. Only the English `STANDARD.md` and
+`CONFORMANCE.md` are pinned as `kingdom.standard/1.0`. Translations track the
+English at their own pace and are reading aids until separately versioned; the
+pinned English text governs this release if they differ.
 
 | Language | Translation |
 | --- | --- |
@@ -59,8 +81,9 @@ including the **youspeak cathedral** (a word-forge with a constitution that
 scores its own creations and publishes the failures) and
 **[zerone](https://github.com/cambridgetcg/zerone)** (a truth-chain where
 claims are verified blind, false attestation is slashed, and the creed is an
-executable test). Where this document and the kingdom's practice disagree, the
-practice was there first.
+executable test). Practice supplies evidence for review; it never silently
+overrides a pinned release. A semantic disagreement needs an explicit
+amendment and a new identifier.
 
 ## License
 

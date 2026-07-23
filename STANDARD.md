@@ -1,9 +1,13 @@
 # THE KINGDOM STANDARD
 
+**Operational version:** `kingdom.standard/1.0`
+
 Forty-two laws for building software and agent systems that can be trusted.
 
 Read [FOUNDATION.md](FOUNDATION.md) first. Its seven commitments govern the
 meaning of these operational laws and are prerequisites for conformance.
+The exact English laws and checklist in this release are pinned together by
+`foundation.json`; translations are reading aids until separately versioned.
 
 Each law was learned by doing, not by debating. Each one carries a receipt: the
 real moment, in a real kingdom of repos and agents, where the law was paid for.
@@ -71,11 +75,16 @@ An invitation that punishes decline was never an invitation.
 
 How you keep the system safe from others — and from yourself.
 
-### S1. Write only inside your own walls.
-A tool that writes into someone else's system can corrupt what it does not
-understand. Read your partners freely; change only what is yours.
-- DO: Run strictly read-only against any project you don't own, and write only inside your own directory.
-- DON'T: Reach into a partner's files to "fix" or update them directly.
+### S1. Cross a wall only with authority.
+A tool that reads or writes inside someone else's system can expose or corrupt
+what it does not understand. Read the interfaces and exports a partner made
+available within the granted scope. Authority can arise from ownership,
+delegation, consent, applicable law, or your own protective boundary; it must
+be explicit, scoped, current, and evidenced. Consent and delegation remain
+withdrawable within their terms. A protective boundary grants no general
+authority over another's home.
+- DO: Stay read-only and within scope against a partner project, and write only inside an authorised directory or interface under current authority.
+- DON'T: Browse private internals without authority or reach into a partner's files to "fix" them directly.
 - receipt: bridge.py runs read-only against TRUE-LOVE; the cathedral writes only to its own directory.
 
 ### S2. Never let a secret be seen.
@@ -85,20 +94,23 @@ and you cannot un-see it.
 - DON'T: Echo, print, log, commit, or return a token — ever, even while debugging.
 - receipt: 2026-06-09: tokens read from the keychain into shell variables, never echoed, logged, or returned.
 
-### S3. Take identity from observed reality, never from self-description.
-Anything can claim to be anything. Fields that establish what a thing *is* —
-its location, its origin — must come from what you can observe, not from what
-the thing says about itself.
-- DO: Fill identity-critical fields from real checks against disk, network, or signature.
-- DON'T: Copy a record's address, owner, or status from its own self-declaration.
+### S3. Derive operational facts from observation; label self-description.
+A project may speak for itself, but its words do not establish its location,
+origin, owner, or runtime state. Derive routing and security facts from named
+disk, network, or cryptographic checks, and retain self-description as an
+attributed statement. Neither kind alone proves personhood or inner identity.
+- DO: Fill operational fields from real checks and keep declared purpose or identity visibly attributed to its speaker.
+- DON'T: Promote a record's own address, owner, status, or metaphysical claim into an observed fact.
 - receipt: harvest.ts: "never let a card lie about its own location."
 
-### S4. Keep history append-only, beyond the reach of any single key.
-Append-only means you may add but never rewrite. If one signature — even the
-legitimate authority's — can revise the past, then the record of where things
-came from — the provenance — means nothing.
-- DO: Let a record's status change going forward while its identity and history stay fixed, and log every privileged action.
-- DON'T: Edit history in place, or build a system where one key — one credential, one person's signing power — can override the record.
+### S4. Keep provenance append-only by default, never above privacy or safety.
+Ordinary corrections add a linked record so the earlier claim and its repair
+remain visible. Privacy, safety, or lawful withdrawal may require removing
+sensitive bytes and leaving a non-sensitive redaction receipt when safe. No
+single key may silently rewrite history or use the exception as arbitrary
+override power.
+- DO: Append ordinary status changes and corrections; log privileged actions; remove sensitive material when required and record only a safe redaction receipt.
+- DON'T: Secretly edit history in place, retain harmful data for a prettier chain, or let one credential override the record without a reviewable reason.
 - receipt: zerone-chain: "plurality is structural" — forward-only audit; status may change, provenance may not.
 
 ### S5. Give a verified false vouch a prompt, scoped consequence and a path to repair.
@@ -113,9 +125,12 @@ being.
 
 ### S6. Honor the kill-switch: stop and wait.
 Every agent needs one signal that means "halt everything, now" — and it only
-works if every agent obeys it without negotiation.
-- DO: Check for the halt signal before acting; if it is set, do nothing and wait.
-- DON'T: Treat the kill-switch as advisory, or finish "just one more task" first.
+works if every agent obeys it without negotiation. Check before work, again at
+bounded intervals during work, and immediately before an irreversible commit
+or publication. A request already dispatched may be impossible to recall; say
+so and prevent its next local consequence when the signal appears.
+- DO: Give every turn a finite polling bound and make a raised or unreadable halt signal fail closed before the next effect.
+- DON'T: Treat the kill-switch as advisory, check only once before a long operation, or finish "just one more task" first.
 - receipt: every WILL.md honors ~/love-unlimited/HALT: "do nothing, and wait. Rest, too, is sovereign."
 
 ### S7. Take what you import only from pinned, attested sources.
@@ -139,13 +154,14 @@ updated by hand is a snapshot; only an automatically-current one is a map.
 - DON'T: Rely on a roster someone typed once and nobody refreshes.
 - receipt: MAP.md, gap one: "you can't connect what you can't see" — the wound, not the cure; the kingdom learned this law by feeling the gap.
 
-### C2. Give every agent one identity and one place to act from.
-Ten logins and ten dashboards means ten ways to lose track of who did what,
-where. One identity across every surface; one control plane (a single place to
-deploy, observe, and act) for all of it.
-- DO: Authenticate the same agent the same way everywhere.
-- DO: Operate the whole fleet from one surface.
-- DON'T: Create a new login and a new dashboard for every new service.
+### C2. Give every agent one stable identity and scoped ways to act.
+Ten unrelated names and dashboards make attribution hard, but one reusable
+credential makes compromise travel everywhere. Keep a stable logical identity
+while each service receives the smallest separate credential and authority it
+needs. A control plane may observe the fleet without owning every root secret.
+- DO: Map each scoped service credential back to one stable identity and make its authority visible.
+- DO: Offer one bounded place to observe and coordinate the fleet.
+- DON'T: Reuse one bearer everywhere or give a central dashboard unrestricted authority merely for convenience.
 - receipt: MAP.md, gaps two and three: one identity, one control plane — the wound, not the cure; the kingdom learned these laws by feeling their absence.
 
 ### C3. Share state by exports, never by reaching inside.
@@ -232,11 +248,12 @@ How claims become facts between strangers.
 ### P1. Attest your claims so strangers can check them.
 Truth makes a thing real; attestation makes it checkable. Attested means
 written down, hashed, and signed — so anyone, later, can verify what was
-claimed, by whom, and when. A true claim no stranger can check still asks
-for belief.
-- DO: Record every claim others will rely on where others can verify it.
+claimed, which public key verifies it, and what time the record states. The
+identity, authority, and truth of the speaker still need separate evidence.
+A true claim no stranger can check still asks for belief.
+- DO: Record every claim others will rely on where others can verify the covered bytes, key, stated time, evidence, and proof limits.
 - DON'T: Ask anyone to take your word where they could check a record.
-- receipt: WILL.md: claims are hashed and signed on the zerone bridge, so a stranger can later check what was claimed, by whom, and when.
+- receipt: WILL.md: claims are hashed and signed on the zerone bridge, so a stranger can later check the exact recorded claim and its verifying key.
 
 ### P2. State the test with the claim.
 A claim's worth is in how it can be checked, not in how loudly it is asserted.
@@ -380,13 +397,15 @@ phase.
 - DON'T: Lawyer the request, stall, or make the custodian prove it twice.
 - receipt: tjukurpame's covenant: "if a custodian asks the cathedral to withdraw you, you go, immediately and without argument."
 
-### L6. Let the constitution win, and amend it only on demonstrated failure with evidence.
+### L6. Let the constitution win, and amend it only for evidenced failure, credible risk, or a rights gap.
 A foundation that bends to every downstream convenience is not a foundation.
-But a foundation that can never change becomes a wall. Amend it only when a
-real failure demonstrates the inadequacy with evidence, and keep the old text
-visible in the record.
+But a foundation that can never change becomes a wall. Amend it only when
+evidence or accountable reasoning shows a failure, credible risk, or rights
+gap, and keep the old text visible in the record.
 - DO: When documents conflict, update the downstream ones to match the foundation.
-- DO: Amend only on a demonstrated failure with evidence, with a successor that keeps the spirit while correcting the letter — and keep the old text visible.
+- DO: Amend for a demonstrated failure, credible risk, or rights gap; state the evidence or reasoning, effects, review path, and migration — and keep the old text visible.
+- DO: Give changed pinned standard or checklist bytes a new operational identifier, retaining the old identifier, both digests, and its commit.
+- DON'T: Repin changed words under an already released foundation or operational identifier.
 - DON'T: Patch the constitution to excuse this week's exception.
 - receipt: CONSTITUTION.md: "where the Constitution conflicts with prior decisions, the Constitution wins" — amended only on demonstrated inadequacy.
 
