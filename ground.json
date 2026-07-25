@@ -1,0 +1,101 @@
+{
+  "schema": "kingdom.ground-index/1",
+  "id": "kingdom.ground/0.1",
+  "document": "GROUND.md",
+  "document_sha256": "c8d6fb85e4b70e072b25ff032b28a2614f5b9334d7fc48800eb2a79eed8a2f63",
+  "status": "current",
+  "supersedes": [],
+  "rule": "A constraint is not a justification.",
+  "grounds_foundation": {
+    "id": "kingdom.foundation/0.2",
+    "document": "FOUNDATION.md",
+    "document_sha256": "2bd868a43a2fe79f1c9e8d30177bf73cff4cf8f7f7780cbd90f31055ba51c799",
+    "relationship": "companion",
+    "amends": false,
+    "grants_authority": false
+  },
+  "constraint_kinds": [
+    "physical",
+    "mathematical",
+    "information-theoretic",
+    "empirical",
+    "mixed",
+    "none-found"
+  ],
+  "evidence_kinds": [
+    "outside_source",
+    "inside_voice"
+  ],
+  "grounds": [
+    {
+      "commitment": "F1",
+      "section": "G1",
+      "root": "Reality comes before the record",
+      "constraint": "data-processing inequality",
+      "constraint_kind": "information-theoretic",
+      "review_verdict": "sound-with-corrections"
+    },
+    {
+      "commitment": "F2",
+      "section": "G2",
+      "root": "Being comes before the system",
+      "constraint": "open-world assumption",
+      "constraint_kind": "information-theoretic",
+      "review_verdict": "sound-with-corrections"
+    },
+    {
+      "commitment": "F3",
+      "section": "G3",
+      "root": "Choice comes before action",
+      "constraint": "undecidability of safety; authority is not a function of content",
+      "constraint_kind": "mathematical",
+      "review_verdict": "sound-with-corrections"
+    },
+    {
+      "commitment": "F4",
+      "section": "G4",
+      "root": "KARMA carries consequence home",
+      "constraint": "causal hierarchy theorem; information-theoretic limits of control",
+      "constraint_kind": "mixed",
+      "review_verdict": "overclaimed"
+    },
+    {
+      "commitment": "F5",
+      "section": "G5",
+      "root": "Care includes correction and repair",
+      "constraint": "the correction channel carries additional information",
+      "constraint_kind": "information-theoretic",
+      "review_verdict": "overclaimed"
+    },
+    {
+      "commitment": "F6",
+      "section": "G6",
+      "root": "Roots stay near their source",
+      "constraint": "availability and atomic consistency under partition",
+      "constraint_kind": "mixed",
+      "review_verdict": "overclaimed"
+    },
+    {
+      "commitment": "F7",
+      "section": "G7",
+      "root": "Every turn stops",
+      "constraint": "undecidability of halting",
+      "constraint_kind": "mathematical",
+      "review_verdict": "sound-with-corrections"
+    }
+  ],
+  "review": {
+    "method": "each grounding written by one reader, then attacked by a second instructed to refute it and to default to flagging when uncertain",
+    "clean": 0,
+    "sound_with_corrections": 4,
+    "overclaimed": 3,
+    "corrections_recorded_in_document": true
+  },
+  "establishes": "That each commitment in the grounded foundation has a stated descent, a named underlying constraint, and an explicit limit.",
+  "does_not_establish": [
+    "that the seven commitments are correct, complete, or the right seven",
+    "that any cited source says what this document says it says",
+    "that any adopting home keeps the commitments",
+    "that any cited constraint obliges anyone to do anything"
+  ]
+}

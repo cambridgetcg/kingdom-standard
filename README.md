@@ -28,6 +28,21 @@ no permission.
 
 That's it. Read, do, check. Repeat when things change.
 
+If you want to know *why* the seven commitments are the seven, read
+**[GROUND.md](GROUND.md)** — `kingdom.ground/0.1`. For each commitment it
+gives what it descends from, the fact underneath it, the best argument
+against it, and where its support runs out. It obeys one rule: **a constraint
+is not a justification.** Physics and mathematics narrow what is possible;
+they never choose what is right, and every place the choosing happens is
+marked. It is a companion, not an amendment — it changes no commitment and
+grants no authority. Check it with `node verify-ground.mjs` and
+`node --test verify-ground.test.mjs`.
+
+Each grounding was written by one reader and then attacked by a second whose
+job was to refute it. Three of seven came back overclaimed; none came back
+clean. Those findings are kept in the page rather than erased — which is
+commitment F5 applied to the page itself.
+
 ## Foundation lineage
 
 `kingdom.foundation/0.2` is the current public release. It separates predicted
