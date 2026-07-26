@@ -46,36 +46,95 @@ commitment F5 applied to the page itself.
 ## Looking at a project
 
 ```sh
-node evidence.mjs <path>          # add --json for a machine, --quiet for less
+node evidence.mjs <path>
+# add --json for a machine, --quiet for fewer locations,
+# --redact-paths before sharing local paths,
+# or lower --max-files, --max-entries, and --max-bytes
+# (--max-bytes applies to cue-candidate content)
 ```
 
+The reader and its tests support Node.js 20 or newer.
+
 `evidence.mjs` reads a project and reports, for each commitment, three things:
-evidence it found with file and line, counter-evidence worth reading, and what
-it cannot tell from outside. It is read-only, bounded in files and bytes, and
-follows no symbolic links.
+text cues with file and line, caution cues worth reading, and what it cannot
+tell from outside. The machine fields are named `cues` and `cautionCues`, not
+`evidence` and `counter`. A cue is a string worth reading, not a claim that the
+sentence is affirmative or that a practice exists.
 
 It certifies nothing. It has no pass, no fail, no score, and no rank — a scan
-that finds nothing says nothing found, never "does not comply", because F2
-forbids reading absence as a verdict. Adoption stays a free choice made in the
-project's own home; this only makes such a choice checkable by a reader.
+that finds nothing says only that nothing was found. Adoption stays a free
+choice made in the project's own home. The reader recognises only the card's
+canonical flow-list or two-space block-list `adopts` shape. An absent field or
+a linked, oversized, special, unreadable, or card outside the reader's narrow
+top-level syntax leaves adoption and refusal unknown; only a parsed list
+supplies `adopts`.
+
+The content loops are finite by default: at most 2,000 text candidates, 20,000
+tree entries, 32 MiB of candidate content, 512 KiB per file, 12 directory
+levels, and 500 distinct places per signal. `--max-bytes` is the cue-scan
+content budget. The separate `kingdom.yaml` adoption read is capped at 64 KiB,
+and its own inspected-byte count and bound are present in the report. The
+exported API enforces hard
+ceilings of 10,000 files, 100,000 entries, and 128 MiB. Directory entries are
+read through a bounded stream and ordered independently of locale. The report
+names each enforced truncation and each class it deliberately does not inspect.
+Dependency, build, cache, and Git directories are counted at the skipped root
+but their contents are not walked. Regular files outside the text-name
+allowlist are also counted rather than silently disappearing.
+
+The reader refuses final symbolic links and special files, opens with
+non-blocking and no-follow flags where the platform provides them, and checks
+path containment and file identity before and after each read. Those checks
+catch ordinary filesystem races. Node does not provide the stronger
+directory-handle operation needed to defeat a hostile filesystem that changes
+paths between every check, so concurrent mutation remains an explicit blind
+spot rather than a false guarantee.
+
+The reader issues no project write operation. Normal file reads can still let
+the operating system update access-time metadata, depending on the filesystem
+and mount policy; the reader does not claim otherwise.
+
+A report carries both the digest indexed for `FOUNDATION.md` and the digest of
+the bytes actually beside the reader, whether they agree, the index and reader
+digests, and the observation time. Paths are present by default so a local
+reader can find each cue. `--redact-paths` removes project, marker-root,
+marker-relative, and cue paths from text or JSON; it leaves times, digests,
+counts, state names, and declared public identifiers. `--quiet` shortens
+output and is not a privacy mode.
 
 Two things it takes care to get right, because getting them wrong is the
 failure the commitments are about:
 
 - **Mention is not use.** A page that forbids `reputation_score` contains the
   string `reputation_score`, and a page teaching people to spot leaked keys
-  contains the shape of a leaked key. The tool looks for the shape of *use* —
-  a key given a value, a field read — and skips known documentation dummies
-  and lines that say "example" or "placeholder".
+  can contain a key shape. Aggregate names are reported only in a field-use
+  shape, with an explicit question about being-wide KARMA versus a scoped work
+  or system measure. Exact published dummy keys are skipped. Broad words
+  such as “example” never suppress a credential-shaped cue, because executable
+  code can contain those words too. `.env`, `.pem`, and `.key` text is included;
+  matched secret bytes are never printed.
 - **It never reads itself.** This tool states every pattern it looks for, so
   it matches itself on all of them. Its own source and test are excluded by
   resolved path, and the report says so rather than leaving it silent.
 
-The check with the sharpest teeth is F6: it asks git whether the project's
-words exist anywhere but this disk — no history, no remote, commits never
-pushed, or files never committed at all.
+The reader never runs Git. Even `git status` can execute a content filter named
+by the repository it reads. It observes only whether a regular `.git` marker
+exists at or above the selected project, and whether the project is nested
+under it. That neutral fact lives once in `home`, outside F6's cue arrays;
+human prose is derived from that state. It does not validate history, remotes,
+publication, ownership, or authority, and a symbolic-link marker is not
+followed.
 
-`node --test evidence.test.mjs` — 29 tests.
+`node --test evidence.test.mjs` — 54 tests, including repository-defined
+commands that must not run, linked and malformed declarations, nested path
+redaction, negative prose, credential false negatives, wide trees, byte and
+match bounds, path and FIFO swaps, provenance, and exported-API immutability.
+
+`kingdom.evidence-report/2` is an intentional break from report 1: `cues` and
+`cautionCues` replace `evidence` and `counter`; `readerReports` replaces
+`establishes`; unknown adoption uses `null`; and the old Git-history claims
+are gone in favour of one neutral marker state. Consumers must select the
+schema explicitly rather than guessing across versions.
 
 ## Foundation lineage
 
