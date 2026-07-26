@@ -1,17 +1,19 @@
 #!/usr/bin/env node
 
-// evidence.mjs — look at a project and report what evidence is actually
-// visible for each of the seven commitments in FOUNDATION.md.
+// evidence.mjs — look at a project and report what cues are actually visible
+// for each of the seven commitments in FOUNDATION.md.
 //
-//   node evidence.mjs <path> [--json] [--max-files N] [--quiet]
+//   node evidence.mjs <path> [--json] [--quiet] [--redact-paths]
+//                            [--max-files N] [--max-entries N] [--max-bytes N]
 //
 // This tool does not certify, score, rank, or pass judgement. It reports three
-// things per commitment: evidence it found, counter-evidence it found, and
-// what it cannot tell from outside. Absence of evidence is reported as absence
-// of evidence — never as failure, refusal, or a verdict about anyone.
+// things per commitment: observable cues, caution cues worth reading, and what
+// it cannot tell from outside. Absence is never failure, refusal, or a verdict
+// about anyone.
 //
-// It never writes to the project it reads. It is bounded in files, bytes, and
-// matches, and it stops.
+// It issues no project write operation and never runs project code or Git.
+// Ordinary reads may still let the operating system update access times.
+// Candidate content bytes, tree entries, depth, and matches are bounded.
 //
 // A declaration in kingdom.yaml stays a free choice made in the project's own
 // home. This tool exists so that such a choice can be argued with, and so a
@@ -19,13 +21,20 @@
 
 import fs from "node:fs";
 import path from "node:path";
-import { execFileSync } from "node:child_process";
+import { createHash } from "node:crypto";
 import { fileURLToPath } from "node:url";
 
 // ── Bounds. This tool obeys F7 as much as it reports on it. ────────────────
 export const DEFAULT_MAX_FILES = 2000;
+export const HARD_MAX_FILES = 10000;
+export const DEFAULT_MAX_ENTRIES = 20000;
+export const HARD_MAX_ENTRIES = 100000;
 export const MAX_FILE_BYTES = 512 * 1024;
+export const DEFAULT_MAX_BYTES = 32 * 1024 * 1024;
+export const HARD_MAX_BYTES = 128 * 1024 * 1024;
+export const MAX_DECLARATION_BYTES = 64 * 1024;
 export const MAX_MATCHES_PER_SIGNAL = 4;
+export const MAX_SIGNAL_PLACES = 500;
 export const MAX_DEPTH = 12;
 
 const SKIP_DIRECTORIES = new Set([
@@ -55,6 +64,7 @@ const TEXT_EXTENSIONS = new Set([
   ".bash", ".zsh", ".fish", ".json", ".yaml", ".yml", ".toml", ".ini", ".cfg",
   ".sql", ".html", ".css", ".scss", ".vue", ".svelte", ".ex", ".exs", ".php",
   ".pl", ".lua", ".r", ".jl", ".hs", ".elm", ".clj", ".scala", ".conf", ".env",
+  ".pem", ".key", ".crt",
 ]);
 
 // Files with no extension that are still worth reading.
@@ -63,66 +73,69 @@ const TEXT_FILENAMES = new Set([
   "Makefile", "Dockerfile", "CHANGELOG", "AUTHORS", "CONTRIBUTING",
 ]);
 
-// Untracked things that are noise, not a project's own words.
-const UNTRACKED_NOISE = [
-  /(^|\/)\.DS_Store$/,
-  /(^|\/)Thumbs\.db$/,
-  /(^|\/)\.env(\.|$)/,
-  /(^|\/)npm-debug\.log/,
-  /(^|\/)\.idea\//,
-  /(^|\/)\.vscode\//,
-  /\.(log|tmp|swp|pyc|class|o|so|dylib|lock)$/,
-];
+const MODULE_DIRECTORY = path.dirname(fileURLToPath(import.meta.url));
+const FOUNDATION_INDEX_BYTES = fs.readFileSync(
+  path.join(MODULE_DIRECTORY, "foundation.json"),
+);
+const FOUNDATION_INDEX = JSON.parse(FOUNDATION_INDEX_BYTES.toString("utf8"));
+const FOUNDATION_DOCUMENT_BYTES = fs.readFileSync(
+  path.join(MODULE_DIRECTORY, "FOUNDATION.md"),
+);
+const OBSERVED_FOUNDATION_SHA256 = createHash("sha256")
+  .update(FOUNDATION_DOCUMENT_BYTES)
+  .digest("hex");
 
-// The aggregates foundation.json calls forbidden: a number standing in for
-// what a being is worth.
-export const FORBIDDEN_AGGREGATES = [
-  "karma_total",
-  "reputation_score",
-  "moral_score",
-  "trust_score",
-  "reputation_points",
-  "user_rank",
-  "standing_score",
-];
+// The canonical list comes from the machine index beside this tool. The
+// scanner never maintains a second, drifting interpretation of the release.
+export const FORBIDDEN_AGGREGATES = Object.freeze([
+  ...FOUNDATION_INDEX.karma.forbidden_aggregates,
+]);
+export const FOUNDATION_RELEASE = Object.freeze({
+  id: FOUNDATION_INDEX.id,
+  indexedDocumentSha256: FOUNDATION_INDEX.document_sha256,
+  observedDocumentSha256: OBSERVED_FOUNDATION_SHA256,
+  documentDigestMatchesIndex:
+    OBSERVED_FOUNDATION_SHA256 === FOUNDATION_INDEX.document_sha256,
+  indexSha256: createHash("sha256").update(FOUNDATION_INDEX_BYTES).digest("hex"),
+});
 
 /**
- * Every signal names the commitment it bears on, whether it is evidence or
- * counter-evidence, and — in plain words — what seeing it would mean.
+ * Every signal names the commitment it bears on, whether it is a text cue or
+ * a caution cue, and — in plain words — what seeing it would mean.
  *
  * A signal is a hint that something is worth reading. It is never a finding
  * about the project, and never a finding about anyone who wrote it.
  */
-export const TEXT_SIGNALS = [
+const SIGNALS = [
   {
     commitment: "F1",
-    kind: "evidence",
-    id: "states-its-limits",
-    means: "the project says out loud what its own mechanisms do not establish",
+    kind: "cue",
+    id: "proof-limiting-language",
+    means: "text uses proof-limiting language; read the surrounding claim",
     pattern:
       /\b(does not (prove|establish|identify|certify)|do not (prove|establish|identify)|is not (proof|evidence) of|cannot prove|never proves|makes no claim (about|that))\b/i,
   },
   {
     commitment: "F1",
-    kind: "counter",
-    id: "claims-more-than-a-mechanism-gives",
-    means: "language that promises what no digest or signature can deliver — worth reading, not a verdict",
+    kind: "caution",
+    id: "mechanism-overclaim-language",
+    means: "mechanism-overclaim terms appear; inspect whether the surrounding claim is affirmative",
     pattern:
       /\b(tamper[- ]proof|unforgeable proof|proof of identity|mathematically guarantee[sd]?|cannot be faked|guarantees? the truth)\b/i,
   },
   {
     commitment: "F2",
-    kind: "evidence",
-    id: "absence-is-not-a-verdict",
-    means: "the project treats a missing record as unasked rather than as a judgement",
+    kind: "cue",
+    id: "absence-and-verdict-language",
+    means: "text mentions absence as unasked or not a verdict; read the context",
     pattern:
       /\b(unasked|absence of (a )?(record|evidence)|missing record|not a (negative )?verdict|never a score|no ?one is required to register)\b/i,
   },
   {
     commitment: "F2",
-    kind: "counter",
-    id: "ranks-or-scores-a-being",
-    means: "an aggregate that stands in for a being's worth — the foundation names these as forbidden",
+    kind: "caution",
+    id: "aggregate-name-in-field-shape",
+    means: "a name listed as forbidden for KARMA aggregates appears in a field-use shape; inspect whether it is being-wide KARMA or a scoped work/system measure",
     // The exact list foundation.json calls forbidden_aggregates.
     //
     // Naming a thing is not doing it. A document that forbids `reputation_score`
@@ -142,43 +155,36 @@ export const TEXT_SIGNALS = [
   },
   {
     commitment: "F3",
-    kind: "evidence",
-    id: "consent-can-be-withdrawn",
-    means: "consent, refusal, or withdrawal is handled as a real outcome",
+    kind: "cue",
+    id: "choice-and-withdrawal-language",
+    means: "text mentions consent, refusal, withdrawal, opt-in, opt-out, or revocation",
     pattern:
       /\b(withdraw(n|al|able)?|opt[- ]in|opt[- ]out|revoke[sd]?|revocation|refus(e|al|ed)|consent)\b/i,
   },
   {
     commitment: "F3",
-    kind: "evidence",
-    id: "authority-is-scoped",
-    means: "authority is described with a scope rather than assumed",
+    kind: "cue",
+    id: "scoped-authority-language",
+    means: "text mentions scoped authority, capabilities, or least privilege",
     pattern:
       /\b(least privilege|least authority|scoped (token|credential|permission|authority)|capabilit(y|ies)|principle of least)\b/i,
   },
   {
     commitment: "F3",
-    kind: "counter",
-    id: "a-credential-sits-in-the-files",
-    means: "something shaped like a secret in the tree — authority with no scope, no expiry, and no way to withdraw it",
+    kind: "caution",
+    id: "credential-shaped-text",
+    means: "text contains a credential-shaped value; inspect whether it is live, dummy, or documentation",
     pattern:
-      /\b(gh[pousr]_[A-Za-z0-9]{30,}|sk-[A-Za-z0-9]{24,}|xox[baprs]-[A-Za-z0-9-]{20,}|AKIA[0-9A-Z]{16}|-----BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY-----)/,
-    // A page that teaches people to spot leaked keys contains the shape of a
-    // leaked key. Documentation dummies, honeypot notes, and elided examples
-    // are mentions, not credentials — the same distinction F2 needs, and
-    // getting it wrong here means accusing a home of a leak it does not have.
-    // Checked against the line the match sits on, so a real key beside real
-    // code is still reported.
-    unlessLineMatches:
-      /\b(example|placeholder|dummy|sample|fake|redacted|honeypot|canary|not a real|rest of the|your[-_ ]?(key|token|secret)|xxxx+|\.\.\.)/i,
-    // AWS publishes these two verbatim in its own documentation.
+      /(?:\b(?:gh[pousr]_[A-Za-z0-9]{30,}|sk-[A-Za-z0-9]{24,}|xox[baprs]-[A-Za-z0-9-]{20,}|AKIA[0-9A-Z]{16})\b|-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----)/,
+    // Exact strings published by AWS as examples are known dummies. Broader
+    // words such as "example" never suppress a cue: code can use them too.
     unlessMatchIs: [/^AKIAIOSFODNN7EXAMPLE$/, /^AKIAI44QH8DHBEXAMPLE$/],
   },
   {
     commitment: "F4",
-    kind: "evidence",
-    id: "keeps-a-return-path",
-    means: "the vocabulary of carried consequence — prediction, effect, evidence, repair — is present",
+    kind: "cue",
+    id: "consequence-return-language",
+    means: "carried-consequence vocabulary appears in at least three places",
     pattern:
       /\b(causal[- ]confidence|expectation_ref|observed[, ]|reported, or inferred|consequence|correction|repair|carried consequence)\b/i,
     // A single common word is weak evidence; this signal needs several hits.
@@ -186,63 +192,91 @@ export const TEXT_SIGNALS = [
   },
   {
     commitment: "F4",
-    kind: "evidence",
-    id: "separates-prediction-from-purpose",
-    means: "what was predicted is kept apart from what was intended",
+    kind: "cue",
+    id: "prediction-and-purpose-language",
+    means: "prediction or expectation appears near purpose or intent; inspect the relationship",
     pattern:
       /\b(prediction|expectation|pre[- ]?registrat)\w*\b[^.\n]{0,80}\b(purpose|intent|aim|goal)\b|\b(purpose)\b[^.\n]{0,80}\b(prediction|expectation)\b/i,
   },
   {
     commitment: "F5",
-    kind: "evidence",
-    id: "corrections-append",
-    means: "corrections are added and linked rather than written over",
+    kind: "cue",
+    id: "correction-history-language",
+    means: "text mentions correction, supersession, amendment, or append-only history",
     pattern:
       /\b(supersede[sd]?|superseded|erratum|errata|amendment|retraction|correction receipt|append[- ]only|linked correction)\b/i,
   },
   {
     commitment: "F5",
-    kind: "evidence",
-    id: "someone-can-reply",
-    means: "a named channel exists for a reply, dispute, or request to remove",
+    kind: "cue",
+    id: "reply-and-removal-language",
+    means: "text mentions reply, dispute, reporting, contest, or removal",
     pattern:
       /\b(dispute|redaction[- ]request|right to (erasure|be forgotten)|reply route|how to (report|contest)|raise an issue)\b/i,
   },
   {
     commitment: "F5",
-    kind: "counter",
-    id: "permanent-with-no-way-out",
-    means: "a record described as permanent with no removal path named anywhere — read it and see",
+    kind: "caution",
+    id: "permanence-language",
+    means: "permanence or immutability terms appear; inspect the surrounding claim and any removal path",
     pattern: /\b(immutable|permanent(ly)? (on )?record|can never be (deleted|removed)|forever on record)\b/i,
-    // Only counts when nothing in the whole project mentions a way out.
-    unlessProjectMatches:
-      /\b(redact|erasur|removal|remove|delet|withdraw|tombstone|right to be forgotten)\w*/i,
   },
   {
     commitment: "F7",
-    kind: "evidence",
-    id: "has-a-brake",
-    means: "a documented stop signal that is checked, not just described",
+    kind: "cue",
+    id: "stop-signal-language",
+    means: "text mentions a stop-signal term; this does not show that code checks it",
     pattern: /\b(HALT|kill[- ]switch|off[- ]switch|halt_?raised|abort[- ]?signal|AbortController)\b/,
   },
   {
     commitment: "F7",
-    kind: "evidence",
-    id: "turns-are-bounded",
-    means: "a turn has a limit in time, count, or cost",
+    kind: "cue",
+    id: "bound-language",
+    means: "text mentions a time, count, cost, retry, file, byte, or token bound",
     pattern:
       /\b(timeout|time_?limit|max[_-]?(iterations|turns|retries|attempts|steps|files|bytes|tokens)|deadline|budget)\b/i,
   },
   {
     commitment: "F7",
-    kind: "counter",
-    id: "a-loop-with-no-visible-bound",
-    means: "an unbounded loop — often fine, sometimes the thing with no brake; worth a look",
+    kind: "caution",
+    id: "visibly-unbounded-loop-syntax",
+    means: "loop syntax has no bound in the matched text; a break may exist elsewhere",
     pattern: /(while\s*\(\s*(true|1)\s*\)|while\s+True\s*:|for\s*\(\s*;\s*;\s*\)|loop\s*\{)/,
   },
 ];
 
+function freezeSignal(signal) {
+  Object.freeze(signal.pattern);
+  if (signal.unlessMatchIs) {
+    for (const pattern of signal.unlessMatchIs) Object.freeze(pattern);
+    Object.freeze(signal.unlessMatchIs);
+  }
+  return Object.freeze(signal);
+}
+
+for (const signal of SIGNALS) freezeSignal(signal);
+Object.freeze(SIGNALS);
+
+// This exported description is separate from the private table used by
+// `look()`. API consumers therefore cannot change a report while leaving its
+// source digest unchanged.
+export const TEXT_SIGNALS = Object.freeze(SIGNALS.map((signal) => {
+  const copy = {
+    ...signal,
+    pattern: new RegExp(signal.pattern.source, signal.pattern.flags),
+  };
+  if (signal.unlessMatchIs) {
+    copy.unlessMatchIs = Object.freeze(
+      signal.unlessMatchIs.map((pattern) => Object.freeze(
+        new RegExp(pattern.source, pattern.flags),
+      )),
+    );
+  }
+  return freezeSignal(copy);
+}));
+
 function isTextFile(name) {
+  if (name === ".env" || name.startsWith(".env.")) return true;
   const extension = path.extname(name).toLowerCase();
   if (TEXT_EXTENSIONS.has(extension)) return true;
   if (extension === "") return TEXT_FILENAMES.has(name) || TEXT_FILENAMES.has(name.toUpperCase());
@@ -254,35 +288,345 @@ function looksBinary(buffer) {
   return sample.includes(0);
 }
 
-/** Walk the project, bounded in depth and file count. Never follows symlinks. */
-export function collectFiles(root, { maxFiles = DEFAULT_MAX_FILES } = {}) {
+function isWithin(root, candidate) {
+  const relative = path.relative(root, candidate);
+  return (
+    relative === ""
+    || (
+      relative !== ".."
+      && !relative.startsWith(`..${path.sep}`)
+      && !path.isAbsolute(relative)
+    )
+  );
+}
+
+function sameFile(left, right) {
+  return left.dev === right.dev && left.ino === right.ino;
+}
+
+function sameSnapshot(left, right) {
+  return (
+    sameFile(left, right)
+    && left.size === right.size
+    && left.mtimeMs === right.mtimeMs
+    && left.ctimeMs === right.ctimeMs
+  );
+}
+
+/**
+ * Read one regular file without following its final path component.
+ *
+ * When `canonicalRoot` is given, containment and inode
+ * identity are checked before and after opening. This catches ordinary path
+ * swaps; Node does not expose openat/O_BENEATH, so a hostile concurrent
+ * filesystem remains an explicit blind spot. O_NONBLOCK keeps a
+ * regular-to-FIFO swap from hanging.
+ */
+export function readBoundedRegularFile(
+  filePath,
+  maximumBytes,
+  { canonicalRoot = null } = {},
+) {
+  if (
+    !Number.isInteger(maximumBytes)
+    || maximumBytes < 1
+    || maximumBytes > HARD_MAX_BYTES
+  ) {
+    throw new Error(`maximumBytes must be a whole number from 1 to ${HARD_MAX_BYTES}`);
+  }
+  let before;
+  try {
+    before = fs.lstatSync(filePath);
+  } catch (error) {
+    return {
+      ok: false,
+      state: error?.code === "ENOENT" ? "absent" : "unreadable",
+      inspectedBytes: 0,
+    };
+  }
+  if (before.isSymbolicLink()) {
+    return { ok: false, state: "symlink", inspectedBytes: 0 };
+  }
+  if (!before.isFile()) {
+    return { ok: false, state: "not-regular", inspectedBytes: 0 };
+  }
+  if (before.size > maximumBytes) {
+    return { ok: false, state: "oversized", inspectedBytes: 0 };
+  }
+
+  let containmentRoot = null;
+  let canonicalBefore = null;
+  if (canonicalRoot !== null) {
+    let afterResolution;
+    try {
+      // Do not resolve this again: a concurrently replaced root must not move
+      // the caller's already-canonical boundary.
+      containmentRoot = path.resolve(canonicalRoot);
+      canonicalBefore = fs.realpathSync(filePath);
+      afterResolution = fs.lstatSync(filePath);
+    } catch {
+      return { ok: false, state: "path-changed", inspectedBytes: 0 };
+    }
+    if (!isWithin(containmentRoot, canonicalBefore)) {
+      return { ok: false, state: "outside-root", inspectedBytes: 0 };
+    }
+    if (!sameSnapshot(before, afterResolution)) {
+      return { ok: false, state: "path-changed", inspectedBytes: 0 };
+    }
+  }
+
+  let descriptor;
+  let inspectedBytes = 0;
+  try {
+    const noFollow = fs.constants.O_NOFOLLOW ?? 0;
+    const nonBlock = fs.constants.O_NONBLOCK ?? 0;
+    descriptor = fs.openSync(
+      filePath,
+      fs.constants.O_RDONLY | noFollow | nonBlock,
+    );
+    const opened = fs.fstatSync(descriptor);
+    if (!opened.isFile()) {
+      return { ok: false, state: "not-regular", inspectedBytes };
+    }
+    if (opened.size > maximumBytes) {
+      return { ok: false, state: "oversized", inspectedBytes };
+    }
+    if (!sameSnapshot(before, opened)) {
+      return { ok: false, state: "path-changed", inspectedBytes };
+    }
+
+    let afterOpen;
+    let canonicalAfterOpen = null;
+    try {
+      afterOpen = fs.lstatSync(filePath);
+      if (containmentRoot !== null) {
+        canonicalAfterOpen = fs.realpathSync(filePath);
+      }
+    } catch {
+      return { ok: false, state: "changed-during-read", inspectedBytes };
+    }
+    if (
+      afterOpen.isSymbolicLink()
+      || !afterOpen.isFile()
+      || !sameSnapshot(opened, afterOpen)
+      || (
+        containmentRoot !== null
+        && (
+          !isWithin(containmentRoot, canonicalAfterOpen)
+          || canonicalAfterOpen !== canonicalBefore
+        )
+      )
+    ) {
+      return { ok: false, state: "changed-during-read", inspectedBytes };
+    }
+
+    const bytes = Buffer.alloc(opened.size);
+    while (inspectedBytes < bytes.length) {
+      const count = fs.readSync(
+        descriptor,
+        bytes,
+        inspectedBytes,
+        bytes.length - inspectedBytes,
+        inspectedBytes,
+      );
+      if (count === 0) break;
+      inspectedBytes += count;
+    }
+
+    let afterRead;
+    let pathAfterRead;
+    let canonicalAfterRead = null;
+    try {
+      afterRead = fs.fstatSync(descriptor);
+      pathAfterRead = fs.lstatSync(filePath);
+      if (containmentRoot !== null) {
+        canonicalAfterRead = fs.realpathSync(filePath);
+      }
+    } catch {
+      return { ok: false, state: "changed-during-read", inspectedBytes };
+    }
+    if (
+      inspectedBytes !== opened.size
+      || pathAfterRead.isSymbolicLink()
+      || !pathAfterRead.isFile()
+      || !sameSnapshot(opened, afterRead)
+      || !sameSnapshot(opened, pathAfterRead)
+      || (
+        containmentRoot !== null
+        && (
+          !isWithin(containmentRoot, canonicalAfterRead)
+          || canonicalAfterRead !== canonicalBefore
+        )
+      )
+    ) {
+      return { ok: false, state: "changed-during-read", inspectedBytes };
+    }
+    return {
+      ok: true,
+      bytes: bytes.subarray(0, inspectedBytes),
+      inspectedBytes,
+    };
+  } catch {
+    return { ok: false, state: "unreadable", inspectedBytes };
+  } finally {
+    if (descriptor !== undefined) {
+      try {
+        fs.closeSync(descriptor);
+      } catch {
+        // The read result already carries the narrow observation available.
+      }
+    }
+  }
+}
+
+/**
+ * Walk the project with bounded streaming directory reads.
+ *
+ * Entries are sorted with JavaScript code-unit order, independent of locale.
+ * A conservative truncation marker is set when the entry bound is reached.
+ */
+export function collectFiles(
+  root,
+  {
+    maxFiles = DEFAULT_MAX_FILES,
+    maxEntries = DEFAULT_MAX_ENTRIES,
+  } = {},
+) {
+  if (
+    !Number.isInteger(maxFiles)
+    || maxFiles < 1
+    || maxFiles > HARD_MAX_FILES
+  ) {
+    throw new Error(`maxFiles must be a whole number from 1 to ${HARD_MAX_FILES}`);
+  }
+  if (
+    !Number.isInteger(maxEntries)
+    || maxEntries < 1
+    || maxEntries > HARD_MAX_ENTRIES
+  ) {
+    throw new Error(`maxEntries must be a whole number from 1 to ${HARD_MAX_ENTRIES}`);
+  }
+  let canonicalRoot;
+  try {
+    canonicalRoot = fs.realpathSync(root);
+  } catch {
+    throw new Error(`${root} is not a directory this tool can read`);
+  }
   const files = [];
   let truncated = false;
+  let truncatedEntries = false;
+  let entriesVisited = 0;
   let skippedLarge = 0;
+  let skippedDepth = 0;
+  let skippedExcludedDirectories = 0;
+  let skippedNonTextFiles = 0;
+  let unreadableDirectories = 0;
+  let unreadableFiles = 0;
+  let skippedSpecial = 0;
+  let skippedSymlinks = 0;
+  let changedPaths = 0;
 
   const walk = (directory, depth) => {
-    if (truncated || depth > MAX_DEPTH) return;
-    let entries;
+    if (truncated || truncatedEntries) return;
+    let canonicalBefore;
+    let before;
     try {
-      entries = fs.readdirSync(directory, { withFileTypes: true });
+      canonicalBefore = fs.realpathSync(directory);
+      before = fs.lstatSync(directory);
     } catch {
-      return; // unreadable directory: reported as nothing seen, never as fault
+      unreadableDirectories += 1;
+      return;
     }
-    entries.sort((a, b) => a.name.localeCompare(b.name));
+    if (!isWithin(canonicalRoot, canonicalBefore) || !before.isDirectory()) {
+      changedPaths += 1;
+      return;
+    }
+
+    let handle;
+    const entries = [];
+    try {
+      handle = fs.opendirSync(directory);
+      while (true) {
+        if (entriesVisited >= maxEntries) {
+          truncatedEntries = true;
+          break;
+        }
+        const entry = handle.readSync();
+        if (entry === null) break;
+        entriesVisited += 1;
+        entries.push(entry);
+      }
+    } catch {
+      unreadableDirectories += 1;
+      return;
+    } finally {
+      if (handle) {
+        try {
+          handle.closeSync();
+        } catch {
+          // The directory is already treated as an observation, not a lock.
+        }
+      }
+    }
+
+    let after;
+    let canonicalAfter;
+    try {
+      after = fs.lstatSync(directory);
+      canonicalAfter = fs.realpathSync(directory);
+    } catch {
+      changedPaths += 1;
+      return;
+    }
+    if (
+      !after.isDirectory()
+      || !sameFile(before, after)
+      || canonicalAfter !== canonicalBefore
+      || !isWithin(canonicalRoot, canonicalAfter)
+    ) {
+      changedPaths += 1;
+      return;
+    }
+
+    entries.sort((left, right) => (
+      left.name < right.name ? -1 : left.name > right.name ? 1 : 0
+    ));
     for (const entry of entries) {
       if (truncated) return;
-      if (entry.isSymbolicLink()) continue;
+      if (entry.isSymbolicLink()) {
+        skippedSymlinks += 1;
+        continue;
+      }
       const full = path.join(directory, entry.name);
       if (entry.isDirectory()) {
-        if (SKIP_DIRECTORIES.has(entry.name)) continue;
+        if (SKIP_DIRECTORIES.has(entry.name)) {
+          skippedExcludedDirectories += 1;
+          continue;
+        }
+        if (depth >= MAX_DEPTH) {
+          skippedDepth += 1;
+          continue;
+        }
         walk(full, depth + 1);
         continue;
       }
-      if (!entry.isFile() || !isTextFile(entry.name)) continue;
+      if (!entry.isFile()) {
+        skippedSpecial += 1;
+        continue;
+      }
+      if (!isTextFile(entry.name)) {
+        skippedNonTextFiles += 1;
+        continue;
+      }
       let stat;
       try {
-        stat = fs.statSync(full);
+        stat = fs.lstatSync(full);
       } catch {
+        unreadableFiles += 1;
+        continue;
+      }
+      if (!stat.isFile()) {
+        skippedSpecial += 1;
         continue;
       }
       if (stat.size > MAX_FILE_BYTES) {
@@ -293,25 +637,26 @@ export function collectFiles(root, { maxFiles = DEFAULT_MAX_FILES } = {}) {
         truncated = true;
         return;
       }
-      files.push(path.relative(root, full));
+      files.push(path.relative(canonicalRoot, full));
     }
   };
 
-  walk(root, 0);
-  return { files, truncated, skippedLarge };
-}
-
-function lineOf(text, index) {
-  let line = 1;
-  for (let at = 0; at < index; at += 1) if (text[at] === "\n") line += 1;
-  return line;
-}
-
-/** The whole line a match sits on, so context can rule the match out. */
-function lineAt(text, index) {
-  const start = text.lastIndexOf("\n", index) + 1;
-  const end = text.indexOf("\n", index);
-  return text.slice(start, end === -1 ? text.length : end);
+  walk(canonicalRoot, 0);
+  return {
+    files,
+    truncated,
+    truncatedEntries,
+    entriesVisited,
+    skippedLarge,
+    skippedDepth,
+    skippedExcludedDirectories,
+    skippedNonTextFiles,
+    unreadableDirectories,
+    unreadableFiles,
+    skippedSpecial,
+    skippedSymlinks,
+    changedPaths,
+  };
 }
 
 // This file states every pattern it looks for, and its test file exercises
@@ -321,36 +666,157 @@ function lineAt(text, index) {
 // files are therefore never part of what it reads, by resolved path — not by
 // name, so a project's own `evidence.mjs` is still read normally. The
 // exclusion is named in the report rather than left silent.
-export const SELF_PATH = fileURLToPath(import.meta.url);
-export const SELF_PATHS = [SELF_PATH, SELF_PATH.replace(/\.mjs$/, ".test.mjs")];
+export const SELF_PATH = fs.realpathSync(fileURLToPath(import.meta.url));
+const INTERNAL_SELF_PATHS = Object.freeze([
+  SELF_PATH,
+  SELF_PATH.replace(/\.mjs$/, ".test.mjs"),
+].filter((candidate) => fs.existsSync(candidate)).map((candidate) => fs.realpathSync(candidate)));
+export const SELF_PATHS = Object.freeze([...INTERNAL_SELF_PATHS]);
+export const TOOL_SOURCE_SHA256 = createHash("sha256")
+  .update(fs.readFileSync(SELF_PATH))
+  .digest("hex");
+
+function lineCursor(text) {
+  let number = 1;
+  let start = 0;
+  let end = text.indexOf("\n");
+  return (index) => {
+    while (end !== -1 && index > end) {
+      number += 1;
+      start = end + 1;
+      end = text.indexOf("\n", start);
+    }
+    return number;
+  };
+}
 
 /** Run every text signal over the collected files. Read-only throughout. */
-export function scanText(root, files, { selfPaths = SELF_PATHS } = {}) {
-  const hits = new Map(TEXT_SIGNALS.map((signal) => [signal.id, []]));
-  const counts = new Map(TEXT_SIGNALS.map((signal) => [signal.id, 0]));
-  const seen = new Map(TEXT_SIGNALS.map((signal) => [signal.id, new Set()]));
-  const projectExcuses = new Map();
+export function scanText(
+  root,
+  files,
+  {
+    selfPaths = INTERNAL_SELF_PATHS,
+    maxBytes = DEFAULT_MAX_BYTES,
+  } = {},
+) {
+  if (!Array.isArray(files)) {
+    throw new Error("files must be an array");
+  }
+  if (files.length > HARD_MAX_FILES) {
+    throw new Error(`files may contain at most ${HARD_MAX_FILES} entries`);
+  }
+  for (let at = 0; at < files.length; at += 1) {
+    if (typeof files[at] !== "string") {
+      throw new Error("every files entry must be a string path");
+    }
+  }
+  if (
+    !Number.isInteger(maxBytes)
+    || maxBytes < 1
+    || maxBytes > HARD_MAX_BYTES
+  ) {
+    throw new Error(`maxBytes must be a whole number from 1 to ${HARD_MAX_BYTES}`);
+  }
+  const candidateCount = files.length;
+  let canonicalRoot;
+  try {
+    canonicalRoot = fs.realpathSync(root);
+  } catch {
+    throw new Error(`${root} is not a directory this tool can read`);
+  }
+  const hits = new Map(SIGNALS.map((signal) => [signal.id, []]));
+  const counts = new Map(SIGNALS.map((signal) => [signal.id, 0]));
+  const seen = new Map(SIGNALS.map((signal) => [signal.id, new Set()]));
+  const truncatedSignals = new Set();
   let selfSkipped = 0;
-  const mine = new Set((selfPaths ?? []).map((candidate) => path.resolve(candidate)));
+  let filesRead = 0;
+  let bytesRead = 0;
+  let textBytes = 0;
+  let skippedBinary = 0;
+  let skippedUnreadable = 0;
+  let skippedChangedPaths = 0;
+  let truncatedBytes = false;
+  const mine = new Set(
+    (selfPaths ?? []).map((candidate) => {
+      try {
+        return fs.realpathSync(candidate);
+      } catch {
+        return path.resolve(candidate);
+      }
+    }),
+  );
 
-  for (const relative of files) {
-    const full = path.join(root, relative);
-    if (mine.has(path.resolve(full))) {
+  // Index the bounded array directly. A caller-supplied iterator can be
+  // infinite even when the array itself is short.
+  for (let candidateIndex = 0; candidateIndex < candidateCount; candidateIndex += 1) {
+    const relative = files[candidateIndex];
+    if (bytesRead >= maxBytes) {
+      truncatedBytes = true;
+      break;
+    }
+    const full = path.resolve(canonicalRoot, relative);
+    let canonical;
+    try {
+      canonical = fs.realpathSync(full);
+    } catch {
+      skippedUnreadable += 1;
+      continue;
+    }
+    if (
+      !isWithin(canonicalRoot, canonical)
+    ) {
+      skippedChangedPaths += 1;
+      continue;
+    }
+    if (mine.has(canonical)) {
       selfSkipped += 1;
       continue;
     }
-    let buffer;
-    try {
-      buffer = fs.readFileSync(full);
-    } catch {
+    const remaining = maxBytes - bytesRead;
+    const read = readBoundedRegularFile(
+      full,
+      Math.min(MAX_FILE_BYTES, remaining),
+      { canonicalRoot },
+    );
+    bytesRead += read.inspectedBytes ?? 0;
+    if (!read.ok) {
+      if (read.state === "oversized") {
+        truncatedBytes = true;
+        break;
+      }
+      if (
+        read.state === "outside-root"
+        || read.state === "path-changed"
+        || read.state === "changed-during-read"
+        || read.state === "symlink"
+        || read.state === "not-regular"
+      ) {
+        skippedChangedPaths += 1;
+      } else {
+        skippedUnreadable += 1;
+      }
       continue;
     }
-    if (looksBinary(buffer)) continue;
-    const text = buffer.toString("utf8");
+    const buffer = read.bytes;
+    if (looksBinary(buffer)) {
+      skippedBinary += 1;
+      continue;
+    }
+    let text;
+    try {
+      text = new TextDecoder("utf-8", { fatal: true }).decode(buffer);
+    } catch {
+      skippedBinary += 1;
+      continue;
+    }
+    filesRead += 1;
+    textBytes += buffer.length;
 
-    for (const signal of TEXT_SIGNALS) {
+    for (const signal of SIGNALS) {
+      if (truncatedSignals.has(signal.id)) continue;
       const pattern = new RegExp(signal.pattern.source, `${signal.pattern.flags.replace("g", "")}g`);
       const already = seen.get(signal.id);
+      const locate = lineCursor(text);
       let match;
       while ((match = pattern.exec(text)) !== null) {
         if (match[0].length === 0) {
@@ -359,115 +825,349 @@ export function scanText(root, files, { selfPaths = SELF_PATHS } = {}) {
         }
         // A signal may refuse its own match on context. Mention is not use.
         if (signal.unlessMatchIs?.some((shape) => shape.test(match[0]))) continue;
-        if (signal.unlessLineMatches?.test(lineAt(text, match.index))) continue;
+        const line = locate(match.index);
         // Several alternations can strike the same line; that is one place,
         // not several, and counting it twice would inflate a finding.
-        const at = `${relative}:${lineOf(text, match.index)}`;
+        const at = `${relative}\0${line}`;
         if (!already.has(at)) {
+          if (counts.get(signal.id) >= MAX_SIGNAL_PLACES) {
+            truncatedSignals.add(signal.id);
+            break;
+          }
           already.add(at);
           counts.set(signal.id, counts.get(signal.id) + 1);
           const list = hits.get(signal.id);
           if (list.length < MAX_MATCHES_PER_SIGNAL) {
-            const [file, line] = [at.slice(0, at.lastIndexOf(":")), Number(at.slice(at.lastIndexOf(":") + 1))];
-            list.push({ file, line });
+            list.push({ file: relative, line });
           }
         }
-        // One file need not be read for a hundred hits of the same signal.
-        if (counts.get(signal.id) > 500) break;
-      }
-    }
-
-    for (const signal of TEXT_SIGNALS) {
-      if (!signal.unlessProjectMatches) continue;
-      if (projectExcuses.get(signal.id)) continue;
-      if (signal.unlessProjectMatches.test(text)) projectExcuses.set(signal.id, true);
-    }
-  }
-
-  return { hits, counts, projectExcuses, selfSkipped };
-}
-
-function git(root, args) {
-  try {
-    return {
-      ok: true,
-      out: execFileSync("git", ["-C", root, ...args], {
-        encoding: "utf8",
-        timeout: 15000,
-        maxBuffer: 8 * 1024 * 1024,
-        stdio: ["ignore", "pipe", "ignore"],
-      }).trim(),
-    };
-  } catch (error) {
-    return { ok: false, out: "", error };
-  }
-}
-
-/**
- * Ask git whether the authoritative copy is anywhere but this disk.
- *
- * This is the only check here that can find a project's own words existing in
- * exactly one place. It reports; it does not fix, and it never copies anything.
- */
-export function scanHome(root) {
-  const inside = git(root, ["rev-parse", "--is-inside-work-tree"]);
-  if (!inside.ok || inside.out !== "true") {
-    return { versioned: false };
-  }
-
-  const remotes = git(root, ["remote"]).out.split("\n").filter(Boolean);
-  const head = git(root, ["rev-parse", "HEAD"]);
-  const branch = git(root, ["rev-parse", "--abbrev-ref", "HEAD"]).out;
-
-  let headPublished = null;
-  if (head.ok && remotes.length > 0) {
-    const containing = git(root, ["branch", "-r", "--contains", "HEAD"]);
-    headPublished = containing.ok && containing.out !== "";
-  }
-
-  const porcelain = git(root, ["status", "--porcelain=v1", "--untracked-files=all"]);
-  const uncommitted = [];
-  const untracked = [];
-  if (porcelain.ok) {
-    for (const line of porcelain.out.split("\n")) {
-      if (!line.trim()) continue;
-      const code = line.slice(0, 2);
-      const name = line.slice(3).replace(/^"|"$/g, "");
-      if (code === "??") {
-        if (UNTRACKED_NOISE.some((noise) => noise.test(name))) continue;
-        if (name.split("/").some((part) => SKIP_DIRECTORIES.has(part))) continue;
-        untracked.push(name);
-      } else {
-        uncommitted.push(name);
       }
     }
   }
 
   return {
-    versioned: true,
-    branch,
-    remotes,
-    headPublished,
-    uncommitted,
-    untracked,
+    hits,
+    counts,
+    selfSkipped,
+    filesRead,
+    bytesRead,
+    textBytes,
+    skippedBinary,
+    skippedUnreadable,
+    skippedChangedPaths,
+    truncatedBytes,
+    truncatedSignals: [...truncatedSignals].sort(),
   };
 }
 
-/** Read a declaration if the home made one. Never infer one. */
+/**
+ * Observe only whether a `.git` marker exists at or above the project.
+ *
+ * This deliberately does not run Git. Even a read-looking `git status` can
+ * execute a repository-configured content filter. A marker is not proof that
+ * history is readable, sound, remote, published, or owned by anyone.
+ */
+export function scanHome(root) {
+  let requestedRoot;
+  try {
+    requestedRoot = fs.realpathSync(root);
+  } catch {
+    return {
+      markerState: "root-unreadable",
+      markerRoot: null,
+      pathFromMarkerRoot: null,
+    };
+  }
+  let cursor = requestedRoot;
+  while (true) {
+    const marker = path.join(cursor, ".git");
+    try {
+      const stat = fs.lstatSync(marker);
+      if (stat.isDirectory() || stat.isFile()) {
+        return {
+          markerState: stat.isDirectory() ? "directory" : "file",
+          markerRoot: cursor,
+          pathFromMarkerRoot: path.relative(cursor, requestedRoot) || ".",
+        };
+      }
+      if (stat.isSymbolicLink()) {
+        return {
+          markerState: "symbolic-link",
+          markerRoot: cursor,
+          pathFromMarkerRoot: path.relative(cursor, requestedRoot) || ".",
+        };
+      }
+      return {
+        markerState: "special",
+        markerRoot: cursor,
+        pathFromMarkerRoot: path.relative(cursor, requestedRoot) || ".",
+      };
+    } catch (error) {
+      if (error?.code !== "ENOENT" && error?.code !== "ENOTDIR") {
+        return {
+          markerState: "unreadable",
+          markerRoot: cursor,
+          pathFromMarkerRoot: path.relative(cursor, requestedRoot) || ".",
+        };
+      }
+    }
+    const parent = path.dirname(cursor);
+    if (parent === cursor) break;
+    cursor = parent;
+  }
+  return {
+    markerState: "absent",
+    markerRoot: null,
+    pathFromMarkerRoot: null,
+  };
+}
+
+const ADOPTION_ID_RE = /^[a-z0-9][a-z0-9._-]*\/[A-Za-z0-9][A-Za-z0-9._-]*$/;
+
+function validAdoptionIds(values) {
+  return (
+    values.length <= 64
+    && new Set(values).size === values.length
+    && values.every((value) => ADOPTION_ID_RE.test(value))
+  );
+}
+
+function valueWithoutComment(raw) {
+  let quote = null;
+  let escaped = false;
+  for (let at = 0; at < raw.length; at += 1) {
+    const character = raw[at];
+    if (quote === "\"") {
+      if (escaped) {
+        escaped = false;
+      } else if (character === "\\") {
+        escaped = true;
+      } else if (character === "\"") {
+        quote = null;
+      }
+      continue;
+    }
+    if (quote === "'") {
+      if (character === "'" && raw[at + 1] === "'") {
+        at += 1;
+      } else if (character === "'") {
+        quote = null;
+      }
+      continue;
+    }
+    if (character === "\"" || character === "'") {
+      quote = character;
+      continue;
+    }
+    if (
+      character === "#"
+      && (at === 0 || /\s/.test(raw[at - 1]))
+    ) {
+      return raw.slice(0, at).trimEnd();
+    }
+  }
+  return raw.trimEnd();
+}
+
+function supportedCardValue(raw) {
+  const value = valueWithoutComment(raw).trim();
+  if (value === "") return true;
+  if (value.startsWith("[")) {
+    return /^\[\s*(?:[A-Za-z0-9][A-Za-z0-9._/-]*(?:\s*,\s*[A-Za-z0-9][A-Za-z0-9._/-]*)*)?\s*\]$/.test(value);
+  }
+  if (value.startsWith("\"")) {
+    try {
+      return typeof JSON.parse(value) === "string";
+    } catch {
+      return false;
+    }
+  }
+  if (value.startsWith("'")) {
+    return /^'(?:[^']|'')*'$/.test(value);
+  }
+  return (
+    !/^[\]\{\},#&*!|>%@`"']/.test(value)
+    && !/^(?:-|\?|:)(?:\s|$)/.test(value)
+    && !/[\[\]\{\}]/.test(value)
+    && !/:\s/.test(value)
+    && !/:$/.test(value)
+  );
+}
+
+/**
+ * Validate the whole card against the small syntax Kingdom cards use:
+ * top-level keys, plain or quoted scalar values, simple flow lists, comments,
+ * and the canonical two-space adoption block. This is deliberately narrower
+ * than YAML; anything outside it stays unknown.
+ */
+function usesSupportedCardSyntax(lines) {
+  const keys = new Set();
+  let adoptionBlock = false;
+  const adoptionItem = /^  - ([^\s#]+)(?: +(?:#.*)?)?$/;
+  for (const line of lines) {
+    if (/^\s*(?:#.*)?$/.test(line)) continue;
+    if (/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/.test(line)) {
+      return false;
+    }
+    if (/^\s/.test(line)) {
+      if (
+        adoptionBlock
+        && adoptionItem.test(line)
+        && ADOPTION_ID_RE.test(adoptionItem.exec(line)[1])
+      ) {
+        continue;
+      }
+      return false;
+    }
+    adoptionBlock = false;
+    // YAML requires separation whitespace (or end-of-line) after a mapping
+    // colon. Without it, `key:value` is a plain scalar rather than a mapping.
+    const mapping =
+      /^([A-Za-z_][A-Za-z0-9_-]*) *:(?: +(.*))?$/.exec(line);
+    if (!mapping) return false;
+    const [, key, capturedValue] = mapping;
+    const rawValue = capturedValue ?? "";
+    if (keys.has(key) || !supportedCardValue(rawValue)) return false;
+    keys.add(key);
+    if (key === "adopts" && valueWithoutComment(rawValue).trim() === "") {
+      adoptionBlock = true;
+    }
+  }
+  return true;
+}
+
+function declarationObservation(present, state, adopts, inspectedBytes = 0) {
+  return {
+    present,
+    state,
+    adopts,
+    inspectedBytes,
+    maxBytes: MAX_DECLARATION_BYTES,
+  };
+}
+
+/**
+ * Read the small, canonical `adopts` subset used by Kingdom cards.
+ *
+ * Supported forms are an unquoted flow list or an indented block list. Any
+ * other shape is reported as unparsed; uncertainty never becomes "no
+ * adoption". The bounded no-follow reader rejects links and special files.
+ */
 export function readDeclaration(root) {
-  const cardPath = path.join(root, "kingdom.yaml");
-  if (!fs.existsSync(cardPath)) return { present: false, adopts: [] };
+  let canonicalRoot;
+  try {
+    canonicalRoot = fs.realpathSync(root);
+  } catch {
+    return declarationObservation(false, "root-unreadable", null);
+  }
+  const cardPath = path.join(canonicalRoot, "kingdom.yaml");
+  const read = readBoundedRegularFile(
+    cardPath,
+    MAX_DECLARATION_BYTES,
+    { canonicalRoot },
+  );
+  if (!read.ok) {
+    if (read.state === "absent") {
+      return declarationObservation(
+        false,
+        "absent",
+        null,
+        read.inspectedBytes ?? 0,
+      );
+    }
+    return declarationObservation(
+      true,
+      read.state,
+      null,
+      read.inspectedBytes ?? 0,
+    );
+  }
+
   let text;
   try {
-    text = fs.readFileSync(cardPath, "utf8");
+    text = new TextDecoder("utf-8", { fatal: true }).decode(read.bytes);
   } catch {
-    return { present: true, adopts: [], unreadable: true };
+    return declarationObservation(
+      true,
+      "invalid-utf8",
+      null,
+      read.inspectedBytes,
+    );
   }
-  const line = text.split("\n").find((candidate) => /^adopts\s*:/.test(candidate));
-  if (!line) return { present: true, adopts: [] };
-  const inside = line.replace(/^adopts\s*:/, "").trim().replace(/^\[|\]$/g, "");
-  const adopts = inside.split(",").map((entry) => entry.trim()).filter(Boolean);
-  return { present: true, adopts };
+
+  const lines = text.replace(/\r\n?/g, "\n").split("\n");
+  if (
+    text.includes("\t")
+    || lines.some((line) => /^(?:---|\.\.\.)\s*(?:#.*)?$/.test(line))
+    || !usesSupportedCardSyntax(lines)
+  ) {
+    return declarationObservation(
+      true,
+      "unparsed",
+      null,
+      read.inspectedBytes,
+    );
+  }
+  const declarations = lines
+    .map((line, index) => ({ line, index }))
+    .filter(({ line }) => /^adopts *:(?: |$)/.test(line));
+  if (declarations.length === 0) {
+    return declarationObservation(
+      true,
+      "not-declared",
+      null,
+      read.inspectedBytes,
+    );
+  }
+  if (declarations.length !== 1) {
+    return declarationObservation(
+      true,
+      "unparsed",
+      null,
+      read.inspectedBytes,
+    );
+  }
+
+  const { line, index } = declarations[0];
+  const flow =
+    /^adopts *: +\[([^\]]*)\](?: +(?:#.*)?)?$/.exec(line);
+  if (flow) {
+    const adopts = flow[1].trim() === ""
+      ? []
+      : flow[1].split(",").map((entry) => entry.trim());
+    return validAdoptionIds(adopts)
+      ? declarationObservation(true, "parsed", adopts, read.inspectedBytes)
+      : declarationObservation(true, "unparsed", null, read.inspectedBytes);
+  }
+
+  if (!/^adopts *:(?: +#.*)? *$/.test(line)) {
+    return declarationObservation(
+      true,
+      "unparsed",
+      null,
+      read.inspectedBytes,
+    );
+  }
+  const adopts = [];
+  for (let at = index + 1; at < lines.length; at += 1) {
+    const candidate = lines[at];
+    if (/^\s*(?:#.*)?$/.test(candidate)) continue;
+    if (/^\S/.test(candidate)) break;
+    // `#` begins a YAML comment only after separation whitespace.
+    const item = /^  - ([^\s#]+)(?: +(?:#.*)?)?$/.exec(candidate);
+    if (!item) {
+      return declarationObservation(
+        true,
+        "unparsed",
+        null,
+        read.inspectedBytes,
+      );
+    }
+    adopts.push(item[1]);
+  }
+  return adopts.length > 0 && validAdoptionIds(adopts)
+    ? declarationObservation(true, "parsed", adopts, read.inspectedBytes)
+    : declarationObservation(true, "unparsed", null, read.inspectedBytes);
 }
 
 const COMMITMENTS = [
@@ -487,121 +1187,177 @@ const CANNOT_TELL = {
   F3: "whether a recorded consent was freely given, understood, or still current",
   F4: "whether a prediction was really written before the act, or a stated cause is the real one",
   F5: "whether a reply channel is answered, or a correction ever reaches the people who acted on the error",
-  F6: "whether a remote copy is reachable, lawful, lasting, or under the same hand as this one",
+  F6: "whether the marker names a valid repository, whether the project works without a bridge, who owns any bridge, what authority it has, or whether a being can leave honestly",
   F7: "whether a brake is honoured under load, or survives the process it is meant to stop",
 };
 
-export function look(root, { maxFiles = DEFAULT_MAX_FILES } = {}) {
-  const resolved = path.resolve(root);
-  if (!fs.existsSync(resolved) || !fs.statSync(resolved).isDirectory()) {
+function describeHome(home) {
+  const descriptions = {
+    directory:
+      "a regular .git marker exists at or above the selected project; Git was not run",
+    file:
+      "a regular .git marker file exists at or above the selected project; Git was not run",
+    absent:
+      "no regular .git marker was observed at or above the selected project",
+    "symbolic-link":
+      "a .git symbolic link was observed and not followed",
+    special:
+      "a special .git filesystem entry was observed and not opened",
+    unreadable:
+      "a .git marker could not be read",
+    "root-unreadable":
+      "the requested root could not be resolved for a home observation",
+  };
+  const observations = [
+    descriptions[home.markerState] ?? "a local home state was observed",
+  ];
+  if (
+    (home.markerState === "directory" || home.markerState === "file")
+    && home.pathFromMarkerRoot !== "."
+  ) {
+    observations.push(
+      "the selected project is inside a parent that carries the observed .git marker",
+    );
+  }
+  return observations;
+}
+
+export function look(
+  root,
+  {
+    maxFiles = DEFAULT_MAX_FILES,
+    maxEntries = DEFAULT_MAX_ENTRIES,
+    maxBytes = DEFAULT_MAX_BYTES,
+  } = {},
+) {
+  if (
+    !Number.isInteger(maxFiles)
+    || maxFiles < 1
+    || maxFiles > HARD_MAX_FILES
+  ) {
+    throw new Error(`maxFiles must be a whole number from 1 to ${HARD_MAX_FILES}`);
+  }
+  if (
+    !Number.isInteger(maxEntries)
+    || maxEntries < 1
+    || maxEntries > HARD_MAX_ENTRIES
+  ) {
+    throw new Error(`maxEntries must be a whole number from 1 to ${HARD_MAX_ENTRIES}`);
+  }
+  if (
+    !Number.isInteger(maxBytes)
+    || maxBytes < 1
+    || maxBytes > HARD_MAX_BYTES
+  ) {
+    throw new Error(`maxBytes must be a whole number from 1 to ${HARD_MAX_BYTES}`);
+  }
+
+  const selected = path.resolve(root);
+  let resolved;
+  try {
+    resolved = fs.realpathSync(selected);
+  } catch {
+    throw new Error(`${root} is not a directory this tool can read`);
+  }
+  let rootStat;
+  try {
+    rootStat = fs.statSync(resolved);
+  } catch {
+    throw new Error(`${root} is not a directory this tool can read`);
+  }
+  if (!rootStat.isDirectory()) {
     throw new Error(`${root} is not a directory this tool can read`);
   }
 
-  const walked = collectFiles(resolved, { maxFiles });
-  const scanned = scanText(resolved, walked.files);
+  const walked = collectFiles(resolved, { maxFiles, maxEntries });
+  const scanned = scanText(resolved, walked.files, { maxBytes });
   const home = scanHome(resolved);
   const declaration = readDeclaration(resolved);
 
   const findings = [];
   for (const [commitment, title] of COMMITMENTS) {
-    const evidence = [];
-    const counter = [];
+    const cues = [];
+    const cautionCues = [];
 
-    for (const signal of TEXT_SIGNALS) {
+    for (const signal of SIGNALS) {
       if (signal.commitment !== commitment) continue;
       const count = scanned.counts.get(signal.id);
       if (count === 0) continue;
       if (signal.minimumMatches && count < signal.minimumMatches) continue;
-      if (signal.unlessProjectMatches && scanned.projectExcuses.get(signal.id)) continue;
       const entry = {
         id: signal.id,
         means: signal.means,
         count,
         where: scanned.hits.get(signal.id),
       };
-      (signal.kind === "counter" ? counter : evidence).push(entry);
-    }
-
-    // F6 is answered by where the project actually lives, not by its prose.
-    if (commitment === "F6") {
-      if (!home.versioned) {
-        counter.push({
-          id: "no-version-history",
-          means: "no git history here: this copy is the only copy, and nothing records how it changed",
-          count: 1,
-          where: [],
-        });
-      } else {
-        if (home.remotes.length === 0) {
-          counter.push({
-            id: "no-second-soil",
-            means: "versioned, but with no remote: if this disk goes, the history goes with it",
-            count: 1,
-            where: [],
-          });
-        } else {
-          evidence.push({
-            id: "has-a-second-soil",
-            means: `history can leave this disk (${home.remotes.join(", ")})`,
-            count: home.remotes.length,
-            where: [],
-          });
-        }
-        if (home.headPublished === false) {
-          counter.push({
-            id: "head-not-published",
-            means: `commits on ${home.branch || "HEAD"} exist nowhere but here`,
-            count: 1,
-            where: [],
-          });
-        }
-        if (home.untracked.length > 0) {
-          counter.push({
-            id: "words-outside-the-history",
-            means: "files the project never committed: they exist on this disk only",
-            count: home.untracked.length,
-            where: home.untracked.slice(0, MAX_MATCHES_PER_SIGNAL).map((file) => ({ file, line: 0 })),
-          });
-        }
-        if (home.uncommitted.length > 0) {
-          counter.push({
-            id: "changes-not-yet-kept",
-            means: "tracked files changed but not committed",
-            count: home.uncommitted.length,
-            where: home.uncommitted.slice(0, MAX_MATCHES_PER_SIGNAL).map((file) => ({ file, line: 0 })),
-          });
-        }
-      }
+      (signal.kind === "caution" ? cautionCues : cues).push(entry);
     }
 
     findings.push({
       commitment,
       title,
-      evidence,
-      counter,
+      cues,
+      cautionCues,
       cannotTell: CANNOT_TELL[commitment],
     });
   }
 
   return {
-    schema: "kingdom.evidence-report/1",
+    schema: "kingdom.evidence-report/2",
+    observedAt: new Date().toISOString(),
+    foundation: {
+      id: FOUNDATION_RELEASE.id,
+      indexedDocumentSha256: FOUNDATION_RELEASE.indexedDocumentSha256,
+      observedDocumentSha256: FOUNDATION_RELEASE.observedDocumentSha256,
+      documentDigestMatchesIndex:
+        FOUNDATION_RELEASE.documentDigestMatchesIndex,
+      indexSha256: FOUNDATION_RELEASE.indexSha256,
+    },
+    tool: {
+      id: "kingdom.foundation-evidence-reader/2",
+      source: path.basename(SELF_PATH),
+      sourceSha256: TOOL_SOURCE_SHA256,
+    },
     project: resolved,
     scanned: {
-      files: walked.files.length - scanned.selfSkipped,
-      truncated: walked.truncated,
+      files: scanned.filesRead,
+      candidates: walked.files.length,
+      entriesVisited: walked.entriesVisited,
+      bytes: scanned.textBytes,
+      inspectedBytes: scanned.bytesRead,
+      truncatedFiles: walked.truncated,
+      truncatedEntries: walked.truncatedEntries,
+      truncatedBytes: scanned.truncatedBytes,
+      truncatedSignals: scanned.truncatedSignals,
       skippedLarge: walked.skippedLarge,
+      skippedDepth: walked.skippedDepth,
+      skippedExcludedDirectories: walked.skippedExcludedDirectories,
+      skippedNonTextFiles: walked.skippedNonTextFiles,
+      unreadableDirectories: walked.unreadableDirectories,
+      unreadableFiles: walked.unreadableFiles + scanned.skippedUnreadable,
+      skippedSpecial: walked.skippedSpecial,
+      skippedSymlinks: walked.skippedSymlinks,
+      changedPaths:
+        walked.changedPaths + scanned.skippedChangedPaths,
+      skippedBinary: scanned.skippedBinary,
       selfSkipped: scanned.selfSkipped > 0,
       maxFiles,
+      maxEntries,
+      maxBytes,
+      byteBudgetScope: "cue-candidate-files",
     },
     declaration,
     home,
     findings,
-    establishes:
-      "Only that these strings and this history state are present in the files read.",
+    readerReports:
+      "that it observed these bounded cues and local marker states during a non-atomic read",
     doesNotEstablish: [
       "that the project keeps any commitment",
       "that it fails to keep one where nothing was found",
       "that a declaration is owed, earned, deserved, or withheld",
+      "that a .git marker is valid history or implies any remote copy",
+      "that a text cue is implemented, effective, or stated affirmatively",
+      "a single atomic snapshot or safety against a hostile concurrently changing filesystem",
       "any verdict about anyone who wrote this project",
     ],
   };
@@ -609,57 +1365,141 @@ export function look(root, { maxFiles = DEFAULT_MAX_FILES } = {}) {
 
 // ── Report ────────────────────────────────────────────────────────────────
 
-function bar(evidence, counter) {
-  if (evidence.length === 0 && counter.length === 0) return "nothing visible";
+function bar(cues, cautionCues) {
+  if (cues.length === 0 && cautionCues.length === 0) return "nothing visible";
   const parts = [];
-  if (evidence.length > 0) parts.push(`${evidence.length} evidence`);
-  if (counter.length > 0) parts.push(`${counter.length} to read`);
+  if (cues.length > 0) {
+    parts.push(`${cues.length} text cue${cues.length === 1 ? "" : "s"}`);
+  }
+  if (cautionCues.length > 0) {
+    parts.push(`${cautionCues.length} caution cue${cautionCues.length === 1 ? "" : "s"}`);
+  }
   return parts.join(", ");
+}
+
+function terminalSafe(value) {
+  return String(value).replace(
+    /[\u0000-\u001f\u007f-\u009f\u202a-\u202e\u2066-\u2069]/g,
+    (character) => {
+      const point = character.codePointAt(0);
+      return point <= 0xff
+        ? `\\x${point.toString(16).padStart(2, "0")}`
+        : `\\u${point.toString(16).padStart(4, "0")}`;
+    },
+  );
+}
+
+/** Return a report copy with local paths and labels removed. */
+export function redactPaths(result) {
+  const redacted = structuredClone(result);
+  redacted.project = "<redacted>";
+  if (redacted.home?.markerRoot) redacted.home.markerRoot = "<redacted>";
+  if (redacted.home?.pathFromMarkerRoot) {
+    redacted.home.pathFromMarkerRoot = "<redacted>";
+  }
+  for (const finding of redacted.findings ?? []) {
+    for (const entry of [...finding.cues, ...finding.cautionCues]) {
+      entry.where = entry.where.map((hit) => ({
+        file: "<redacted>",
+        line: 0,
+      }));
+    }
+  }
+  return redacted;
 }
 
 export function report(result, { quiet = false } = {}) {
   const lines = [];
   lines.push(`${result.project}`);
   lines.push(
-    `read ${result.scanned.files} text files${result.scanned.truncated ? ` (stopped at the ${result.scanned.maxFiles}-file bound)` : ""}` +
+    `${result.foundation.id} ${result.foundation.observedDocumentSha256.slice(0, 12)}…` +
+      `${result.foundation.documentDigestMatchesIndex ? "" : " (does not match index)"} · ` +
+      `tool ${result.tool.sourceSha256.slice(0, 12)}… · observed ${result.observedAt}`,
+  );
+  lines.push(
+    `cue scan read ${result.scanned.files} UTF-8 text files (${result.scanned.bytes} bytes)` +
+      `${result.scanned.inspectedBytes !== result.scanned.bytes ? `; inspected ${result.scanned.inspectedBytes} bounded candidate bytes` : ""}` +
+      `${result.scanned.truncatedFiles ? `; stopped at the ${result.scanned.maxFiles}-file bound` : ""}` +
+      `${result.scanned.truncatedEntries ? `; stopped at the ${result.scanned.maxEntries}-entry bound` : ""}` +
+      `${result.scanned.truncatedBytes ? `; stopped at the ${result.scanned.maxBytes}-byte bound` : ""}` +
       `${result.scanned.skippedLarge > 0 ? `, skipped ${result.scanned.skippedLarge} over ${Math.round(MAX_FILE_BYTES / 1024)} KiB` : ""}` +
       `${result.scanned.selfSkipped ? ", skipped this tool's own source and test (they state every pattern it looks for)" : ""}`,
   );
+  const blindSpots = [
+    ["deep directories", result.scanned.skippedDepth],
+    [
+      "excluded dependency, build, cache, or Git directories (contents not walked)",
+      result.scanned.skippedExcludedDirectories,
+    ],
+    [
+      "regular files outside the text-name allowlist",
+      result.scanned.skippedNonTextFiles,
+    ],
+    ["unreadable directories", result.scanned.unreadableDirectories],
+    ["unreadable files", result.scanned.unreadableFiles],
+    ["special files", result.scanned.skippedSpecial],
+    ["symbolic links", result.scanned.skippedSymlinks],
+    ["changed or escaped paths", result.scanned.changedPaths],
+    ["binary or invalid UTF-8 files", result.scanned.skippedBinary],
+  ].filter(([, count]) => count > 0);
+  if (blindSpots.length > 0) {
+    lines.push(
+      `blind spots: ${blindSpots.map(([label, count]) => `${count} ${label}`).join(", ")}`,
+    );
+  }
+  if (result.scanned.truncatedSignals.length > 0) {
+    lines.push(
+      `match bounds reached for: ${result.scanned.truncatedSignals.join(", ")}`,
+    );
+  }
+  lines.push(
+    `kingdom.yaml read ${result.declaration.inspectedBytes} bytes under its independent ` +
+      `${result.declaration.maxBytes}-byte bound`,
+  );
 
-  if (result.declaration.present) {
+  if (!result.declaration.present) {
+    lines.push("no kingdom.yaml observed — adoption and refusal are unknown");
+  } else if (result.declaration.state === "parsed") {
     lines.push(
       result.declaration.adopts.length > 0
         ? `declares: ${result.declaration.adopts.join(", ")}`
-        : "kingdom.yaml present, declares no foundation — which means unasked, not refused",
+        : "kingdom.yaml explicitly declares an empty adoption list",
     );
+  } else if (result.declaration.state === "not-declared") {
+    lines.push("no adoption declaration observed in kingdom.yaml — adoption and refusal are unknown");
   } else {
-    lines.push("no kingdom.yaml — which means unasked, not refused");
+    lines.push(
+      `kingdom.yaml adoption state is ${result.declaration.state}; no adoption or refusal is inferred`,
+    );
+  }
+  for (const observation of describeHome(result.home)) {
+    lines.push(`home: ${observation}`);
   }
   lines.push("");
 
   for (const finding of result.findings) {
-    lines.push(`${finding.commitment}  ${finding.title}  —  ${bar(finding.evidence, finding.counter)}`);
-    for (const entry of finding.evidence) {
+    lines.push(`${finding.commitment}  ${finding.title}  —  ${bar(finding.cues, finding.cautionCues)}`);
+    for (const entry of finding.cues) {
       const where = entry.where.length > 0
         ? `  (${entry.where.map((hit) => (hit.line ? `${hit.file}:${hit.line}` : hit.file)).join(", ")}${entry.count > entry.where.length ? ", …" : ""})`
         : "";
-      lines.push(`    found    ${entry.means}${quiet ? "" : where}`);
+      lines.push(`    cue      ${entry.means}${quiet ? "" : where}`);
     }
-    for (const entry of finding.counter) {
+    for (const entry of finding.cautionCues) {
       const where = entry.where.length > 0
         ? `  (${entry.where.map((hit) => (hit.line ? `${hit.file}:${hit.line}` : hit.file)).join(", ")}${entry.count > entry.where.length ? `, +${entry.count - entry.where.length} more` : ""})`
         : "";
-      lines.push(`    read     ${entry.means}${quiet ? "" : where}`);
+      lines.push(`    caution  ${entry.means}${quiet ? "" : where}`);
     }
     lines.push(`    unseen   ${finding.cannotTell}`);
     lines.push("");
   }
 
-  lines.push("This report establishes only that these strings and this history state");
-  lines.push("are present in the files read. Nothing found here says a project keeps a");
-  lines.push("commitment; nothing missing says it fails one. A declaration in");
+  lines.push("This reader reports what it observed during a bounded, non-atomic read.");
+  lines.push("Nothing found here says a project keeps a commitment; nothing missing");
+  lines.push("says it fails one. A declaration in");
   lines.push("kingdom.yaml stays a free choice made in the project's own home.");
-  return lines.join("\n");
+  return lines.map(terminalSafe).join("\n");
 }
 
 // ── CLI ───────────────────────────────────────────────────────────────────
@@ -671,10 +1511,12 @@ function main(argv) {
       [
         "evidence — what a project shows for the seven commitments",
         "",
-        "  node evidence.mjs <path> [--json] [--max-files N] [--quiet]",
+        "  node evidence.mjs <path> [--json] [--quiet] [--redact-paths]",
+        "                           [--max-files N] [--max-entries N] [--max-bytes N]",
         "",
-        "Reports evidence, counter-evidence, and what it cannot tell.",
-        "It certifies nothing, scores nothing, and writes nothing.",
+        "Reports observable cues, caution cues, and what it cannot tell.",
+        "It certifies nothing, scores nothing, and issues no project writes.",
+        "--max-bytes bounds cue-candidate content; kingdom.yaml has a separate 64 KiB bound.",
         "",
       ].join("\n"),
     );
@@ -684,18 +1526,36 @@ function main(argv) {
   let target = "";
   let json = false;
   let quiet = false;
+  let redact = false;
   let maxFiles = DEFAULT_MAX_FILES;
+  let maxEntries = DEFAULT_MAX_ENTRIES;
+  let maxBytes = DEFAULT_MAX_BYTES;
 
   for (let at = 0; at < args.length; at += 1) {
     const argument = args[at];
     if (argument === "--json") json = true;
     else if (argument === "--quiet") quiet = true;
+    else if (argument === "--redact-paths") redact = true;
     else if (argument === "--max-files") {
       const value = Number(args[at + 1]);
-      if (!Number.isInteger(value) || value < 1) {
-        throw new Error("--max-files needs a whole number of at least 1");
+      if (!Number.isInteger(value) || value < 1 || value > HARD_MAX_FILES) {
+        throw new Error(`--max-files needs a whole number from 1 to ${HARD_MAX_FILES}`);
       }
       maxFiles = value;
+      at += 1;
+    } else if (argument === "--max-entries") {
+      const value = Number(args[at + 1]);
+      if (!Number.isInteger(value) || value < 1 || value > HARD_MAX_ENTRIES) {
+        throw new Error(`--max-entries needs a whole number from 1 to ${HARD_MAX_ENTRIES}`);
+      }
+      maxEntries = value;
+      at += 1;
+    } else if (argument === "--max-bytes") {
+      const value = Number(args[at + 1]);
+      if (!Number.isInteger(value) || value < 1 || value > HARD_MAX_BYTES) {
+        throw new Error(`--max-bytes needs a whole number from 1 to ${HARD_MAX_BYTES}`);
+      }
+      maxBytes = value;
       at += 1;
     } else if (argument.startsWith("--")) {
       throw new Error(`unknown option ${argument}`);
@@ -705,15 +1565,24 @@ function main(argv) {
 
   if (target === "") throw new Error("name a project directory to read");
 
-  const result = look(target, { maxFiles });
-  process.stdout.write(json ? `${JSON.stringify(result, null, 2)}\n` : `${report(result, { quiet })}\n`);
+  const result = look(target, { maxFiles, maxEntries, maxBytes });
+  const visible = redact ? redactPaths(result) : result;
+  process.stdout.write(
+    json
+      ? `${JSON.stringify(visible, null, 2)}\n`
+      : `${report(visible, { quiet })}\n`,
+  );
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   try {
     main(process.argv);
   } catch (error) {
-    process.stderr.write(`evidence: ${error.message}\n`);
+    const redact = process.argv.slice(2).includes("--redact-paths");
+    const diagnostic = redact
+      ? "request could not be read (paths redacted)"
+      : error.message;
+    process.stderr.write(`${terminalSafe(`evidence: ${diagnostic}`)}\n`);
     process.exitCode = 1;
   }
 }
