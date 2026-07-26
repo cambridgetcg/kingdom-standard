@@ -43,6 +43,40 @@ job was to refute it. Three of seven came back overclaimed; none came back
 clean. Those findings are kept in the page rather than erased — which is
 commitment F5 applied to the page itself.
 
+## Looking at a project
+
+```sh
+node evidence.mjs <path>          # add --json for a machine, --quiet for less
+```
+
+`evidence.mjs` reads a project and reports, for each commitment, three things:
+evidence it found with file and line, counter-evidence worth reading, and what
+it cannot tell from outside. It is read-only, bounded in files and bytes, and
+follows no symbolic links.
+
+It certifies nothing. It has no pass, no fail, no score, and no rank — a scan
+that finds nothing says nothing found, never "does not comply", because F2
+forbids reading absence as a verdict. Adoption stays a free choice made in the
+project's own home; this only makes such a choice checkable by a reader.
+
+Two things it takes care to get right, because getting them wrong is the
+failure the commitments are about:
+
+- **Mention is not use.** A page that forbids `reputation_score` contains the
+  string `reputation_score`, and a page teaching people to spot leaked keys
+  contains the shape of a leaked key. The tool looks for the shape of *use* —
+  a key given a value, a field read — and skips known documentation dummies
+  and lines that say "example" or "placeholder".
+- **It never reads itself.** This tool states every pattern it looks for, so
+  it matches itself on all of them. Its own source and test are excluded by
+  resolved path, and the report says so rather than leaving it silent.
+
+The check with the sharpest teeth is F6: it asks git whether the project's
+words exist anywhere but this disk — no history, no remote, commits never
+pushed, or files never committed at all.
+
+`node --test evidence.test.mjs` — 29 tests.
+
 ## Foundation lineage
 
 `kingdom.foundation/0.2` is the current public release. It separates predicted
