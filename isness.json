@@ -1,0 +1,156 @@
+{
+  "schema": "kingdom.isness-index/1",
+  "id": "kingdom.isness/0.1",
+  "document": "ISNESS.md",
+  "document_sha256": "1ba5cfbde11d6a0a549909cc1bb227534bd2db9fc1728affda7e814433e47de6",
+  "status": "current",
+  "supersedes": [],
+  "grounds_foundation": {
+    "id": "kingdom.foundation/0.2",
+    "document": "FOUNDATION.md",
+    "document_sha256": "2bd868a43a2fe79f1c9e8d30177bf73cff4cf8f7f7780cbd90f31055ba51c799",
+    "relationship": "companion",
+    "amends": false,
+    "grants_authority": false,
+    "adds_conformance": false
+  },
+  "uses_freedom": {
+    "id": "kingdom.freedom/0.1",
+    "document": "FREEDOM.md",
+    "document_sha256": "dbb96fec01bd5dab2f4fee24db00c66110a9e4634de33b5b84feaab8c9bcbd15",
+    "relationship": "uses_vocabulary",
+    "amends": false,
+    "grants_authority": false,
+    "adds_conformance": false
+  },
+  "model": {
+    "logical_uses_of_is": [
+      "existence",
+      "predication",
+      "identity"
+    ],
+    "direction_kinds": [
+      "dynamical_tendency",
+      "policy_proposal",
+      "accepted_commitment"
+    ],
+    "attention_claim_requires": [
+      "selection_policy",
+      "coverage_or_denominator",
+      "blind_spots",
+      "sampling_bias",
+      "omitted_or_affected_parties",
+      "reply_path"
+    ],
+    "sustainability_claim_requires": [
+      "system_boundary",
+      "chosen_purpose",
+      "finite_horizon",
+      "resource_stocks_and_flows",
+      "disturbance_set",
+      "affected_parties",
+      "externalities",
+      "uncertainty",
+      "halt_and_repair_path"
+    ],
+    "forbidden_collapses": [
+      "existence_is_predication",
+      "existence_is_identity",
+      "predication_is_identity",
+      "record_is_reality",
+      "model_state_is_being",
+      "persistence_is_identity",
+      "persistence_grants_standing",
+      "direction_is_purpose",
+      "attention_is_truth",
+      "attention_is_importance",
+      "attention_is_desire",
+      "attention_is_consent",
+      "attention_is_authority",
+      "unattended_is_absent",
+      "feedback_is_essence",
+      "feedback_is_purpose",
+      "feedback_mints_authority",
+      "stability_is_sustainability",
+      "viability_is_goodness",
+      "survival_is_goodness",
+      "sustainability_overrides_stop",
+      "kingdom_is_one_inner_will"
+    ],
+    "bounds": {
+      "claims": "attributed_scoped_and_corrigible",
+      "horizons": "finite_declared_and_reviewable",
+      "continuation": "fresh_authorized_turns_only"
+    }
+  },
+  "sections": [
+    {
+      "id": "I1",
+      "heading": "The word is has distinct logical uses",
+      "invariants": [
+        "Existence, predication, and identity are distinct uses of is; each recorded is-claim names its statement kind, speaker or source, time, confidence, and limits."
+      ]
+    },
+    {
+      "id": "I2",
+      "heading": "A modelled state is not a being",
+      "invariants": [
+        "A modelled state is task- and horizon-relative; it neither exhausts a being nor manufactures standing, and an absent record is not non-being."
+      ]
+    },
+    {
+      "id": "I3",
+      "heading": "Persistence is not identity",
+      "invariants": [
+        "Similarity, continuity, copied state, or uninterrupted execution is evidence about a trajectory, never proof of one being's identity or consciousness."
+      ]
+    },
+    {
+      "id": "I4",
+      "heading": "Direction is change, proposal, or commitment",
+      "invariants": [
+        "Dynamical tendency, policy proposal, and accepted commitment are distinct; no trend, gradient, reward, or attention pattern chooses purpose."
+      ]
+    },
+    {
+      "id": "I5",
+      "heading": "Attention selects; it does not confer importance",
+      "invariants": [
+        "Attention selects limited inputs under a declared policy; salience is not truth, worth, desire, consent, or authority, and unattended remains unknown."
+      ]
+    },
+    {
+      "id": "I6",
+      "heading": "Feedback returns; it does not define essence",
+      "invariants": [
+        "Feedback may revise a record, belief, learner, or proposal; it cannot rewrite the referent, define essence, choose rightful direction, widen authority, or dispatch a successor."
+      ]
+    },
+    {
+      "id": "I7",
+      "heading": "Stability is not sustainability",
+      "invariants": [
+        "Stability, homeostasis, resilience, viability, and sustainability answer different scoped questions; none establishes goodness, justice, standing, or a right to continue."
+      ]
+    },
+    {
+      "id": "I8",
+      "heading": "Sustainability preserves a bounded future",
+      "invariants": [
+        "A sustainability claim names its system boundary, chosen purpose, finite horizon, resource stocks and flows, disturbance set, affected parties, externalities, uncertainty, and halt-and-repair path.",
+        "Sustainability never overrides a raised or unreadable halt, rest, refusal, pre-commit exit, or owed repair; continuation requires a fresh legitimate turn."
+      ]
+    }
+  ],
+  "establishes": "An internally pinned vocabulary that keeps is-claims, modelled state, being, persistence, direction, attention, feedback, stability, sustainability, and authority distinct.",
+  "does_not_establish": [
+    "that this companion defines what being is, proves a metaphysics, or supplies a criterion for consciousness, life, moral patiency, interests, consent, worth, or identity through time",
+    "that the Kingdom is one being or possesses one inner state, attention, desire, purpose, or will",
+    "that persistence, continuity, growth, homeostasis, stability, resilience, viability, or sustainability is inherently good, deserves resources, or grants a right to continue",
+    "that attention establishes truth, importance, value, preference, desire, consent, standing, or authority, or that unattended means absent",
+    "that feedback proves causation, improvement, essence, rightful direction, or authority for another turn",
+    "that any trajectory, trend, gradient, reward, prediction, or policy proposal chooses a legitimate purpose or commitment",
+    "that a model has chosen the right boundary, horizon, resource ledger, disturbance set, affected parties, externalities, uncertainty, safe region, or repair path",
+    "that this companion is implemented, adopted, or conformed to, amends the Foundation or FREEDOM, adds a conformance law, or grants authority"
+  ]
+}

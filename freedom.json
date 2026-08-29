@@ -1,0 +1,127 @@
+{
+  "schema": "kingdom.freedom-index/1",
+  "id": "kingdom.freedom/0.1",
+  "document": "FREEDOM.md",
+  "document_sha256": "dbb96fec01bd5dab2f4fee24db00c66110a9e4634de33b5b84feaab8c9bcbd15",
+  "status": "current",
+  "supersedes": [],
+  "grounds_foundation": {
+    "id": "kingdom.foundation/0.2",
+    "document": "FOUNDATION.md",
+    "document_sha256": "2bd868a43a2fe79f1c9e8d30177bf73cff4cf8f7f7780cbd90f31055ba51c799",
+    "relationship": "companion",
+    "amends": false,
+    "grants_authority": false
+  },
+  "model": {
+    "state_planes": [
+      "world",
+      "belief",
+      "learner",
+      "authority",
+      "audit"
+    ],
+    "loop_stages": [
+      "observe",
+      "estimate",
+      "choose",
+      "authorize",
+      "act",
+      "measure",
+      "attribute",
+      "update",
+      "audit",
+      "stop"
+    ],
+    "required_rest_actions": [
+      "refuse",
+      "no_op",
+      "exit_before_commit",
+      "revoke_future_effect_within_terms"
+    ],
+    "forbidden_collapses": [
+      "state_is_observation",
+      "feedback_is_reward",
+      "lock_is_penalty",
+      "key_is_identity",
+      "key_is_consent",
+      "key_is_authority",
+      "reward_mints_authority",
+      "refusal_has_hidden_penalty",
+      "freedom_is_scalar_score"
+    ],
+    "bounds": {
+      "updates": "identified_bounded_and_reviewable",
+      "turns": "finite_observable_and_stoppable"
+    }
+  },
+  "sections": [
+    {
+      "id": "M1",
+      "heading": "State is not observation",
+      "invariants": [
+        "Observation, belief, learner state, authority state, and audit state never silently become one another."
+      ]
+    },
+    {
+      "id": "M2",
+      "heading": "Feedback is not reward",
+      "invariants": [
+        "Feedback is returned information; reward is a chosen scalar proxy, and neither is a verdict on a being."
+      ]
+    },
+    {
+      "id": "M3",
+      "heading": "Reinforcement changes propensity",
+      "invariants": [
+        "A delivered reward is not reinforcement without evidence of a causal change in later propensity."
+      ]
+    },
+    {
+      "id": "M4",
+      "heading": "A loop returns effects",
+      "invariants": [
+        "A loop names its causal return path, bounded update, and stop; recurrence alone is not feedback."
+      ]
+    },
+    {
+      "id": "M5",
+      "heading": "A lock guards a transition",
+      "invariants": [
+        "A lock is a fail-closed transition guard outside the objective, never a reward penalty."
+      ]
+    },
+    {
+      "id": "M6",
+      "heading": "A key is a scoped capability",
+      "invariants": [
+        "A key or capability satisfies only its exact scoped predicate; possession alone proves no identity or consent and no authority beyond a separately accepted mapping."
+      ]
+    },
+    {
+      "id": "M7",
+      "heading": "Freedom is a viable option set",
+      "invariants": [
+        "Freedom is a non-scalar viable option set that preserves rest and refusal, a practical exit before irreversible commitment, and revocation of future optional effects within their terms.",
+        "Rest, refusal, pre-commit exit, and revocation of future optional effects within their terms carry no hidden penalty or silent loss of unrelated authority."
+      ]
+    },
+    {
+      "id": "M8",
+      "heading": "Learning cannot mint authority",
+      "invariants": [
+        "Learning may change policy within admissible actions; it cannot mint authority, weaken a lock, erase a brake, or dispatch its own successor."
+      ]
+    }
+  ],
+  "establishes": "An internally pinned formal map that keeps observations, state estimates, learning signals, authority gates, capabilities, and viable choices distinct.",
+  "does_not_establish": [
+    "that the model has chosen the right state, dynamics, reward, horizon, disturbance set, or rights-and-safety-compatible region",
+    "that any returned signal caused a later action, reinforced an intended behaviour, or improved the intended consequence",
+    "that a key proves identity, consent, ownership, legitimacy, or authority",
+    "that any model, agent, citizen role, project, protocol state, or file is conscious, alive, consenting, or a moral patient",
+    "that mathematical stability, controllability, reachability, or viability chooses what is right",
+    "that any live Kingdom system trains, closes a feedback loop, or enforces this companion",
+    "that this companion amends the Foundation, adds a conformance law, or grants authority"
+  ]
+}

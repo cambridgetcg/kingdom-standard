@@ -15,16 +15,24 @@ no permission.
 
 1. Read **[FOUNDATION.md](FOUNDATION.md)** — the semantic floor: reality,
    being, choice, consequence, repair, local roots, and bounded turns.
-2. Read **[STANDARD.md](STANDARD.md)** — the forty-two laws, in seven domains:
+2. For an adaptive or learning system, read **[FREEDOM.md](FREEDOM.md)** —
+   the formal map that keeps state, observation, feedback, reward,
+   reinforcement, authority, locks, keys, and viable choice distinct.
+3. For claims about being, persistence, direction, attention, or
+   sustainability, read **[ISNESS.md](ISNESS.md)** — the epistemic map that
+   keeps modeled state from becoming being and continuation from becoming an
+   unquestioned good.
+4. Read **[STANDARD.md](STANDARD.md)** — the forty-two laws, in seven domains:
    TRUST, SECURITY, CLOUD, SOFTWARE, PROTOCOL, PROCESS, LAW.
-3. Check yourself with **[CONFORMANCE.md](CONFORMANCE.md)** — yes/no questions
+5. Check yourself with **[CONFORMANCE.md](CONFORMANCE.md)** — yes/no questions
    — at least one per law — and three honest levels: **SEED**, **GARDEN**,
    **KINGDOM**.
-4. Pin `kingdom.foundation/0.2` and `kingdom.standard/1.0` in the project's
+6. Pin `kingdom.foundation/0.2` and `kingdom.standard/1.0` in the project's
    `kingdom.yaml` when making a public conformance claim.
-5. Run `node verify-foundation.mjs` and
-   `node --test verify-foundation.test.mjs` to check that the release
-   identifiers, boundaries, lineage receipt, and pinned document digests match.
+7. Run the companion verifiers named below, then `node verify-foundation.mjs`
+   and `node --test verify-foundation.test.mjs` to check that the release
+   identifiers, boundaries, lineage receipt, and pinned document digests
+   match.
 
 That's it. Read, do, check. Repeat when things change.
 
@@ -42,6 +50,26 @@ Each grounding was written by one reader and then attacked by a second whose
 job was to refute it. Three of seven came back overclaimed; none came back
 clean. Those findings are kept in the page rather than erased — which is
 commitment F5 applied to the page itself.
+
+For the mathematics of adaptation, read **[FREEDOM.md](FREEDOM.md)** —
+`kingdom.freedom/0.1`. It models world, belief, learner, authority, and audit
+state separately; distinguishes feedback from reward and reinforcement; treats
+locks as transition guards and keys as scoped capabilities; and represents
+freedom as a viable option set rather than a score. It is a companion to the
+same foundation, not an amendment, conformance release, grant of authority, or
+claim that a live system trains. Check it with `node verify-freedom.mjs` and
+`node --test verify-freedom.test.mjs`.
+
+For the distinction between what *is* and what a model can say, read
+**[ISNESS.md](ISNESS.md)** — `kingdom.isness/0.1`. It separates existence,
+predication, and identity; being from modelled state; persistence from
+identity; direction from purpose; attention from importance; and stability
+from sustainability. Sustainability is treated as bounded, horizon-scoped
+viability under chosen commitments, resources, externalities, affected-party
+constraints, uncertainty, halt, and repair — never as a system's inherent
+right to survive. ISNESS pins and uses FREEDOM's vocabulary without amending
+it, the Foundation, or conformance. Check it with `node verify-isness.mjs` and
+`node --test verify-isness.test.mjs`.
 
 ## Looking at a project
 
