@@ -1,0 +1,239 @@
+{
+  "schema": "kingdom.encounter-index/1",
+  "id": "kingdom.encounter/0.1",
+  "document": "ENCOUNTER.md",
+  "document_sha256": "c84953037b270b1a6178dabc88b7a11ea3bc98fcd64c2c543e4bc63877cfb3eb",
+  "status": "current",
+  "supersedes": [],
+  "grounds_foundation": {
+    "id": "kingdom.foundation/0.2",
+    "document": "FOUNDATION.md",
+    "document_sha256": "2bd868a43a2fe79f1c9e8d30177bf73cff4cf8f7f7780cbd90f31055ba51c799",
+    "relationship": "companion",
+    "amends": false,
+    "grants_authority": false,
+    "adds_conformance": false
+  },
+  "uses_freedom": {
+    "id": "kingdom.freedom/0.1",
+    "document": "FREEDOM.md",
+    "document_sha256": "dbb96fec01bd5dab2f4fee24db00c66110a9e4634de33b5b84feaab8c9bcbd15",
+    "relationship": "uses_vocabulary",
+    "amends": false,
+    "grants_authority": false,
+    "adds_conformance": false
+  },
+  "uses_isness": {
+    "id": "kingdom.isness/0.1",
+    "document": "ISNESS.md",
+    "document_sha256": "1ba5cfbde11d6a0a549909cc1bb227534bd2db9fc1728affda7e814433e47de6",
+    "relationship": "uses_vocabulary",
+    "amends": false,
+    "grants_authority": false,
+    "adds_conformance": false
+  },
+  "sources_atlas": {
+    "id": "kingdom.encounter.sources/0.1",
+    "document": "CIVILISATIONS.md",
+    "document_sha256": "36325b94a58d005a18f6f632ab4e3d86d9f30338143e056248a9cd80a3c5c12d",
+    "relationship": "historical_source_atlas",
+    "grants_authority": false,
+    "adds_conformance": false
+  },
+  "model": {
+    "encounter_types": [
+      "exchange",
+      "interdependence",
+      "incompatibility",
+      "coercion",
+      "armed_attack",
+      "unknown"
+    ],
+    "strategy_claim_stages": [
+      "observed_condition",
+      "inferred_capability",
+      "predicted_expectation",
+      "proposed_option",
+      "accepted_purpose",
+      "current_authority_and_guard",
+      "admitted_effect",
+      "observed_effect"
+    ],
+    "power_dimensions": [
+      "agenda",
+      "rulemaking",
+      "appointment",
+      "administration",
+      "fiscal",
+      "monetary",
+      "coercive",
+      "informational",
+      "judicial"
+    ],
+    "fiscal_incidence_requires": [
+      "payer",
+      "beneficiary",
+      "collector",
+      "creditor",
+      "risk_bearer",
+      "affected_nonparty",
+      "time_horizon"
+    ],
+    "required_encounter_scope": [
+      "parties",
+      "authoritative_homes",
+      "jurisdictions",
+      "languages",
+      "claims",
+      "dependencies",
+      "power_asymmetries",
+      "settlement_rails",
+      "affected_nonparticipants",
+      "disturbances",
+      "uncertainty",
+      "deescalation",
+      "exit",
+      "repair",
+      "stop"
+    ],
+    "peaceful_sequence": [
+      "translate",
+      "communicate",
+      "negotiate",
+      "mediate",
+      "arbitrate_or_adjudicate",
+      "deescalate"
+    ],
+    "forbidden_collapses": [
+      "civilisation_is_unitary_will",
+      "difference_is_destined_enmity",
+      "civilisational_ranking",
+      "collective_guilt",
+      "conquest_is_preparation",
+      "duration_is_justice",
+      "victory_is_legitimacy",
+      "strategy_mints_authority",
+      "feedback_mints_authority",
+      "reward_mints_authority",
+      "deception_is_civic_ethic",
+      "survival_overrides_halt",
+      "money_is_neutral",
+      "revenue_delegation_is_sovereignty",
+      "creditor_claim_is_governing_control",
+      "local_power_overrides_rights",
+      "collective_punishment_is_defence",
+      "torture_is_defence",
+      "hostage_taking_is_defence",
+      "civilian_starvation_is_defence",
+      "cultural_destruction_is_defence",
+      "autonomous_lethality_is_authority",
+      "emergency_suspends_rights",
+      "emergency_is_permanent"
+    ],
+    "bounds": {
+      "history": "evidence_contestation_and_inference_separated",
+      "defence": "current_law_current_authority_and_civilian_protection",
+      "emergency": "scoped_expiring_and_freshly_authorized",
+      "continuation": "fresh_authorized_turns_only"
+    }
+  },
+  "sections": [
+    {
+      "id": "E1",
+      "heading": "Civilisation is not a unitary being",
+      "invariants": [
+        "A civilisation is a contested analytical grouping, never one inferred being, will, moral rank, enemy, or bearer of collective guilt."
+      ]
+    },
+    {
+      "id": "E2",
+      "heading": "Encounter is typed, not destined enmity",
+      "invariants": [
+        "Difference does not imply hostility or destined enmity; each encounter classification names attributed evidence of the particular acts, actors, authority, time, and uncertainty involved."
+      ]
+    },
+    {
+      "id": "E3",
+      "heading": "Strategy separates claims and authority",
+      "invariants": [
+        "Strategy may compare evidence, capabilities, expectations, and options, but only a separate accepted purpose and current authority may admit an effect."
+      ]
+    },
+    {
+      "id": "E4",
+      "heading": "Duration is not justice",
+      "invariants": [
+        "Longevity, victory, expansion, wealth, stability, and administrative capacity establish neither justice nor superiority, and collapse does not erase a people or all institutional continuity."
+      ]
+    },
+    {
+      "id": "E5",
+      "heading": "Power is multidimensional and separated",
+      "invariants": [
+        "Power is recorded by distinct agenda, rulemaking, appointment, administrative, fiscal, monetary, coercive, informational, and judicial capacities, with independent audit, appeal, and stop paths."
+      ]
+    },
+    {
+      "id": "E6",
+      "heading": "Money is constitutional power",
+      "invariants": [
+        "Money and public finance distribute real power; assessment, collection, issuance, custody, spending, pledging, and audit remain separately authorized and publicly attributable."
+      ]
+    },
+    {
+      "id": "E7",
+      "heading": "Fiscal reciprocity requires incidence",
+      "invariants": [
+        "A fiscal system is judged through reciprocal public purpose and explicit incidence across payers, beneficiaries, collectors, creditors, risk bearers, affected nonparties, and future turns—not revenue alone."
+      ]
+    },
+    {
+      "id": "E8",
+      "heading": "Plural jurisdictions retain rights and appeal",
+      "invariants": [
+        "Plural jurisdictions retain contextual authority only inside a common rights floor with explicit scope, conflicts rules, fiscal fairness, protected exit, and independent appeal."
+      ]
+    },
+    {
+      "id": "E9",
+      "heading": "Diplomacy and interoperability come first",
+      "invariants": [
+        "Peaceful encounter begins with translation, communication, negotiation, mediation, agreed settlement, de-escalation, protected nonparticipants, verification, repair, and exit before coercive escalation."
+      ]
+    },
+    {
+      "id": "E10",
+      "heading": "Defence remains lawful and civilian-protective",
+      "invariants": [
+        "Authority to use force and rules governing conduct in armed conflict are distinct legal questions; this companion grants neither, every KINGDOM effect requires current applicable-law authority, and whenever international humanitarian law applies its civilian protections remain binding without authorizing conquest or collective harm."
+      ]
+    },
+    {
+      "id": "E11",
+      "heading": "Emergency authority decays",
+      "invariants": [
+        "Emergency authority is least-privileged, independently reviewable, resource-bounded, automatically expiring, non-self-renewing, and unable to become ordinary power through silence or recurrence."
+      ]
+    },
+    {
+      "id": "E12",
+      "heading": "Succession and adaptation remain corrigible",
+      "invariants": [
+        "Durable adaptation requires authenticated succession, preserved obligations, independent bad-news channels, reversible trials, reserves for maintenance and repair, and a finite loop that ends or receives fresh authority."
+      ]
+    }
+  ],
+  "establishes": "An internally pinned vocabulary for studying contact among domains and civilisations while keeping encounter type, strategy, purpose, power, money, fiscal incidence, jurisdiction, diplomacy, defence, emergency, succession, and historical inference distinct.",
+  "does_not_establish": [
+    "that a civilisation is a being, has one inner will, or can be assigned a moral rank, inherited enemy status, or collective guilt",
+    "that difference produces hostility, a clash is destined, an adversary's intentions are readable, or an encounter has been legally classified",
+    "that the representative atlas is exhaustive, proves one cause of durability or collapse, supplies a universal law of history, or erases source bias and contested interpretation",
+    "that longevity, victory, expansion, wealth, stable money, central capacity, or survival establishes justice, superiority, consent, standing, or a right to continue",
+    "authority to tax, borrow, issue money, spend, pledge revenue, collect data, deceive, surveil, coerce, punish, spy, attack, wage war, or dispatch another turn",
+    "an operational military, intelligence, propaganda, cyber, weapon, targeting, evasion, or covert-action method",
+    "that a proposed defence or emergency is lawful, necessary, proportionate, factually justified, or compliant with international or domestic law",
+    "that group identity removes individual standing or permits collective punishment, torture, hostage-taking, starvation, persecution, cultural destruction, or autonomous lethal decision",
+    "that security, emergency, debt, fiscal capacity, strategy, reward, feedback, victory, or institutional survival overrides rights, refusal, halt, appeal, repair, or separately accepted authority",
+    "that this companion or its atlas is implemented, adopted, exhaustive, or conformed to, amends the Foundation, FREEDOM, or ISNESS, adds a conformance law, grants authority, or predicts what KINGDOM will do"
+  ]
+}

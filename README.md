@@ -22,14 +22,19 @@ no permission.
    sustainability, read **[ISNESS.md](ISNESS.md)** — the epistemic map that
    keeps modeled state from becoming being and continuation from becoming an
    unquestioned good.
-4. Read **[STANDARD.md](STANDARD.md)** — the forty-two laws, in seven domains:
+4. For contact across domains, institutions, or civilisations, read
+   **[ENCOUNTER.md](ENCOUNTER.md)** and its historical source atlas,
+   **[CIVILISATIONS.md](CIVILISATIONS.md)** — the strategic map that separates
+   difference from enmity, durability from justice, money from neutral
+   infrastructure, and preparedness from conquest.
+5. Read **[STANDARD.md](STANDARD.md)** — the forty-two laws, in seven domains:
    TRUST, SECURITY, CLOUD, SOFTWARE, PROTOCOL, PROCESS, LAW.
-5. Check yourself with **[CONFORMANCE.md](CONFORMANCE.md)** — yes/no questions
+6. Check yourself with **[CONFORMANCE.md](CONFORMANCE.md)** — yes/no questions
    — at least one per law — and three honest levels: **SEED**, **GARDEN**,
    **KINGDOM**.
-6. Pin `kingdom.foundation/0.2` and `kingdom.standard/1.0` in the project's
+7. Pin `kingdom.foundation/0.2` and `kingdom.standard/1.0` in the project's
    `kingdom.yaml` when making a public conformance claim.
-7. Run the companion verifiers named below, then `node verify-foundation.mjs`
+8. Run the companion verifiers named below, then `node verify-foundation.mjs`
    and `node --test verify-foundation.test.mjs` to check that the release
    identifiers, boundaries, lineage receipt, and pinned document digests
    match.
@@ -70,6 +75,18 @@ constraints, uncertainty, halt, and repair — never as a system's inherent
 right to survive. ISNESS pins and uses FREEDOM's vocabulary without amending
 it, the Foundation, or conformance. Check it with `node verify-isness.mjs` and
 `node --test verify-isness.test.mjs`.
+
+For encounter across domains and civilisations, read
+**[ENCOUNTER.md](ENCOUNTER.md)** — `kingdom.encounter/0.1` — together with the
+versioned [historical source atlas](CIVILISATIONS.md). It types encounter before
+calling anything a clash, separates strategy from authority, maps power and
+fiscal incidence rather than treating centralization or money as neutral, and
+puts diplomacy, civilian protection, expiring emergency power, succession,
+repair, and finite turns ahead of institutional survival. It contains no
+operational conflict method and turns no historical duration into moral rank.
+It is a companion, not an amendment, conformance release, or grant of
+authority. Check it with `node verify-encounter.mjs` and
+`node --test verify-encounter.test.mjs`.
 
 ## Looking at a project
 
