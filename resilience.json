@@ -1,0 +1,404 @@
+{
+  "schema": "kingdom.resilience-index/1",
+  "id": "kingdom.resilience/0.1",
+  "document": "RESILIENCE.md",
+  "document_sha256": "78c0bbef59c0061766838cfe80ea73a834fbe2ef7d3b00f7aa2cc7f5d2e4256c",
+  "status": "current",
+  "supersedes": [],
+  "grounds_foundation": {
+    "id": "kingdom.foundation/0.2",
+    "document": "FOUNDATION.md",
+    "document_sha256": "2bd868a43a2fe79f1c9e8d30177bf73cff4cf8f7f7780cbd90f31055ba51c799",
+    "relationship": "companion",
+    "amends": false,
+    "grants_authority": false,
+    "adds_conformance": false
+  },
+  "uses_freedom": {
+    "id": "kingdom.freedom/0.1",
+    "document": "FREEDOM.md",
+    "document_sha256": "dbb96fec01bd5dab2f4fee24db00c66110a9e4634de33b5b84feaab8c9bcbd15",
+    "relationship": "uses_vocabulary",
+    "amends": false,
+    "grants_authority": false,
+    "adds_conformance": false
+  },
+  "uses_isness": {
+    "id": "kingdom.isness/0.1",
+    "document": "ISNESS.md",
+    "document_sha256": "1ba5cfbde11d6a0a549909cc1bb227534bd2db9fc1728affda7e814433e47de6",
+    "relationship": "uses_vocabulary",
+    "amends": false,
+    "grants_authority": false,
+    "adds_conformance": false
+  },
+  "uses_encounter": {
+    "id": "kingdom.encounter/0.1",
+    "document": "ENCOUNTER.md",
+    "document_sha256": "c84953037b270b1a6178dabc88b7a11ea3bc98fcd64c2c543e4bc63877cfb3eb",
+    "relationship": "uses_vocabulary",
+    "amends": false,
+    "grants_authority": false,
+    "adds_conformance": false
+  },
+  "model": {
+    "onset_shapes": [
+      "acute",
+      "chronic",
+      "cumulative",
+      "intermittent",
+      "unknown"
+    ],
+    "agency_kinds": [
+      "not_attributed",
+      "non_agentic_claim",
+      "accidental_actor_claim",
+      "intentional_actor_claim",
+      "mixed_claim",
+      "contested",
+      "unknown"
+    ],
+    "boundary_shapes": [
+      "internal",
+      "external",
+      "cross_boundary",
+      "unknown"
+    ],
+    "propagation_shapes": [
+      "localized",
+      "network_cascade",
+      "common_mode",
+      "correlated",
+      "concentration_or_chokepoint",
+      "externality_or_displacement",
+      "unknown"
+    ],
+    "reversibility_shapes": [
+      "reversible",
+      "partly_reversible",
+      "irreversible",
+      "unknown"
+    ],
+    "required_shape_parameters": [
+      "magnitude_and_units",
+      "duration_or_unknown",
+      "velocity_or_unknown",
+      "recurrence_or_unknown",
+      "spatial_footprint_or_unknown",
+      "observability_and_lead_time_or_unknown"
+    ],
+    "consequence_dimensions": [
+      "life_health_care",
+      "standing_rights_agency",
+      "ecological_material",
+      "essential_needs_services",
+      "livelihoods_economic_fiscal",
+      "infrastructure_supply_mobility",
+      "information_communication_epistemic",
+      "digital_data_identity_privacy",
+      "governance_law_succession",
+      "social_relational_cultural",
+      "external_interdependence",
+      "future_options_repair_burden"
+    ],
+    "constraint_kinds": [
+      "hard_guard",
+      "minimum_service_floor",
+      "maximum_limit",
+      "target",
+      "descriptive_baseline"
+    ],
+    "assessment_states": [
+      "satisfies",
+      "violates",
+      "unknown"
+    ],
+    "threat_family_prompts": [
+      "climate_ecology_geophysical_extraterrestrial_material",
+      "public_health_biological",
+      "industrial_chemical_radiological_structural_transport_safety",
+      "essential_needs",
+      "infrastructure_supply_dependencies",
+      "digital_cyber_data_information_ai",
+      "fiscal_monetary_financial_economic_labour",
+      "governance_law_institutional_succession",
+      "social_relational_cultural_access_care_epistemic",
+      "external_encounter_coercion_conflict",
+      "compound_cascading_tail_unknown",
+      "countermeasure_transition_self_created"
+    ],
+    "required_risk_claim": [
+      "source",
+      "statement_kind",
+      "assessment_time",
+      "accepted_purpose",
+      "system_boundary",
+      "authoritative_home",
+      "jurisdiction",
+      "finite_horizon",
+      "hazard_or_condition",
+      "actor_if_attributed",
+      "capability_if_attributed",
+      "intent_if_claimed",
+      "exposure",
+      "vulnerability",
+      "capacity",
+      "onset_shapes",
+      "agency_kinds",
+      "boundary_shapes",
+      "propagation_shapes",
+      "reversibility_shapes",
+      "shape_parameters",
+      "conditional_likelihood_or_unknown",
+      "consequence_profile",
+      "dependencies_and_common_modes",
+      "affected_parties",
+      "burden_distribution",
+      "existing_controls",
+      "evidence",
+      "uncertainty",
+      "counterevidence",
+      "reply_and_correction",
+      "data_boundary",
+      "options_and_obligations",
+      "current_authority",
+      "deescalation",
+      "exit",
+      "repair",
+      "halt_and_stop"
+    ],
+    "required_dimension_profile": [
+      "unit_or_description",
+      "baseline",
+      "constraint_kind",
+      "constraint_basis",
+      "criterion_and_direction",
+      "finite_horizon",
+      "affected_parties",
+      "distribution",
+      "evidence",
+      "uncertainty",
+      "correction_path"
+    ],
+    "required_dependency_edge": [
+      "source_node",
+      "dependent_node",
+      "mechanism",
+      "required_level_or_demand",
+      "latency",
+      "capacity_limit",
+      "degradation_relation_or_unknown",
+      "substitute",
+      "common_modes",
+      "evidence",
+      "uncertainty",
+      "custodian",
+      "correction"
+    ],
+    "required_resilience_claim": [
+      "system_boundary",
+      "accepted_purpose",
+      "essential_functions",
+      "rights_and_obligations",
+      "affected_parties",
+      "disturbance_set",
+      "finite_horizon",
+      "dimensions_and_adequacy_criteria",
+      "dependencies_and_common_modes",
+      "resources_and_reserves",
+      "available_options",
+      "exit_and_retirement",
+      "uncertainty_and_counterevidence",
+      "repair_and_restitution",
+      "halt"
+    ],
+    "resilience_functions": [
+      "anticipate",
+      "prevent",
+      "reduce_exposure",
+      "reduce_vulnerability",
+      "preserve_capacity",
+      "absorb",
+      "maintain_essential_functions",
+      "respond",
+      "recover",
+      "repair",
+      "adapt",
+      "transform_or_retire",
+      "preserve_exit",
+      "stop"
+    ],
+    "treatment_stages": [
+      "observed_condition",
+      "bounded_risk_claim",
+      "proposed_treatment",
+      "accepted_purpose",
+      "current_authority_and_guard",
+      "admitted_effect",
+      "observed_effect",
+      "repair_and_review",
+      "stop"
+    ],
+    "forbidden_collapses": [
+      "risk_claim_is_fact",
+      "hazard_is_enemy",
+      "hazard_is_observed_harm",
+      "exposure_is_fault",
+      "vulnerability_is_identity",
+      "vulnerability_is_blame",
+      "capacity_is_duty",
+      "capability_is_intent",
+      "possibility_is_probability",
+      "prediction_is_observation",
+      "salience_is_likelihood",
+      "unknown_is_zero",
+      "unknown_is_safe",
+      "threat_label_is_enemy_identity",
+      "group_label_is_collective_threat",
+      "demographic_identity_is_hazard",
+      "dissent_is_threat_indicator",
+      "shape_is_severity",
+      "risk_is_scalar_score",
+      "citizen_is_readiness_score",
+      "unlike_units_are_ordered",
+      "stability_is_resilience",
+      "resilience_is_sustainability",
+      "institution_is_essential_function",
+      "institutional_survival_is_resilience",
+      "redundancy_is_independence",
+      "control_is_authority",
+      "treatment_is_risk_free",
+      "threat_claim_authorizes_surveillance",
+      "threat_claim_authorizes_preemption",
+      "alert_declares_emergency",
+      "scenario_is_forecast",
+      "drill_proves_readiness",
+      "response_mints_authority",
+      "feedback_mints_authority",
+      "reward_mints_authority",
+      "security_overrides_rights",
+      "survival_overrides_halt",
+      "emergency_is_permanent",
+      "secrecy_erases_audit",
+      "absence_of_incident_is_safety",
+      "control_success_proves_causation",
+      "harm_displacement_is_resilience",
+      "recovery_erases_obligations",
+      "resilience_mints_continuation",
+      "self_preservation_mints_authority",
+      "service_target_is_hard_guard",
+      "hard_guard_is_service_target",
+      "stop_requires_authority"
+    ],
+    "bounds": {
+      "claims": "attributed_scoped_time_bound_and_corrigible",
+      "axes": "multi_valued_independent_and_corrigible",
+      "families": "non_exhaustive_overlapping_and_not_person_categories",
+      "profiles": "multidimensional_nonaggregated_and_unknown_preserving",
+      "likelihoods": "conditional_sourced_and_not_verdicts",
+      "treatments": "rights_compatible_least_powerful_and_authorized",
+      "horizons": "finite_declared_and_reviewable",
+      "emergency": "scoped_expiring_and_freshly_authorized",
+      "continuation": "fresh_authorized_turns_only"
+    }
+  },
+  "sections": [
+    {
+      "id": "RS1",
+      "heading": "Risk is a claim, not an enemy",
+      "invariants": [
+        "A risk claim is attributed, scoped, time-bound, uncertain, and corrigible; it establishes neither an enemy, emergency, intent, destiny, nor authority."
+      ]
+    },
+    {
+      "id": "RS2",
+      "heading": "Hazard, exposure, vulnerability, capacity, and consequence are distinct",
+      "invariants": [
+        "Hazard, exposure, vulnerability, capacity, and consequence remain distinct; exposure is not fault, vulnerability is not identity or blame, and capacity manufactures neither duty nor consent."
+      ]
+    },
+    {
+      "id": "RS3",
+      "heading": "Classification is multi-axis and corrigible",
+      "invariants": [
+        "Every classification uses non-empty, set-valued, independent, and corrigible onset, agency, boundary, propagation, and reversibility axes, with unknown standing alone when evidence is insufficient; intent attaches only to evidenced acts by named actors, never identity, ancestry, association, geography, or proxy."
+      ]
+    },
+    {
+      "id": "RS4",
+      "heading": "Consequences remain a multidimensional profile",
+      "invariants": [
+        "Consequences retain time and affected party in an unknown-preserving profile whose dimension-specific baseline, constraint kind, criterion and direction, horizon, distribution, evidence, uncertainty, and correction path remain distinct, never a person, group, threat, readiness, or resilience score."
+      ]
+    },
+    {
+      "id": "RS5",
+      "heading": "Dependencies can cascade without becoming destiny",
+      "invariants": [
+        "Every dependency claim names direction, mechanism, required level or demand, latency, capacity limit, degradation relation or unknown, substitutes, common modes, evidence, uncertainty, custodian, and correction; adjacency, correlation, and copies establish neither causation nor independence, and the hypothesis graph computes no cascade without a separately validated domain model."
+      ]
+    },
+    {
+      "id": "RS6",
+      "heading": "People and legitimate purposes come before system continuity",
+      "invariants": [
+        "Resilience preserves legitimate options and essential functions for affected beings; it is neither sustainability, justice, institutional survival, nor a right to persist, and safe degradation, handover, transformation, completion, retirement, and ending remain valid."
+      ]
+    },
+    {
+      "id": "RS7",
+      "heading": "Preparedness builds options, not surveillance or coercion",
+      "invariants": [
+        "Preparedness creates bounded options, while each collection, drill, reserve, restriction, relocation, intervention, and communication remains a separate effect requiring accepted purpose, current authority and guard, minimization, custody, expiry, reply, repair, and stop."
+      ]
+    },
+    {
+      "id": "RS8",
+      "heading": "Response functions remain distinct",
+      "invariants": [
+        "Anticipation, prevention, exposure reduction, vulnerability reduction, capacity preservation, absorption, essential-function continuity, response, recovery, repair, adaptation, transformation or retirement, exit, and stop are distinct functions; every consequential effect within them requires its own current authority and guard, while stop and halt remain unconditional."
+      ]
+    },
+    {
+      "id": "RS9",
+      "heading": "Distribution and essential-service floors stay visible",
+      "invariants": [
+        "Every treatment keeps each constraint kind and assessment visible and names who pays, benefits, decides, bears residual and displaced risk, loses options, remains unheard, and is owed accessibility, a currently authorized least-harm or duty response, remedy, restitution, or repair; a service target is not a hard guard, and neither mints authority."
+      ]
+    },
+    {
+      "id": "RS10",
+      "heading": "Indicators and exercises do not authorize action",
+      "invariants": [
+        "An indicator, alert, model, scenario, exercise, near miss, quiet interval, or control result is evidence for review—not proof of probability, safety, causation, emergency, readiness, or authority."
+      ]
+    },
+    {
+      "id": "RS11",
+      "heading": "External origin does not create an adversary",
+      "invariants": [
+        "External origin, dependence, capability, competition, or contested attribution does not create an adversary; named intentional acts and encounter questions retain ENCOUNTER's evidence, diplomacy, law, civilian protection, emergency, and correction boundaries."
+      ]
+    },
+    {
+      "id": "RS12",
+      "heading": "Every preparedness turn stops",
+      "invariants": [
+        "Every assessment and preparedness turn stops; feedback may correct a later proposal but cannot widen authority, weaken a failed or unknown guard, defeat halt, declare continuation, or dispatch another turn."
+      ]
+    }
+  ],
+  "establishes": "An internally pinned vocabulary for attributed and corrigible risk claims, multidimensional consequence profiles, threat shapes, dependencies, preparedness, response, recovery, repair, adaptation, exit, and finite stop without turning people, uncertainty, continuity, or self-preservation into enemies or authority.",
+  "does_not_establish": [
+    "that a risk claim is fact, certainty, forecast, enemy identification, legal classification, or emergency",
+    "that a person, group, citizen, nationality, civilisation, demographic, disability, illness, belief, association, location, or dissent is a hazard, vulnerability, threat identity, collective intention, or collective guilt",
+    "a universal risk, threat, citizen, readiness, resilience, sustainability, or civilisation score, or an objective conversion or ordering of unlike consequences",
+    "that unknown means zero or safe, no incident means safety, repetition proves causation, redundancy proves independence, or a control proves sufficiency",
+    "that stability, resilience, sustainability, continuity, survival, or growth establishes justice, standing, goodness, consent, an essential function, or a right to persist",
+    "authority to collect data, profile, surveil, discriminate, restrict, relocate, coerce, pre-empt, censor, seize, spend, borrow, declare emergency, use force, or dispatch another turn",
+    "that preparedness, security, emergency, sustainability, or survival overrides standing, rights, refusal, exit, appeal, remedy, repair, or halt",
+    "an operational biological, cyber, military, intelligence, sabotage, targeting, evasion, weapons, propaganda, or covert-action method",
+    "that restored output erases obligations, that displaced or externalized harm is resilience, or that recovery is complete without affected-party remedy and owed repair",
+    "that this companion is implemented, adopted, exhaustive, conformed to, a prediction of what KINGDOM will do, an amendment to any dependency, or a grant of authority"
+  ]
+}

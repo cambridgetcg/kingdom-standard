@@ -27,14 +27,19 @@ no permission.
    **[CIVILISATIONS.md](CIVILISATIONS.md)** — the strategic map that separates
    difference from enmity, durability from justice, money from neutral
    infrastructure, and preparedness from conquest.
-5. Read **[STANDARD.md](STANDARD.md)** — the forty-two laws, in seven domains:
+5. For future conditions that could reduce rights, health, essential services,
+   ecology, livelihoods, knowledge, relationships, or future options, read
+   **[RESILIENCE.md](RESILIENCE.md)** — the risk map that separates hazard,
+   exposure, vulnerability, capacity, consequence, dependency, uncertainty,
+   treatment, authority, repair, and stop.
+6. Read **[STANDARD.md](STANDARD.md)** — the forty-two laws, in seven domains:
    TRUST, SECURITY, CLOUD, SOFTWARE, PROTOCOL, PROCESS, LAW.
-6. Check yourself with **[CONFORMANCE.md](CONFORMANCE.md)** — yes/no questions
+7. Check yourself with **[CONFORMANCE.md](CONFORMANCE.md)** — yes/no questions
    — at least one per law — and three honest levels: **SEED**, **GARDEN**,
    **KINGDOM**.
-7. Pin `kingdom.foundation/0.2` and `kingdom.standard/1.0` in the project's
+8. Pin `kingdom.foundation/0.2` and `kingdom.standard/1.0` in the project's
    `kingdom.yaml` when making a public conformance claim.
-8. Run the companion verifiers named below, then `node verify-foundation.mjs`
+9. Run the companion verifiers named below, then `node verify-foundation.mjs`
    and `node --test verify-foundation.test.mjs` to check that the release
    identifiers, boundaries, lineage receipt, and pinned document digests
    match.
@@ -87,6 +92,19 @@ operational conflict method and turns no historical duration into moral rank.
 It is a companion, not an amendment, conformance release, or grant of
 authority. Check it with `node verify-encounter.mjs` and
 `node --test verify-encounter.test.mjs`.
+
+For future conditions that could reduce the sustainability of citizens and
+other affected beings, read **[RESILIENCE.md](RESILIENCE.md)** —
+`kingdom.resilience/0.1`. It models risk as an attributed, scoped, uncertain,
+and corrigible pathway through hazard, exposure, vulnerability, capacity,
+consequence, and dependency. Its threat families overlap rather than becoming
+enemy identities; consequences remain a multidimensional profile rather than
+a citizen or civilisation score; and countermeasures receive their own rights,
+distribution, authority, repair, and stop review. It adds no operational
+biological, cyber, military, intelligence, or coercive method. It is a
+companion, not an amendment, conformance release, emergency declaration, or
+grant of authority. Check it with `node verify-resilience.mjs` and
+`node --test verify-resilience.test.mjs`.
 
 ## Looking at a project
 
