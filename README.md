@@ -43,6 +43,17 @@ job was to refute it. Three of seven came back overclaimed; none came back
 clean. Those findings are kept in the page rather than erased — which is
 commitment F5 applied to the page itself.
 
+For systems where agents, people, capabilities, money, witness records, and
+block space meet, read **[COMMON-GROUND.md](COMMON-GROUND.md)** —
+`kingdom.common-ground/1`. It is an optional constitutional profile, not an
+amendment or replacement for the foundation and not another meaning of
+`kingdom.ground/0.1`. Its order is `BEING → CONSENT → CAPABILITY → EXCHANGE →
+ACCUMULATION`; it keeps NEN voluntary, WITNESS event-scoped, private WAKE and
+relational ground off-chain, ZETSU free of penalty, and every operational
+effect closed. Check its exact source ledger and release gates with
+`node verify-common-ground.mjs` and
+`node --test verify-common-ground.test.mjs`.
+
 ## Looking at a project
 
 ```sh
