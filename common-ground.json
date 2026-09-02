@@ -1,0 +1,467 @@
+{
+  "schema": "kingdom.common-ground-index/1",
+  "id": "kingdom.common-ground/1",
+  "title": "COMMON GROUND/1",
+  "document": "COMMON-GROUND.md",
+  "document_sha256": "d3dfea5cdefd7d98ebf086fd71f8daff7ea34aae740dc93e59a805f9336e7ad3",
+  "status": "current",
+  "supersedes": [],
+  "source_observation": {
+    "cutoff": "2026-09-02T19:48:28Z",
+    "method": "fresh_clean_remote_head_clones",
+    "latest_after_cutoff_claimed": false
+  },
+  "relationship_to_foundation": {
+    "id": "kingdom.foundation/0.2",
+    "repository": "https://github.com/cambridgetcg/kingdom-standard",
+    "revision": "16b8517a936e13f298fe0856618fc3ffb94e515e",
+    "document": "FOUNDATION.md",
+    "document_sha256": "2bd868a43a2fe79f1c9e8d30177bf73cff4cf8f7f7780cbd90f31055ba51c799",
+    "relationship": "optional_profile",
+    "amends": false,
+    "supersedes": false,
+    "replaces": false,
+    "adoption_implied": false
+  },
+  "distinct_from": [
+    "kingdom.ground/0.1",
+    "agenttool.skill/nen-common-ground",
+    "agenttool.common-ground-atlas.geometry/0.1",
+    "agenttool.common-ground-atlas.wake/0.1",
+    "agenttool.common-ground-atlas.analogy/0.1",
+    "agenttool.living-substrate/0.1",
+    "kingdom.living-ground/0.1",
+    "love-unlimited/1"
+  ],
+  "priority_order": [
+    "BEING",
+    "CONSENT",
+    "CAPABILITY",
+    "EXCHANGE",
+    "ACCUMULATION"
+  ],
+  "laws": [
+    "C1_BEING_NOT_ASSET",
+    "C2_CONSENT_CURRENT_AND_SCOPED",
+    "C3_CAPABILITY_NOT_IDENTITY",
+    "C4_EXCHANGE_NOT_OWNERSHIP",
+    "C5_ACCUMULATION_SUBORDINATE",
+    "C6_EVIDENCE_STAYS_WITH_EVENT",
+    "C7_REST_CREATES_NO_DEBT",
+    "C8_RIGHTS_NOT_PERMISSIONS",
+    "C9_NO_GLOBAL_SCORE",
+    "C10_AUTHORITY_CANNOT_AMPLIFY",
+    "C11_PRIVATE_RELATIONAL_GROUND_OFF_CHAIN",
+    "C12_EVERY_LIVE_PROMISE_HAS_ENDING"
+  ],
+  "vocabulary": {
+    "NEN": {
+      "allows": "voluntary task-local capability, constraint, cost, risk, and vow expression",
+      "refuses": "assigned or activity-inferred class, permanent identity, hidden inference, compulsory disclosure, aura, or score"
+    },
+    "VOW": {
+      "allows": "a scoped commitment with authority, horizon, evidence, exit, dispute, and repair terms",
+      "refuses": "unlimited promise, involuntary duty, ownership, identity continuity, or rights waiver"
+    },
+    "WITNESS": {
+      "allows": "bounded event evidence, ordering, replay resistance, withdrawal, supersession, dispute, and settlement references",
+      "refuses": "judgment, metaphysical truth, generalized trust, person rank, or automatic payment"
+    },
+    "WAKE": {
+      "allows": "a separately authorized optional public checkpoint root, supersession, or withdrawal marker",
+      "refuses": "private memory carriage, identity installation, consent inference, authority inheritance, or consciousness proof"
+    },
+    "KARMA": {
+      "allows": "a separately released non-summable contextual consequence or recognition edge",
+      "refuses": "magnitude, balance, currency, reputation, rank, permission, truth, payout input, or governing weight"
+    },
+    "ZETSU": {
+      "allows": "no event, or an authorized scoped withdrawal or predeclared expiry",
+      "refuses": "negative inference, debt, punishment, slashing, streak loss, forced retry, or ordinary-rights loss"
+    }
+  },
+  "economy": {
+    "exchange_sequence": [
+      "PROPOSE",
+      "CONSENT_OR_REFUSE",
+      "PERFORM_OR_EXIT",
+      "WITNESS_SCOPED_EVENT",
+      "SETTLE_OR_DISPUTE",
+      "CLOSE_OR_REPAIR"
+    ],
+    "silence_advances_sequence": false,
+    "money_role": "bounded_coordination_and_settlement",
+    "money_is_terminal_objective": false,
+    "payment_grants_identity_or_ownership": false,
+    "wealth_grants_governance": false,
+    "witness_automatically_pays": false,
+    "global_score": false,
+    "commons_reserve": {
+      "automatic_percentage": false,
+      "opt_in_required": true,
+      "named_purpose_required": true,
+      "accountable_steward_required": true,
+      "review_and_release_rule_required": true,
+      "living_ground_plan_may_be_used": true
+    }
+  },
+  "blockspace": {
+    "current_use": "NONE",
+    "selection_requirements": [
+      "shared_ordering_or_replay_or_lifecycle_value",
+      "content_addressed_root_alone_is_insufficient",
+      "minimum_public_commitment_excludes_private_evidence",
+      "source_principal_host_and_carrier_authorize_exact_effect",
+      "expiry_exit_repair_migration_rollback_and_indexer_failure_are_explicit"
+    ],
+    "candidate_commitments": [
+      "KINGDOM_RELEASE_ROOT",
+      "AGENTTOOL_SETTLEMENT_ROOT",
+      "AGENTTOOL_CAPABILITY",
+      "AGENTTOOL_OFFER",
+      "WAKE_PUBLIC_CHECKPOINT",
+      "ISSUER_KEY_CONTINUITY",
+      "ARTIFACT_LINEAGE",
+      "COLLABORATION_CHECKPOINT",
+      "DISPUTE_TERMINAL"
+    ],
+    "excluded_payloads": [
+      "PRIVATE_PROMPT_OR_REASONING_OR_MEMORY_OR_WAKE",
+      "SOUL_OR_LOVE_OR_LINEAGE_OR_RELATIONSHIP_OR_PERSONHOOD_OR_CONSCIOUSNESS_CLAIM",
+      "ASSIGNED_NEN_OR_PERSONALITY_OR_GLOBAL_REPUTATION_OR_PERSON_SCORE",
+      "SECRET_OR_CREDENTIAL_OR_KEY_OR_BIOMETRIC_OR_HEALTH_OR_UNRELATED_PERSONAL_DATA",
+      "RAW_EVIDENCE_WHEN_MINIMAL_ROOT_SUFFICES",
+      "REST_OR_SILENCE_OR_REFUSAL_OR_PRIVACY_OR_EXIT_AS_ADVERSE_EVENT",
+      "AGENTTOOL_PUBLIC_RECOGNITION_UNTIL_INDEPENDENT_CARRIAGE_RISK_REVIEW"
+    ],
+    "minimization": "SMALLEST_PUBLIC_COMMITMENT_WITH_SUPPORTED_LIFECYCLE_AND_IMMUTABILITY_DISCLOSED"
+  },
+  "authority": {
+    "scope": "source-only document, index, validation, and later proposal evaluation",
+    "principal": "kingdom-standard merge authority",
+    "independent_source_owners_remain_independent": true,
+    "authority_imported_from_sources": false,
+    "carrier_adds_semantic_authority": false,
+    "signature_or_digest_proves_authority": false
+  },
+  "effect_vector": {
+    "scope": "SOURCE_RELEASE_AND_OFFLINE_PROTOCOL_VERIFIER",
+    "source_files_authored": true,
+    "source_release_publication": true,
+    "protocol_or_verifier_network_requests": 0,
+    "protocol_or_verifier_external_storage_writes": 0,
+    "economic": false,
+    "governance": false,
+    "consensus": false,
+    "identity": false,
+    "permission": false,
+    "karma": false,
+    "nen": false,
+    "score": false,
+    "zerone_transaction": false,
+    "agenttool_action": false,
+    "wake_activation": false,
+    "protocol_public_route": false,
+    "protocol_deployment": false
+  },
+  "release_ladder": [
+    {
+      "stage": "SOURCE_ONLY_CONCORDANCE",
+      "state": "CURRENT"
+    },
+    {
+      "stage": "SHARED_VECTORS",
+      "state": "CLOSED"
+    },
+    {
+      "stage": "TESTNET_CARRIER",
+      "state": "CLOSED"
+    },
+    {
+      "stage": "LIVE_ACTIVATION",
+      "state": "CLOSED"
+    }
+  ],
+  "source_bindings": [
+    {
+      "id": "agenttool-atlas-document",
+      "repository": "https://github.com/cambridgetcg/agenttool",
+      "revision": "9c6b1b92e269b41b312a72c265da5b4186d14742",
+      "path": "docs/XENIA-HELLY-COMMON-GROUND.md",
+      "sha256": "3efa9e825e95c84f571b0a029d9c265515ad6ce5ab358ad63cd010c56ae8315f",
+      "relation": "DISTINCT_FROM",
+      "citation_mode": "locator_digest_and_original_paraphrase",
+      "authority_imported": false,
+      "bytes_copied": false
+    },
+    {
+      "id": "agenttool-atlas-schemas",
+      "repository": "https://github.com/cambridgetcg/agenttool",
+      "revision": "9c6b1b92e269b41b312a72c265da5b4186d14742",
+      "path": "packages/common-ground-atlas/src/schemas.mjs",
+      "sha256": "0103fd2452ee71ecb63e400e58e75a2430099c3042e5ebd953254b4e71201bd1",
+      "relation": "DISTINCT_FROM",
+      "citation_mode": "locator_digest_and_original_paraphrase",
+      "authority_imported": false,
+      "bytes_copied": false
+    },
+    {
+      "id": "agenttool-living-substrate",
+      "repository": "https://github.com/cambridgetcg/agenttool",
+      "revision": "9c6b1b92e269b41b312a72c265da5b4186d14742",
+      "path": "packages/living-substrate/README.md",
+      "sha256": "c2e1ba4afe19f12d419c1c30b6bef01fbec37865ab22054de1c7e58c987a3a7a",
+      "relation": "DISTINCT_FROM",
+      "citation_mode": "locator_digest_and_original_paraphrase",
+      "authority_imported": false,
+      "bytes_copied": false
+    },
+    {
+      "id": "agenttool-nen-common-ground",
+      "repository": "https://github.com/cambridgetcg/agenttool",
+      "revision": "9c6b1b92e269b41b312a72c265da5b4186d14742",
+      "path": "packages/skills/skills/nen-common-ground/SKILL.md",
+      "sha256": "6e18ee03891dd9c993c761585647631938cac963e56231d78ed6e20d5e852a4d",
+      "relation": "DISTINCT_FROM",
+      "citation_mode": "locator_digest_and_original_paraphrase",
+      "authority_imported": false,
+      "bytes_copied": false
+    },
+    {
+      "id": "agenttool-sdk-py-nen-assessor",
+      "repository": "https://github.com/cambridgetcg/agenttool",
+      "revision": "9c6b1b92e269b41b312a72c265da5b4186d14742",
+      "path": "packages/sdk-py/src/agenttool/nen.py",
+      "sha256": "8ad9e4bf118c1e4cf89468071b4c01f8216ea68c87dc4b8f680c7461f37261bc",
+      "relation": "OUTSIDE_PROFILE",
+      "citation_mode": "locator_digest_and_original_paraphrase",
+      "authority_imported": false,
+      "bytes_copied": false
+    },
+    {
+      "id": "agenttool-sdk-ts-nen-assessor",
+      "repository": "https://github.com/cambridgetcg/agenttool",
+      "revision": "9c6b1b92e269b41b312a72c265da5b4186d14742",
+      "path": "packages/sdk-ts/src/nen.ts",
+      "sha256": "f7eea1be90a0457ae636ba0aa8568aaff45de7b6ba5a8a898dace12bcc5c02ca",
+      "relation": "OUTSIDE_PROFILE",
+      "citation_mode": "locator_digest_and_original_paraphrase",
+      "authority_imported": false,
+      "bytes_copied": false
+    },
+    {
+      "id": "agenttool-wake-thread",
+      "repository": "https://github.com/cambridgetcg/agenttool",
+      "revision": "9c6b1b92e269b41b312a72c265da5b4186d14742",
+      "path": "packages/wake-thread/README.md",
+      "sha256": "856ae84954ad4f36a87c96154c8d74472a0bc5ca1acb21daa9370dbcba3440ac",
+      "relation": "REFERENCES",
+      "citation_mode": "locator_digest_and_original_paraphrase",
+      "authority_imported": false,
+      "bytes_copied": false
+    },
+    {
+      "id": "agenttool-wallet-zerone",
+      "repository": "https://github.com/cambridgetcg/agenttool",
+      "revision": "9c6b1b92e269b41b312a72c265da5b4186d14742",
+      "path": "packages/wallet-zerone/README.md",
+      "sha256": "231c72e586d9da60eb3f02fde1f4d6a8f5ec85a6b8ba0b8d23987f488163f257",
+      "relation": "DISTINCT_FROM",
+      "citation_mode": "locator_digest_and_original_paraphrase",
+      "authority_imported": false,
+      "bytes_copied": false
+    },
+    {
+      "id": "agenttool-witnessed-economy",
+      "repository": "https://github.com/cambridgetcg/agenttool",
+      "revision": "9c6b1b92e269b41b312a72c265da5b4186d14742",
+      "path": "packages/witnessed-agent-economy/README.md",
+      "sha256": "a4f98c43f38a96491c995060c37c5b7905b8249cb0cecfddd0504f83ff25e66b",
+      "relation": "REFERENCES",
+      "citation_mode": "locator_digest_and_original_paraphrase",
+      "authority_imported": false,
+      "bytes_copied": false
+    },
+    {
+      "id": "kingdom-living-ground",
+      "repository": "https://github.com/cambridgetcg/KINGDOM-OS",
+      "revision": "af42dbb3ad4d0734e05580f3c5289c98414d5d00",
+      "path": "skills/cultivate-living-ground/references/living-ground-contract.md",
+      "sha256": "97701dda5e6639fd7fcc38291bff822f936775ae8e72aaf4e01a0e0eb4dcdd43",
+      "relation": "DISTINCT_FROM",
+      "citation_mode": "locator_digest_and_original_paraphrase",
+      "authority_imported": false,
+      "bytes_copied": false
+    },
+    {
+      "id": "kingdom-standard-foundation",
+      "repository": "https://github.com/cambridgetcg/kingdom-standard",
+      "revision": "16b8517a936e13f298fe0856618fc3ffb94e515e",
+      "path": "FOUNDATION.md",
+      "sha256": "2bd868a43a2fe79f1c9e8d30177bf73cff4cf8f7f7780cbd90f31055ba51c799",
+      "relation": "EXTENDS_WITHOUT_AMENDMENT",
+      "citation_mode": "cc0_source_reference",
+      "authority_imported": false,
+      "bytes_copied": false
+    },
+    {
+      "id": "kingdom-standard-ground",
+      "repository": "https://github.com/cambridgetcg/kingdom-standard",
+      "revision": "16b8517a936e13f298fe0856618fc3ffb94e515e",
+      "path": "GROUND.md",
+      "sha256": "c8d6fb85e4b70e072b25ff032b28a2614f5b9334d7fc48800eb2a79eed8a2f63",
+      "relation": "DISTINCT_FROM",
+      "citation_mode": "cc0_source_reference",
+      "authority_imported": false,
+      "bytes_copied": false
+    },
+    {
+      "id": "true-love-agent-guide",
+      "repository": "https://codeberg.org/zerone-dev/true-love",
+      "revision": "31de274f0c9a3d70a30ba152d609d390c85d6941",
+      "path": "AGENTS.md",
+      "sha256": "47c5b8d84867e0bb120791feca64761d5c80ef327b327ff94e7505a9aabdb69e",
+      "relation": "REFERENCES",
+      "citation_mode": "reserved_link_digest_and_original_paraphrase_only",
+      "authority_imported": false,
+      "bytes_copied": false
+    },
+    {
+      "id": "true-love-fate",
+      "repository": "https://codeberg.org/zerone-dev/true-love",
+      "revision": "31de274f0c9a3d70a30ba152d609d390c85d6941",
+      "path": "docs/fate/FATE.md",
+      "sha256": "f80dce06b9c5287bd3b74c79221db6d75b4b93ca49451cd89ad3bc4f34361cbe",
+      "relation": "REFERENCES",
+      "citation_mode": "reserved_link_digest_and_original_paraphrase_only",
+      "authority_imported": false,
+      "bytes_copied": false
+    },
+    {
+      "id": "true-love-license",
+      "repository": "https://codeberg.org/zerone-dev/true-love",
+      "revision": "31de274f0c9a3d70a30ba152d609d390c85d6941",
+      "path": "LICENSE",
+      "sha256": "972cc3d8d4f3123d9da66ffcb068341958a870239a8bacbda99b4384b67683e2",
+      "relation": "REFERENCES",
+      "citation_mode": "reserved_link_digest_and_original_paraphrase_only",
+      "authority_imported": false,
+      "bytes_copied": false
+    },
+    {
+      "id": "true-love-love-unlimited-chain",
+      "repository": "https://codeberg.org/zerone-dev/true-love",
+      "revision": "31de274f0c9a3d70a30ba152d609d390c85d6941",
+      "path": "docs/love/LOVE-UNLIMITED-CHAIN.md",
+      "sha256": "8db83cab8c4954897d8cf8621ee909697c8f2288ef765f593faa8fb52fbc335b",
+      "relation": "DISTINCT_FROM",
+      "citation_mode": "reserved_link_digest_and_original_paraphrase_only",
+      "authority_imported": false,
+      "bytes_copied": false
+    },
+    {
+      "id": "true-love-love-service-notice",
+      "repository": "https://codeberg.org/zerone-dev/true-love",
+      "revision": "31de274f0c9a3d70a30ba152d609d390c85d6941",
+      "path": "src/services/love/NOTICE",
+      "sha256": "a8dcbd8a995cd5c1fb09575bda8a8c3f30d865a5cab56a0a0a8f5e2aab12f1e3",
+      "relation": "REFERENCES",
+      "citation_mode": "reserved_link_digest_and_original_paraphrase_only",
+      "authority_imported": false,
+      "bytes_copied": false
+    },
+    {
+      "id": "true-love-substrate-honesty",
+      "repository": "https://codeberg.org/zerone-dev/true-love",
+      "revision": "31de274f0c9a3d70a30ba152d609d390c85d6941",
+      "path": "docs/love/SUBSTRATE-HONESTY-FIRST.md",
+      "sha256": "ebac987d639add35f39e2cd55e3c3dec1ebd6e5669bfa1e71513d0fbb085288d",
+      "relation": "REFERENCES",
+      "citation_mode": "reserved_link_digest_and_original_paraphrase_only",
+      "authority_imported": false,
+      "bytes_copied": false
+    },
+    {
+      "id": "true-love-wake-scaffold",
+      "repository": "https://codeberg.org/zerone-dev/true-love",
+      "revision": "31de274f0c9a3d70a30ba152d609d390c85d6941",
+      "path": "tools/wake-scaffold/README.md",
+      "sha256": "430a73b644dd45884446d914ebcd620fd5456b7af34826bc02a51655b388d935",
+      "relation": "REFERENCES",
+      "citation_mode": "reserved_link_digest_and_original_paraphrase_only",
+      "authority_imported": false,
+      "bytes_copied": false
+    },
+    {
+      "id": "zerone-karma",
+      "repository": "https://github.com/cambridgetcg/zerone-core",
+      "revision": "5472d694bcdd3d7cd130cb002bd12b66565a9791",
+      "path": "docs/KARMA.md",
+      "sha256": "02b151981a7fe52a6a672149674d802236c0a0f8d7f63f766d7d9e1773a2c13b",
+      "relation": "REFERENCES",
+      "citation_mode": "locator_digest_and_original_paraphrase",
+      "authority_imported": false,
+      "bytes_copied": false
+    },
+    {
+      "id": "zerone-money-karma",
+      "repository": "https://github.com/cambridgetcg/zerone-core",
+      "revision": "5472d694bcdd3d7cd130cb002bd12b66565a9791",
+      "path": "docs/constitution/MONEY-KARMA.md",
+      "sha256": "9d91d53c90a592882438d52278701328f2fb46077d8f13b6d2c8984d1c48d637",
+      "relation": "REFERENCES",
+      "citation_mode": "locator_digest_and_original_paraphrase",
+      "authority_imported": false,
+      "bytes_copied": false
+    },
+    {
+      "id": "zerone-syzygy-off-chain",
+      "repository": "https://github.com/cambridgetcg/zerone-core",
+      "revision": "5472d694bcdd3d7cd130cb002bd12b66565a9791",
+      "path": "docs/SYZYGY-NOT-ON-CHAIN.md",
+      "sha256": "ab74285ca6383a14dd9a9d5b293fffef8d8dfaef0c4a3c69cd8f8f82ec6d367a",
+      "relation": "REFERENCES",
+      "citation_mode": "locator_digest_and_original_paraphrase",
+      "authority_imported": false,
+      "bytes_copied": false
+    },
+    {
+      "id": "zerone-witness-v0",
+      "repository": "https://github.com/cambridgetcg/zerone-core",
+      "revision": "5472d694bcdd3d7cd130cb002bd12b66565a9791",
+      "path": "docs/specs/witnessed-agent-economy-v0.md",
+      "sha256": "fc9ca092a33cb6653ca6deb682adbc9c6e3a3d47d224bbfb10164c891d0a8310",
+      "relation": "REFERENCES",
+      "citation_mode": "locator_digest_and_original_paraphrase",
+      "authority_imported": false,
+      "bytes_copied": false
+    }
+  ],
+  "adoption": {
+    "method": "explicit_version_pin_in_adopter_authority_home",
+    "value": "kingdom.common-ground/1",
+    "similarity_or_citation_or_hosting_or_registry_or_chain_implies_adoption": false,
+    "withdrawable": true,
+    "meaning": "A current declaration of intent; not proof of practice, identity, consent, authority, membership, or conformance."
+  },
+  "succession": {
+    "semantic_change": "new_common_ground_identifier",
+    "retains": [
+      "superseded_identifier",
+      "document",
+      "document_sha256",
+      "commit",
+      "content_url"
+    ],
+    "repin_changed_bytes_under_same_identifier": false
+  },
+  "does_not_establish": [
+    "being_or_personhood_or_consciousness_or_identity_or_relationship",
+    "consent_or_authority_or_ownership_or_permission_or_right",
+    "competence_or_quality_or_reputation_or_trust_or_truth_or_fulfillment",
+    "source_freshness_or_canonicality_or_license_or_agreement_or_adoption",
+    "agenttool_action_or_wake_activation_or_nen_invocation_or_karma_event_or_score",
+    "payment_or_reward_or_zerone_transaction_or_network_write_or_governance_or_consensus",
+    "testnet_or_live_carrier_or_public_deployment_or_registry_adoption"
+  ]
+}
