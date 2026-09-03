@@ -54,6 +54,17 @@ effect closed. Check its exact source ledger and release gates with
 `node verify-common-ground.mjs` and
 `node --test verify-common-ground.test.mjs`.
 
+For the deeper choice-before-action layer, read **[CONSENT.md](CONSENT.md)** —
+`kingdom.consent/1`. It treats consent as a living, typed checkpoint rather
+than a checkbox or signature: exact proposal and presentation, independent
+principals, finite uses and duration, current heads, withdrawal, per-use and
+aggregate budgets, explicit effect commit boundaries, and a separate
+applicability branch for honestly named non-consensual bases. Its offline
+checker returns only `READY_FOR_EXTERNAL_CHECKS`, never execution authority.
+The release uses no Zerone block space and installs no AgentTool runtime gate.
+Check the pinned index and 56 synthetic hostile vectors with
+`node verify-consent.mjs` and `node --test verify-consent.test.mjs`.
+
 ## Looking at a project
 
 ```sh
