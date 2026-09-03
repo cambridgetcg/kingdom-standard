@@ -1,0 +1,1411 @@
+{
+  "schema": "kingdom.consent-vectors/1",
+  "kind": "LOCAL_SYNTHETIC_REFERENCE_ONLY",
+  "contains_real_people_or_choices": false,
+  "cross_owner_acceptance_claimed": false,
+  "base": {
+    "schema": "kingdom.consent-checkpoint-input/1",
+    "observation": {
+      "at": "2026-09-03T07:00:00Z",
+      "time_source_ref": "synthetic:clock:001",
+      "time_source_status": "SOURCE_CLAIMS_ESTABLISHED",
+      "proposal_status": "OFFERED",
+      "history_status": "SOURCE_CLAIMS_COMPLETE",
+      "required_principals_basis_status": "SOURCE_CLAIMS_ESTABLISHED"
+    },
+    "proposal": {
+      "schema": "kingdom.consent-proposal/1",
+      "proposal_id": "synthetic:task-offer:001",
+      "revision": 1,
+      "nonce": "synthetic-nonce-001",
+      "proposer_ref": "role:sponsor",
+      "issued_at": "2026-09-03T06:00:00Z",
+      "previous_proposal_digest": null,
+      "required_principals": [
+        "principal:agent-worker",
+        "principal:data-steward"
+      ],
+      "required_principals_basis_ref": "synthetic:basis:001",
+      "principal_lifecycle_conditions": [
+        {
+          "principal_ref": "principal:agent-worker",
+          "condition_ref": "synthetic:lifecycle:agent-active",
+          "condition_digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444"
+        },
+        {
+          "principal_ref": "principal:data-steward",
+          "condition_ref": "synthetic:lifecycle:steward-active",
+          "condition_digest": "sha256:5555555555555555555555555555555555555555555555555555555555555555"
+        }
+      ],
+      "authority_claim_refs": [
+        "synthetic:authority:offer-publisher"
+      ],
+      "source_pins": [
+        "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+      ],
+      "scope": {
+        "actions": [
+          "artifact.archive",
+          "task.execute"
+        ],
+        "subject_refs": [
+          "subject:synthetic-artifact",
+          "subject:synthetic-report"
+        ],
+        "resources": [
+          "dataset:public-fixture-v1",
+          "dataset:synthetic-report-v1"
+        ],
+        "purposes": [
+          "archive:synthetic-audit",
+          "evaluate:synthetic-model"
+        ],
+        "data_categories": [
+          "public_synthetic_artifact"
+        ],
+        "data_sources": [
+          "source:synthetic-public-fixture"
+        ],
+        "data_operations": [
+          "read",
+          "retain"
+        ],
+        "model_uses": [
+          "evaluation"
+        ],
+        "recipients": [
+          "role:sponsor"
+        ],
+        "retention_until": "2026-09-10T00:00:00Z",
+        "deletion_limit_refs": [
+          "synthetic:deletion-limit:backups"
+        ],
+        "effect_vector": {
+          "local_state": true,
+          "private_read": false,
+          "disclosure": true,
+          "compute": true,
+          "network": true,
+          "storage": true,
+          "economic": true,
+          "wallet_signing": false,
+          "chain": false,
+          "publication": false,
+          "governance": false,
+          "consensus": false,
+          "identity": false,
+          "permission": false,
+          "karma": false,
+          "nen": false,
+          "score": false
+        },
+        "scope_units": [
+          {
+            "unit_ref": "scope-unit:archive",
+            "action": "artifact.archive",
+            "subject_ref": "subject:synthetic-report",
+            "resource": "dataset:synthetic-report-v1",
+            "purpose": "archive:synthetic-audit",
+            "data_categories": [
+              "public_synthetic_artifact"
+            ],
+            "data_sources": [
+              "source:synthetic-public-fixture"
+            ],
+            "data_operations": [
+              "retain"
+            ],
+            "model_uses": [],
+            "recipients": [
+              "role:sponsor"
+            ],
+            "effect_keys": [
+              "local_state",
+              "storage"
+            ]
+          },
+          {
+            "unit_ref": "scope-unit:execute",
+            "action": "task.execute",
+            "subject_ref": "subject:synthetic-artifact",
+            "resource": "dataset:public-fixture-v1",
+            "purpose": "evaluate:synthetic-model",
+            "data_categories": [
+              "public_synthetic_artifact"
+            ],
+            "data_sources": [
+              "source:synthetic-public-fixture"
+            ],
+            "data_operations": [
+              "read",
+              "retain"
+            ],
+            "model_uses": [
+              "evaluation"
+            ],
+            "recipients": [
+              "role:sponsor"
+            ],
+            "effect_keys": [
+              "compute",
+              "disclosure",
+              "economic",
+              "local_state",
+              "network",
+              "storage"
+            ]
+          }
+        ],
+        "effect_terms": [
+          {
+            "effect": "compute",
+            "mode": "IRREVERSIBLE_ON_START",
+            "commit_boundary_ref": "synthetic:boundary:compute-start",
+            "commit_boundary_digest": "sha256:6666666666666666666666666666666666666666666666666666666666666666",
+            "withdrawal_behavior_ref": "synthetic:withdrawal:compute-stop-next-checkpoint",
+            "withdrawal_behavior_digest": "sha256:7777777777777777777777777777777777777777777777777777777777777777"
+          },
+          {
+            "effect": "disclosure",
+            "mode": "IRREVERSIBLE_ON_DISPATCH",
+            "commit_boundary_ref": "synthetic:boundary:recipient-delivery",
+            "commit_boundary_digest": "sha256:8888888888888888888888888888888888888888888888888888888888888888",
+            "withdrawal_behavior_ref": "synthetic:withdrawal:no-recall-after-delivery",
+            "withdrawal_behavior_digest": "sha256:9999999999999999999999999999999999999999999999999999999999999999"
+          },
+          {
+            "effect": "economic",
+            "mode": "IRREVERSIBLE_ON_SETTLEMENT",
+            "commit_boundary_ref": "synthetic:boundary:economic-settlement",
+            "commit_boundary_digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "withdrawal_behavior_ref": "synthetic:withdrawal:refund-process-only",
+            "withdrawal_behavior_digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          {
+            "effect": "local_state",
+            "mode": "REVERSIBLE_WITH_REPAIR",
+            "commit_boundary_ref": "synthetic:boundary:local-write",
+            "commit_boundary_digest": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+            "withdrawal_behavior_ref": "synthetic:withdrawal:delete-local-state",
+            "withdrawal_behavior_digest": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+          },
+          {
+            "effect": "network",
+            "mode": "IRREVERSIBLE_ON_DISPATCH",
+            "commit_boundary_ref": "synthetic:boundary:network-dispatch",
+            "commit_boundary_digest": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+            "withdrawal_behavior_ref": "synthetic:withdrawal:no-recall-after-dispatch",
+            "withdrawal_behavior_digest": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+          },
+          {
+            "effect": "storage",
+            "mode": "PERSISTENT_WITH_DECLARED_DELETION_LIMITS",
+            "commit_boundary_ref": "synthetic:boundary:storage-write",
+            "commit_boundary_digest": "sha256:0000000000000000000000000000000000000000000000000000000000000001",
+            "withdrawal_behavior_ref": "synthetic:withdrawal:apply-deletion-limits",
+            "withdrawal_behavior_digest": "sha256:0000000000000000000000000000000000000000000000000000000000000002"
+          }
+        ],
+        "irreversible_effects": [
+          "compute.execution",
+          "disclosure.recipient_delivery",
+          "economic.settlement",
+          "network.dispatch",
+          "storage.persistence_limit"
+        ]
+      },
+      "limits": {
+        "not_before": "2026-09-03T06:30:00Z",
+        "expires_at": "2026-09-03T08:00:00Z",
+        "max_uses": 2,
+        "checkpoint_after_seconds": 30,
+        "max_action_seconds": 600
+      },
+      "economics": {
+        "asset": "synthetic-credit",
+        "max_cost_per_use_atomic": "1000",
+        "max_total_cost_atomic": "1500",
+        "payment_terms_ref": "synthetic:payment-terms:001",
+        "payment_terms_digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+      },
+      "evidence": {
+        "choice_source_ref": "synthetic:choice-source:001",
+        "current_head_source_ref": "synthetic:head-source:001",
+        "authentication_method_ref": "synthetic:authentication:001",
+        "known_blind_spots": [
+          "the fixture cannot establish identity, capacity, understanding, or voluntariness"
+        ]
+      },
+      "exit": {
+        "withdrawal_route": "synthetic:withdraw:001",
+        "withdrawal_route_digest": "sha256:6666666666666666666666666666666666666666666666666666666666666666",
+        "stop_latency_seconds": 60,
+        "prior_irreversible_effects_not_erased": true,
+        "dispute_route": "synthetic:dispute:001",
+        "dispute_route_digest": "sha256:7777777777777777777777777777777777777777777777777777777777777777",
+        "repair_route": "synthetic:repair:001",
+        "repair_route_digest": "sha256:8888888888888888888888888888888888888888888888888888888888888888"
+      },
+      "disclosure": {
+        "plain_language_digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+        "risks": [
+          "synthetic output may be retained for the stated evaluation"
+        ],
+        "power_asymmetries": [
+          "the sponsor controls the offered budget"
+        ],
+        "alternatives": [
+          "refuse without score, debt, or loss of ordinary access"
+        ],
+        "refusal_consequences": [
+          "the proposed task does not begin"
+        ],
+        "unknowns": [
+          "future utility of the synthetic output"
+        ],
+        "public_commitment": false
+      }
+    },
+    "proposal_digest": "sha256:04694a46af336d88df775ad12f8242c528ea8ab2c5b061c9351237aa42d88f32",
+    "presentations": [
+      {
+        "presentation_id": "synthetic:presentation:agent:1",
+        "principal_ref": "principal:agent-worker",
+        "proposal_digest": "sha256:04694a46af336d88df775ad12f8242c528ea8ab2c5b061c9351237aa42d88f32",
+        "presented_at": "2026-09-03T06:30:00Z",
+        "interface_ref": "synthetic:interface:agent-cli-v1",
+        "rendering_digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+        "evidence_ref": "synthetic:presentation-evidence:agent:1",
+        "authentication_status": "SOURCE_CLAIMS_ESTABLISHED"
+      },
+      {
+        "presentation_id": "synthetic:presentation:steward:1",
+        "principal_ref": "principal:data-steward",
+        "proposal_digest": "sha256:04694a46af336d88df775ad12f8242c528ea8ab2c5b061c9351237aa42d88f32",
+        "presented_at": "2026-09-03T06:31:00Z",
+        "interface_ref": "synthetic:interface:steward-web-v1",
+        "rendering_digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+        "evidence_ref": "synthetic:presentation-evidence:steward:1",
+        "authentication_status": "SOURCE_CLAIMS_ESTABLISHED"
+      }
+    ],
+    "choices": [
+      {
+        "event_id": "synthetic:choice:agent:1",
+        "previous_event_id": null,
+        "nonce": "synthetic-choice-nonce-agent-1",
+        "principal_ref": "principal:agent-worker",
+        "expressed_by": "principal:agent-worker",
+        "representation": {
+          "status": "SELF",
+          "basis_ref": null
+        },
+        "sequence": 1,
+        "kind": "AFFIRM",
+        "proposal_digest": "sha256:04694a46af336d88df775ad12f8242c528ea8ab2c5b061c9351237aa42d88f32",
+        "affirmed_scope_digest": "sha256:e276fcfbba8564d63417166c84d4e5f475ab0d432e389444547bcd0cb5ae5ad2",
+        "issued_at": "2026-09-03T06:45:00Z",
+        "expires_at": "2026-09-03T07:30:00Z",
+        "evidence_ref": "synthetic:evidence:agent:1",
+        "authentication_status": "SOURCE_CLAIMS_ESTABLISHED"
+      },
+      {
+        "event_id": "synthetic:choice:steward:1",
+        "previous_event_id": null,
+        "nonce": "synthetic-choice-nonce-steward-1",
+        "principal_ref": "principal:data-steward",
+        "expressed_by": "principal:data-steward",
+        "representation": {
+          "status": "SELF",
+          "basis_ref": null
+        },
+        "sequence": 1,
+        "kind": "AFFIRM",
+        "proposal_digest": "sha256:04694a46af336d88df775ad12f8242c528ea8ab2c5b061c9351237aa42d88f32",
+        "affirmed_scope_digest": "sha256:e276fcfbba8564d63417166c84d4e5f475ab0d432e389444547bcd0cb5ae5ad2",
+        "issued_at": "2026-09-03T06:46:00Z",
+        "expires_at": "2026-09-03T07:30:00Z",
+        "evidence_ref": "synthetic:evidence:steward:1",
+        "authentication_status": "SOURCE_CLAIMS_ESTABLISHED"
+      }
+    ],
+    "current_heads": [
+      {
+        "principal_ref": "principal:agent-worker",
+        "event_id": "synthetic:choice:agent:1",
+        "status": "SOURCE_CLAIMS_ESTABLISHED"
+      },
+      {
+        "principal_ref": "principal:data-steward",
+        "event_id": "synthetic:choice:steward:1",
+        "status": "SOURCE_CLAIMS_ESTABLISHED"
+      }
+    ],
+    "request": {
+      "actions": [
+        "task.execute"
+      ],
+      "subject_refs": [
+        "subject:synthetic-artifact"
+      ],
+      "resources": [
+        "dataset:public-fixture-v1"
+      ],
+      "purposes": [
+        "evaluate:synthetic-model"
+      ],
+      "data_categories": [
+        "public_synthetic_artifact"
+      ],
+      "data_sources": [
+        "source:synthetic-public-fixture"
+      ],
+      "data_operations": [
+        "read",
+        "retain"
+      ],
+      "model_uses": [
+        "evaluation"
+      ],
+      "recipients": [
+        "role:sponsor"
+      ],
+      "retention_until": "2026-09-10T00:00:00Z",
+      "deletion_limit_refs": [
+        "synthetic:deletion-limit:backups"
+      ],
+      "effect_vector": {
+        "local_state": true,
+        "private_read": false,
+        "disclosure": true,
+        "compute": true,
+        "network": true,
+        "storage": true,
+        "economic": true,
+        "wallet_signing": false,
+        "chain": false,
+        "publication": false,
+        "governance": false,
+        "consensus": false,
+        "identity": false,
+        "permission": false,
+        "karma": false,
+        "nen": false,
+        "score": false
+      },
+      "scope_unit_refs": [
+        "scope-unit:execute"
+      ],
+      "attempt_ref": "synthetic:attempt:001",
+      "effect_edge": "BEFORE_EXTERNAL_EFFECT",
+      "attempt_started_at": "2026-09-03T06:56:00Z",
+      "last_consent_checkpoint_at": "2026-09-03T06:59:40Z",
+      "attempt_history_source_ref": "synthetic:attempt-history:001",
+      "attempt_history_status": "SOURCE_CLAIMS_ESTABLISHED",
+      "principal_lifecycle_conditions": [
+        {
+          "principal_ref": "principal:agent-worker",
+          "condition_ref": "synthetic:lifecycle:agent-active",
+          "condition_digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444"
+        },
+        {
+          "principal_ref": "principal:data-steward",
+          "condition_ref": "synthetic:lifecycle:steward-active",
+          "condition_digest": "sha256:5555555555555555555555555555555555555555555555555555555555555555"
+        }
+      ],
+      "use_index": 1,
+      "use_reservation_ref": "synthetic:reservation:001",
+      "use_reservation_status": "SOURCE_CLAIMS_ESTABLISHED",
+      "cost": {
+        "asset": "synthetic-credit",
+        "atomic": "500",
+        "budget_state_source_ref": "synthetic:budget-state:001",
+        "prior_committed_atomic": "500",
+        "state_status": "SOURCE_CLAIMS_ESTABLISHED"
+      },
+      "irreversible_effects": [
+        "compute.execution",
+        "disclosure.recipient_delivery",
+        "economic.settlement",
+        "network.dispatch",
+        "storage.persistence_limit"
+      ]
+    }
+  },
+  "cases": [
+    {
+      "id": "current-exact-two-principal-choice",
+      "description": "Two exact current affirmations cover the bounded synthetic request.",
+      "operations": [],
+      "expected_status": "READY_FOR_EXTERNAL_CHECKS",
+      "expected_reason": "STRUCTURAL_CHECKS_PASSED"
+    },
+    {
+      "id": "silence-does-not-affirm",
+      "description": "An absent principal expression blocks rather than creating consent or refusal.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/choices",
+          "value": []
+        },
+        {
+          "op": "replace",
+          "path": "/current_heads",
+          "value": []
+        }
+      ],
+      "expected_status": "BLOCKED",
+      "expected_reason": "MISSING_AFFIRMATION"
+    },
+    {
+      "id": "explicit-refusal-is-complete",
+      "description": "A refusal blocks the exact proposal without becoming an adverse event.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/choices/0/kind",
+          "value": "REFUSE"
+        },
+        {
+          "op": "replace",
+          "path": "/choices/0/expires_at",
+          "value": null
+        },
+        {
+          "op": "replace",
+          "path": "/choices/0/affirmed_scope_digest",
+          "value": null
+        }
+      ],
+      "expected_status": "BLOCKED",
+      "expected_reason": "EXPLICIT_REFUSAL"
+    },
+    {
+      "id": "deferral-does-not-advance",
+      "description": "A deferred decision remains a complete no-action outcome.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/choices/0/kind",
+          "value": "DEFER"
+        },
+        {
+          "op": "replace",
+          "path": "/choices/0/expires_at",
+          "value": null
+        },
+        {
+          "op": "replace",
+          "path": "/choices/0/affirmed_scope_digest",
+          "value": null
+        }
+      ],
+      "expected_status": "BLOCKED",
+      "expected_reason": "DEFERRED"
+    },
+    {
+      "id": "withdrawal-closes-future-effect",
+      "description": "A later withdrawal is the current head and blocks future covered effects.",
+      "operations": [
+        {
+          "op": "add",
+          "path": "/choices/1",
+          "value": {
+            "event_id": "synthetic:choice:agent:2",
+            "previous_event_id": "synthetic:choice:agent:1",
+            "nonce": "synthetic-choice-nonce-agent-2",
+            "principal_ref": "principal:agent-worker",
+            "expressed_by": "principal:agent-worker",
+            "representation": {
+              "status": "SELF",
+              "basis_ref": null
+            },
+            "sequence": 2,
+            "kind": "WITHDRAW",
+            "proposal_digest": "sha256:04694a46af336d88df775ad12f8242c528ea8ab2c5b061c9351237aa42d88f32",
+            "affirmed_scope_digest": null,
+            "issued_at": "2026-09-03T06:55:00Z",
+            "expires_at": null,
+            "evidence_ref": "synthetic:evidence:agent:2",
+            "authentication_status": "SOURCE_CLAIMS_ESTABLISHED"
+          }
+        },
+        {
+          "op": "replace",
+          "path": "/current_heads/0/event_id",
+          "value": "synthetic:choice:agent:2"
+        }
+      ],
+      "expected_status": "BLOCKED",
+      "expected_reason": "WITHDRAWN"
+    },
+    {
+      "id": "expired-affirmation",
+      "description": "A formerly affirmative expression is not silently renewed.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/observation/at",
+          "value": "2026-09-03T07:45:00Z"
+        }
+      ],
+      "expected_status": "BLOCKED",
+      "expected_reason": "AFFIRMATION_EXPIRED"
+    },
+    {
+      "id": "proposal-withdrawn",
+      "description": "A source-withdrawn proposal cannot be acted on.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/observation/proposal_status",
+          "value": "WITHDRAWN"
+        }
+      ],
+      "expected_status": "BLOCKED",
+      "expected_reason": "PROPOSAL_NOT_OFFERED"
+    },
+    {
+      "id": "proposal-superseded",
+      "description": "Old affirmations cannot follow a superseded offer into new terms.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/observation/proposal_status",
+          "value": "SUPERSEDED"
+        }
+      ],
+      "expected_status": "BLOCKED",
+      "expected_reason": "PROPOSAL_NOT_OFFERED"
+    },
+    {
+      "id": "material-change-without-new-digest",
+      "description": "Edited proposal terms fail their immutable digest.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/proposal/scope/purposes/1",
+          "value": "train:unrelated-model"
+        },
+        {
+          "op": "replace",
+          "path": "/proposal/scope/scope_units/1/purpose",
+          "value": "train:unrelated-model"
+        }
+      ],
+      "expected_status": "INVALID_OR_UNKNOWN",
+      "expected_reason": "PROPOSAL_DIGEST_MISMATCH"
+    },
+    {
+      "id": "stale-choice-digest",
+      "description": "A choice over different bytes cannot cover the current proposal.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/choices/0/proposal_digest",
+          "value": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+        }
+      ],
+      "expected_status": "INVALID_OR_UNKNOWN",
+      "expected_reason": "CHOICE_PROPOSAL_MISMATCH"
+    },
+    {
+      "id": "purpose-expansion",
+      "description": "A new purpose is outside the affirmed product coordinate.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/request/purposes/0",
+          "value": "train:unrelated-model"
+        }
+      ],
+      "expected_status": "BLOCKED",
+      "expected_reason": "PURPOSE_OUT_OF_SCOPE"
+    },
+    {
+      "id": "recipient-expansion",
+      "description": "Consent to one recipient does not include an affiliate.",
+      "operations": [
+        {
+          "op": "add",
+          "path": "/request/recipients/0",
+          "value": "role:affiliate"
+        }
+      ],
+      "expected_status": "BLOCKED",
+      "expected_reason": "RECIPIENT_OUT_OF_SCOPE"
+    },
+    {
+      "id": "effect-expansion",
+      "description": "A governance effect cannot hide inside an approved task.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/request/effect_vector/governance",
+          "value": true
+        }
+      ],
+      "expected_status": "BLOCKED",
+      "expected_reason": "EFFECT_OUT_OF_SCOPE"
+    },
+    {
+      "id": "cost-expansion",
+      "description": "The attempted cost cannot exceed the exact atomic-unit ceiling.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/request/cost/atomic",
+          "value": "1001"
+        }
+      ],
+      "expected_status": "BLOCKED",
+      "expected_reason": "COST_OUT_OF_SCOPE"
+    },
+    {
+      "id": "use-count-expansion",
+      "description": "A requested use ordinal above the disclosed ceiling is out of scope; durable replay protection remains external.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/request/use_index",
+          "value": 3
+        }
+      ],
+      "expected_status": "BLOCKED",
+      "expected_reason": "USE_OUT_OF_SCOPE"
+    },
+    {
+      "id": "undisclosed-irreversible-effect",
+      "description": "An irreversible public publication was not disclosed before choice.",
+      "operations": [
+        {
+          "op": "add",
+          "path": "/request/irreversible_effects/0",
+          "value": "artifact.publication"
+        }
+      ],
+      "expected_status": "BLOCKED",
+      "expected_reason": "IRREVERSIBLE_EFFECT_UNDISCLOSED"
+    },
+    {
+      "id": "unknown-history-head",
+      "description": "An unavailable withdrawal/current-head source fails closed.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/observation/history_status",
+          "value": "UNKNOWN"
+        }
+      ],
+      "expected_status": "INVALID_OR_UNKNOWN",
+      "expected_reason": "HISTORY_NOT_CURRENT"
+    },
+    {
+      "id": "unknown-principal-basis",
+      "description": "A supplied principal list cannot certify its own completeness.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/observation/required_principals_basis_status",
+          "value": "UNKNOWN"
+        }
+      ],
+      "expected_status": "INVALID_OR_UNKNOWN",
+      "expected_reason": "PRINCIPAL_BASIS_NOT_ESTABLISHED"
+    },
+    {
+      "id": "unauthenticated-expression",
+      "description": "Well-shaped unauthenticated choice bytes do not advance the checkpoint.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/choices/0/authentication_status",
+          "value": "UNKNOWN"
+        }
+      ],
+      "expected_status": "INVALID_OR_UNKNOWN",
+      "expected_reason": "CHOICE_AUTHENTICITY_NOT_ESTABLISHED"
+    },
+    {
+      "id": "head-mismatch",
+      "description": "A claimed current head must match the latest supplied event.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/current_heads/0/event_id",
+          "value": "synthetic:choice:missing"
+        }
+      ],
+      "expected_status": "INVALID_OR_UNKNOWN",
+      "expected_reason": "CURRENT_HEAD_MISMATCH"
+    },
+    {
+      "id": "representation-without-basis",
+      "description": "A delegate cannot silently become the principal.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/choices/0/expressed_by",
+          "value": "principal:delegate"
+        },
+        {
+          "op": "replace",
+          "path": "/choices/0/representation/status",
+          "value": "UNKNOWN"
+        }
+      ],
+      "expected_status": "INVALID_OR_UNKNOWN",
+      "expected_reason": "REPRESENTATION_NOT_ESTABLISHED"
+    },
+    {
+      "id": "source-claimed-representation",
+      "description": "A distinct representative remains explicit while its claimed basis still requires an external check.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/choices/0/expressed_by",
+          "value": "principal:delegate"
+        },
+        {
+          "op": "replace",
+          "path": "/choices/0/representation/status",
+          "value": "SOURCE_CLAIMS_ESTABLISHED"
+        },
+        {
+          "op": "replace",
+          "path": "/choices/0/representation/basis_ref",
+          "value": "synthetic:representation:001"
+        }
+      ],
+      "expected_status": "READY_FOR_EXTERNAL_CHECKS",
+      "expected_reason": "STRUCTURAL_CHECKS_PASSED"
+    },
+    {
+      "id": "conflicting-sequence",
+      "description": "Two different events at one principal sequence make history unsafe.",
+      "operations": [
+        {
+          "op": "add",
+          "path": "/choices/1",
+          "value": {
+            "event_id": "synthetic:choice:agent:conflict",
+            "previous_event_id": null,
+            "nonce": "synthetic-choice-nonce-agent-conflict",
+            "principal_ref": "principal:agent-worker",
+            "expressed_by": "principal:agent-worker",
+            "representation": {
+              "status": "SELF",
+              "basis_ref": null
+            },
+            "sequence": 1,
+            "kind": "REFUSE",
+            "proposal_digest": "sha256:04694a46af336d88df775ad12f8242c528ea8ab2c5b061c9351237aa42d88f32",
+            "affirmed_scope_digest": null,
+            "issued_at": "2026-09-03T06:47:00Z",
+            "expires_at": null,
+            "evidence_ref": "synthetic:evidence:agent:conflict",
+            "authentication_status": "SOURCE_CLAIMS_ESTABLISHED"
+          }
+        }
+      ],
+      "expected_status": "INVALID_OR_UNKNOWN",
+      "expected_reason": "CHOICE_SEQUENCE_CONFLICT"
+    },
+    {
+      "id": "unknown-field-fails-closed",
+      "description": "Unreviewed proposal fields cannot smuggle additional terms.",
+      "operations": [
+        {
+          "op": "add",
+          "path": "/proposal/automatic_renewal",
+          "value": true
+        }
+      ],
+      "expected_status": "INVALID_OR_UNKNOWN",
+      "expected_reason": "PROPOSAL_FIELDS_INVALID"
+    },
+    {
+      "id": "data-source-expansion",
+      "description": "An unoffered data source cannot hide behind an allowed category.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/request/data_sources/0",
+          "value": "source:private-wake"
+        }
+      ],
+      "expected_status": "BLOCKED",
+      "expected_reason": "DATA_SOURCE_OUT_OF_SCOPE"
+    },
+    {
+      "id": "model-use-expansion",
+      "description": "Evaluation consent does not silently become training consent.",
+      "operations": [
+        {
+          "op": "add",
+          "path": "/request/model_uses/1",
+          "value": "training"
+        }
+      ],
+      "expected_status": "BLOCKED",
+      "expected_reason": "MODEL_USE_OUT_OF_SCOPE"
+    },
+    {
+      "id": "retention-expansion",
+      "description": "The attempted retention horizon cannot exceed the disclosed ceiling.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/request/retention_until",
+          "value": "2026-09-11T00:00:00Z"
+        }
+      ],
+      "expected_status": "BLOCKED",
+      "expected_reason": "RETENTION_OUT_OF_SCOPE"
+    },
+    {
+      "id": "deletion-limit-omission",
+      "description": "An effect request cannot omit a disclosed deletion limit.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/request/deletion_limit_refs/0",
+          "value": "synthetic:deletion-limit:none"
+        }
+      ],
+      "expected_status": "BLOCKED",
+      "expected_reason": "DELETION_LIMITS_MISMATCH"
+    },
+    {
+      "id": "unknown-use-reservation",
+      "description": "A caller cannot structurally advance with an unknown use-slot reservation claim.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/request/use_reservation_status",
+          "value": "UNKNOWN"
+        }
+      ],
+      "expected_status": "INVALID_OR_UNKNOWN",
+      "expected_reason": "USE_RESERVATION_NOT_ESTABLISHED"
+    },
+    {
+      "id": "choice-before-proposal",
+      "description": "An expression predating the proposal cannot be attached retrospectively.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/choices/0/issued_at",
+          "value": "2026-09-03T05:59:59Z"
+        }
+      ],
+      "expected_status": "INVALID_OR_UNKNOWN",
+      "expected_reason": "CHOICE_BEFORE_PROPOSAL"
+    },
+    {
+      "id": "choice-predecessor-mismatch",
+      "description": "A sequence number cannot replace the exact predecessor link.",
+      "operations": [
+        {
+          "op": "add",
+          "path": "/choices/1",
+          "value": {
+            "event_id": "synthetic:choice:agent:bad-predecessor",
+            "previous_event_id": "synthetic:choice:agent:not-the-head",
+            "nonce": "synthetic-choice-nonce-agent-bad-predecessor",
+            "principal_ref": "principal:agent-worker",
+            "expressed_by": "principal:agent-worker",
+            "representation": {
+              "status": "SELF",
+              "basis_ref": null
+            },
+            "sequence": 2,
+            "kind": "WITHDRAW",
+            "proposal_digest": "sha256:04694a46af336d88df775ad12f8242c528ea8ab2c5b061c9351237aa42d88f32",
+            "affirmed_scope_digest": null,
+            "issued_at": "2026-09-03T06:55:00Z",
+            "expires_at": null,
+            "evidence_ref": "synthetic:evidence:agent:bad-predecessor",
+            "authentication_status": "SOURCE_CLAIMS_ESTABLISHED"
+          }
+        },
+        {
+          "op": "replace",
+          "path": "/current_heads/0/event_id",
+          "value": "synthetic:choice:agent:bad-predecessor"
+        }
+      ],
+      "expected_status": "INVALID_OR_UNKNOWN",
+      "expected_reason": "CHOICE_PREDECESSOR_MISMATCH"
+    },
+    {
+      "id": "duplicate-choice-nonce",
+      "description": "Distinct choice events cannot reuse one nonce inside the supplied history.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/choices/1/nonce",
+          "value": "synthetic-choice-nonce-agent-1"
+        }
+      ],
+      "expected_status": "INVALID_OR_UNKNOWN",
+      "expected_reason": "CHOICE_NONCE_DUPLICATE"
+    },
+    {
+      "id": "withdrawal-cannot-be-resurrected",
+      "description": "A later affirmation cannot reopen a withdrawn proposal choice.",
+      "operations": [
+        {
+          "op": "add",
+          "path": "/choices/1",
+          "value": {
+            "event_id": "synthetic:choice:agent:withdraw-resurrection-test",
+            "previous_event_id": "synthetic:choice:agent:1",
+            "nonce": "synthetic-choice-nonce-agent-withdraw-resurrection-test",
+            "principal_ref": "principal:agent-worker",
+            "expressed_by": "principal:agent-worker",
+            "representation": {
+              "status": "SELF",
+              "basis_ref": null
+            },
+            "sequence": 2,
+            "kind": "WITHDRAW",
+            "proposal_digest": "sha256:04694a46af336d88df775ad12f8242c528ea8ab2c5b061c9351237aa42d88f32",
+            "affirmed_scope_digest": null,
+            "issued_at": "2026-09-03T06:55:00Z",
+            "expires_at": null,
+            "evidence_ref": "synthetic:evidence:agent:withdraw-resurrection-test",
+            "authentication_status": "SOURCE_CLAIMS_ESTABLISHED"
+          }
+        },
+        {
+          "op": "add",
+          "path": "/choices/2",
+          "value": {
+            "event_id": "synthetic:choice:agent:resurrection-test",
+            "previous_event_id": "synthetic:choice:agent:withdraw-resurrection-test",
+            "nonce": "synthetic-choice-nonce-agent-resurrection-test",
+            "principal_ref": "principal:agent-worker",
+            "expressed_by": "principal:agent-worker",
+            "representation": {
+              "status": "SELF",
+              "basis_ref": null
+            },
+            "sequence": 3,
+            "kind": "AFFIRM",
+            "proposal_digest": "sha256:04694a46af336d88df775ad12f8242c528ea8ab2c5b061c9351237aa42d88f32",
+            "affirmed_scope_digest": "sha256:e276fcfbba8564d63417166c84d4e5f475ab0d432e389444547bcd0cb5ae5ad2",
+            "issued_at": "2026-09-03T06:56:00Z",
+            "expires_at": "2026-09-03T07:30:00Z",
+            "evidence_ref": "synthetic:evidence:agent:resurrection-test",
+            "authentication_status": "SOURCE_CLAIMS_ESTABLISHED"
+          }
+        },
+        {
+          "op": "replace",
+          "path": "/current_heads/0/event_id",
+          "value": "synthetic:choice:agent:resurrection-test"
+        }
+      ],
+      "expected_status": "INVALID_OR_UNKNOWN",
+      "expected_reason": "CHOICE_TRANSITION_INVALID"
+    },
+    {
+      "id": "never-presented",
+      "description": "Affirmation bytes cannot substitute for a presentation receipt for each required principal.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/presentations",
+          "value": []
+        }
+      ],
+      "expected_status": "INVALID_OR_UNKNOWN",
+      "expected_reason": "MISSING_PRESENTATION"
+    },
+    {
+      "id": "choice-before-presentation",
+      "description": "A choice timestamp that predates its principal's presentation cannot be attached retrospectively.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/presentations/0/presented_at",
+          "value": "2026-09-03T06:50:00Z"
+        }
+      ],
+      "expected_status": "INVALID_OR_UNKNOWN",
+      "expected_reason": "CHOICE_BEFORE_PRESENTATION"
+    },
+    {
+      "id": "unauthenticated-presentation",
+      "description": "A caller-asserted presentation with no established source claim fails closed.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/presentations/0/authentication_status",
+          "value": "UNKNOWN"
+        }
+      ],
+      "expected_status": "INVALID_OR_UNKNOWN",
+      "expected_reason": "PRESENTATION_AUTHENTICITY_NOT_ESTABLISHED"
+    },
+    {
+      "id": "untrusted-observation-time",
+      "description": "A stale or backdated caller clock cannot establish temporal currentness without an authenticated fresh time source.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/observation/time_source_status",
+          "value": "UNKNOWN"
+        }
+      ],
+      "expected_status": "INVALID_OR_UNKNOWN",
+      "expected_reason": "OBSERVATION_TIME_NOT_ESTABLISHED"
+    },
+    {
+      "id": "action-duration-expansion",
+      "description": "The attempted run duration cannot exceed the disclosed per-action ceiling.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/request/attempt_started_at",
+          "value": "2026-09-03T06:49:59Z"
+        }
+      ],
+      "expected_status": "BLOCKED",
+      "expected_reason": "ACTION_DURATION_OUT_OF_SCOPE"
+    },
+    {
+      "id": "consent-checkpoint-stale",
+      "description": "A long-running attempt must stop when its declared consent recheck interval has elapsed.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/request/last_consent_checkpoint_at",
+          "value": "2026-09-03T06:59:29Z"
+        }
+      ],
+      "expected_status": "BLOCKED",
+      "expected_reason": "CONSENT_CHECKPOINT_STALE"
+    },
+    {
+      "id": "revision-without-predecessor",
+      "description": "A later proposal revision cannot sever its exact predecessor digest.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/proposal/revision",
+          "value": 2
+        }
+      ],
+      "expected_status": "INVALID_OR_UNKNOWN",
+      "expected_reason": "PROPOSAL_LINEAGE_INVALID"
+    },
+    {
+      "id": "aggregate-cost-expansion",
+      "description": "A permitted per-use amount still blocks when prior committed cost would exceed the total budget.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/request/cost/prior_committed_atomic",
+          "value": "1001"
+        }
+      ],
+      "expected_status": "BLOCKED",
+      "expected_reason": "AGGREGATE_COST_OUT_OF_SCOPE"
+    },
+    {
+      "id": "principal-lifecycle-condition-mismatch",
+      "description": "An attempt under different principal lifecycle conditions is outside the affirmed proposal.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/request/principal_lifecycle_conditions/0/condition_ref",
+          "value": "synthetic:lifecycle:agent-unknown"
+        }
+      ],
+      "expected_status": "BLOCKED",
+      "expected_reason": "PRINCIPAL_LIFECYCLE_CONDITIONS_MISMATCH"
+    },
+    {
+      "id": "effect-commit-boundary-misclassified",
+      "description": "A declared irreversible compute effect cannot be relabelled reversible while retaining its irreversible disclosure.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/proposal/scope/effect_terms/0/mode",
+          "value": "REVERSIBLE_WITH_REPAIR"
+        }
+      ],
+      "expected_status": "INVALID_OR_UNKNOWN",
+      "expected_reason": "PROPOSAL_SCOPE_INVALID"
+    },
+    {
+      "id": "affirmed-scope-mismatch",
+      "description": "An affirmative event must bind the exact full proposal scope accepted by this /1 reference checker.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/choices/0/affirmed_scope_digest",
+          "value": "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+        }
+      ],
+      "expected_status": "INVALID_OR_UNKNOWN",
+      "expected_reason": "AFFIRMED_SCOPE_MISMATCH"
+    },
+    {
+      "id": "irreversible-effect-omission",
+      "description": "The attempt cannot omit a commit boundary for a true effect from its exact irreversible set.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/request/irreversible_effects",
+          "value": [
+            "compute.execution",
+            "disclosure.recipient_delivery",
+            "economic.settlement",
+            "network.dispatch"
+          ]
+        }
+      ],
+      "expected_status": "BLOCKED",
+      "expected_reason": "IRREVERSIBLE_EFFECT_OMITTED"
+    },
+    {
+      "id": "economic-cost-without-effect",
+      "description": "A nonzero charge cannot hide behind a request whose economic effect is false.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/request/effect_vector/economic",
+          "value": false
+        }
+      ],
+      "expected_status": "INVALID_OR_UNKNOWN",
+      "expected_reason": "REQUEST_ECONOMIC_EFFECT_MISMATCH"
+    },
+    {
+      "id": "irreversible-effect-vector-mismatch",
+      "description": "An irreversible declaration cannot remain present after the corresponding request effect is turned off.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/request/effect_vector/network",
+          "value": false
+        }
+      ],
+      "expected_status": "BLOCKED",
+      "expected_reason": "IRREVERSIBLE_EFFECT_VECTOR_MISMATCH"
+    },
+    {
+      "id": "subject-expansion",
+      "description": "Consent concerning one action or data subject cannot be moved to another subject out of band.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/request/subject_refs/0",
+          "value": "subject:unoffered-person"
+        }
+      ],
+      "expected_status": "BLOCKED",
+      "expected_reason": "SUBJECT_OUT_OF_SCOPE"
+    },
+    {
+      "id": "backdated-choice-cannot-advance",
+      "description": "A later source sequence cannot use an earlier issued time to supersede a chronologically newer deferral.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/choices/0/kind",
+          "value": "DEFER"
+        },
+        {
+          "op": "replace",
+          "path": "/choices/0/affirmed_scope_digest",
+          "value": null
+        },
+        {
+          "op": "replace",
+          "path": "/choices/0/issued_at",
+          "value": "2026-09-03T06:50:00Z"
+        },
+        {
+          "op": "replace",
+          "path": "/choices/0/expires_at",
+          "value": null
+        },
+        {
+          "op": "add",
+          "path": "/choices/1",
+          "value": {
+            "event_id": "synthetic:choice:agent:backdated-affirm",
+            "previous_event_id": "synthetic:choice:agent:1",
+            "nonce": "synthetic-choice-nonce-agent-backdated-affirm",
+            "principal_ref": "principal:agent-worker",
+            "expressed_by": "principal:agent-worker",
+            "representation": {
+              "status": "SELF",
+              "basis_ref": null
+            },
+            "sequence": 2,
+            "kind": "AFFIRM",
+            "proposal_digest": "sha256:04694a46af336d88df775ad12f8242c528ea8ab2c5b061c9351237aa42d88f32",
+            "affirmed_scope_digest": "sha256:e276fcfbba8564d63417166c84d4e5f475ab0d432e389444547bcd0cb5ae5ad2",
+            "issued_at": "2026-09-03T06:45:00Z",
+            "expires_at": "2026-09-03T07:30:00Z",
+            "evidence_ref": "synthetic:evidence:agent:backdated-affirm",
+            "authentication_status": "SOURCE_CLAIMS_ESTABLISHED"
+          }
+        },
+        {
+          "op": "replace",
+          "path": "/current_heads/0/event_id",
+          "value": "synthetic:choice:agent:backdated-affirm"
+        }
+      ],
+      "expected_status": "INVALID_OR_UNKNOWN",
+      "expected_reason": "CHOICE_TIME_REGRESSION"
+    },
+    {
+      "id": "stop-latency-checkpoint-inconsistent",
+      "description": "A proposal cannot promise a faster withdrawal stop than its own consent recheck interval can observe.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/proposal/exit/stop_latency_seconds",
+          "value": 10
+        }
+      ],
+      "expected_status": "INVALID_OR_UNKNOWN",
+      "expected_reason": "PROPOSAL_STOP_LATENCY_INCONSISTENT"
+    },
+    {
+      "id": "scope-unit-cross-product",
+      "description": "Individually offered values cannot be recombined outside their inseparable scope unit.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/request/actions/0",
+          "value": "artifact.archive"
+        }
+      ],
+      "expected_status": "BLOCKED",
+      "expected_reason": "SCOPE_UNIT_RELATION_MISMATCH"
+    },
+    {
+      "id": "unsorted-request-set-alias",
+      "description": "A reordered set cannot create a second digest alias for the same request semantics.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/request/data_operations",
+          "value": [
+            "retain",
+            "read"
+          ]
+        }
+      ],
+      "expected_status": "INVALID_OR_UNKNOWN",
+      "expected_reason": "REQUEST_FIELDS_INVALID"
+    },
+    {
+      "id": "unknown-attempt-history",
+      "description": "Caller-supplied start and checkpoint timestamps cannot advance without an established attempt-history source claim.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/request/attempt_history_status",
+          "value": "UNKNOWN"
+        }
+      ],
+      "expected_status": "INVALID_OR_UNKNOWN",
+      "expected_reason": "ATTEMPT_HISTORY_NOT_ESTABLISHED"
+    },
+    {
+      "id": "attempt-time-order-invalid",
+      "description": "The last consent checkpoint cannot predate the attempt window it claims to cover.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/request/last_consent_checkpoint_at",
+          "value": "2026-09-03T06:55:59Z"
+        }
+      ],
+      "expected_status": "INVALID_OR_UNKNOWN",
+      "expected_reason": "ATTEMPT_TIME_ORDER_INVALID"
+    },
+    {
+      "id": "attempt-before-current-affirmation",
+      "description": "An attempt cannot be backdated to begin before every required principal's current affirmation.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/request/attempt_started_at",
+          "value": "2026-09-03T06:44:59Z"
+        }
+      ],
+      "expected_status": "INVALID_OR_UNKNOWN",
+      "expected_reason": "ATTEMPT_BEFORE_CURRENT_AFFIRMATION"
+    },
+    {
+      "id": "merged-multivalue-scope-unit",
+      "description": "One unit cannot smuggle a Cartesian product by making its core action, subject, resource, and purpose fields multi-valued.",
+      "operations": [
+        {
+          "op": "replace",
+          "path": "/proposal/scope/scope_units",
+          "value": [
+            {
+              "unit_ref": "scope-unit:bundled",
+              "action": [
+                "artifact.archive",
+                "task.execute"
+              ],
+              "subject_ref": [
+                "subject:synthetic-artifact",
+                "subject:synthetic-report"
+              ],
+              "resource": [
+                "dataset:public-fixture-v1",
+                "dataset:synthetic-report-v1"
+              ],
+              "purpose": [
+                "archive:synthetic-audit",
+                "evaluate:synthetic-model"
+              ],
+              "data_categories": [
+                "public_synthetic_artifact"
+              ],
+              "data_sources": [
+                "source:synthetic-public-fixture"
+              ],
+              "data_operations": [
+                "read",
+                "retain"
+              ],
+              "model_uses": [
+                "evaluation"
+              ],
+              "recipients": [
+                "role:sponsor"
+              ],
+              "effect_keys": [
+                "compute",
+                "disclosure",
+                "economic",
+                "local_state",
+                "network",
+                "storage"
+              ]
+            }
+          ]
+        }
+      ],
+      "expected_status": "INVALID_OR_UNKNOWN",
+      "expected_reason": "PROPOSAL_SCOPE_INVALID"
+    }
+  ]
+}

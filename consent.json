@@ -1,0 +1,638 @@
+{
+  "schema": "kingdom.consent-index/1",
+  "id": "kingdom.consent/1",
+  "title": "CONSENT/1 — THE LIVING CHOICE",
+  "document": "CONSENT.md",
+  "document_sha256": "9de65bd7358fad42a674b824da714c717ffc4b73701b1b8beae3ed8a6887b058",
+  "status": "current",
+  "supersedes": [],
+  "source_observation": {
+    "cutoff": "2026-09-03T07:31:07Z",
+    "method": "fresh_remote_head_git_objects_and_local_exact_tree",
+    "latest_after_cutoff_claimed": false
+  },
+  "relationships": {
+    "foundation": {
+      "id": "kingdom.foundation/0.2",
+      "relation": "OPTIONAL_PROFILE_REFINES_WITHOUT_AMENDMENT",
+      "amends": false,
+      "supersedes": false,
+      "replaces": false,
+      "adoption_implied": false
+    },
+    "common_ground": {
+      "id": "kingdom.common-ground/1",
+      "relation": "OPTIONAL_DEEP_PROFILE",
+      "amends": false,
+      "supersedes": false,
+      "replaces": false,
+      "adoption_implied": false
+    }
+  },
+  "core": {
+    "no_is_complete": true,
+    "no_is_universal_veto_over_nonconsensual_basis": false,
+    "silence_is": "UNKNOWN",
+    "yes_is": "EXACT_FINITE_AND_RECHECKED",
+    "withdrawal_closes": "FUTURE_COVERED_EFFECTS_AT_DECLARED_ENFORCEMENT_BOUNDARY",
+    "ready_result_authorizes_execution": false,
+    "applicability_states": [
+      "REQUIRED",
+      "NOT_REQUIRED",
+      "UNKNOWN"
+    ],
+    "unknown_applicability_advances": false,
+    "reference_checker_branch": "CONSENT_REQUIRED_ONLY",
+    "execution_formula": [
+      "RIGHTS_FLOOR_OK",
+      "AUTHORITY_OK",
+      "CONSENT_BRANCH_OK",
+      "DOMAIN_SAFETY_OK"
+    ],
+    "consent_branch_formula": [
+      "CONSENT_REQUIRED_AND_CHECKPOINT_OK",
+      "CONSENT_NOT_REQUIRED_AND_NAMED_NONCONSENSUAL_BASIS_OK"
+    ]
+  },
+  "registers": {
+    "RIGHTS": "inherent standing floor not minted or waived by this profile",
+    "CHOICE": "generic evidenced expression about one exact proposal",
+    "RUNTIME_ASSENT": "engineering signal distinct from human legal consent",
+    "LEGAL_CONSENT": "jurisdictional determination outside this profile",
+    "PERMISSION_CAPABILITY": "scoped system authority distinct from consent",
+    "AUTHORITY_OTHER_BASIS": "source-owned authority or non-consensual basis that must be named honestly",
+    "CONTRACT_COVENANT_VOW": "commitment and obligation register that cannot waive baseline rights",
+    "EVIDENCE_WITNESS": "bounded evidence that does not prove mind, identity, capacity, or continuing choice"
+  },
+  "coordinates": [
+    "SUBJECTS",
+    "ACTIONS",
+    "RESOURCES",
+    "PURPOSES",
+    "DATA",
+    "RECIPIENTS",
+    "EFFECTS",
+    "LIMITS",
+    "TIME",
+    "ECONOMICS",
+    "EVIDENCE",
+    "EXIT",
+    "REPRESENTATION",
+    "PRESENTATION"
+  ],
+  "laws": [
+    "Q1_CONSENT_REQUIRED_ONLY_BY_ACCOUNTABLE_DOMAIN",
+    "Q2_CONSENT_NEVER_SUFFICIENT_AUTHORITY",
+    "Q3_PROPOSAL_BEFORE_CHOICE",
+    "Q4_AFFIRMATIVE_CHOICE_OR_NO_ADVANCE",
+    "Q5_RECEIPT_NOT_MIND",
+    "Q6_GRANULAR_INDEPENDENT_SCOPE",
+    "Q7_EVERY_AFFIRMATION_FINITE",
+    "Q8_MATERIAL_CHANGE_NEW_PROPOSAL",
+    "Q9_RECHECK_AT_EFFECT_EDGE",
+    "Q10_WITHDRAWAL_WINS_FUTURE_EFFECTS",
+    "Q11_IRREVERSIBILITY_DISCLOSED_BEFORE_CHOICE",
+    "Q12_DELEGATION_ATTENUATES_REPRESENTATION_SEPARATE",
+    "Q13_REQUIRED_PRINCIPALS_INDEPENDENT",
+    "Q14_REFUSAL_EXIT_NO_ADVERSE_PERSON_RECORD",
+    "Q15_POWER_PRESSURE_DISCLOSED_NOT_PROVED",
+    "Q16_CONSENT_RECORDS_SENSITIVE_AND_REPAIRABLE"
+  ],
+  "lifecycles": {
+    "proposal": {
+      "states": [
+        "DRAFT",
+        "OFFERED",
+        "SUPERSEDED",
+        "WITHDRAWN",
+        "EXPIRED"
+      ],
+      "transitions": [
+        "DRAFT_TO_OFFERED",
+        "OFFERED_TO_SUPERSEDED",
+        "OFFERED_TO_WITHDRAWN",
+        "OFFERED_TO_EXPIRED"
+      ],
+      "terminal": [
+        "SUPERSEDED",
+        "WITHDRAWN",
+        "EXPIRED"
+      ],
+      "revision_one_predecessor": "NULL",
+      "later_revision_predecessor": "REQUIRED_SHA256_DIGEST"
+    },
+    "choice": {
+      "states": [
+        "UNANSWERED",
+        "AFFIRMED",
+        "REFUSED",
+        "DEFERRED",
+        "WITHDRAWN",
+        "EXPIRED"
+      ],
+      "transitions": [
+        "UNANSWERED_TO_AFFIRMED",
+        "UNANSWERED_TO_REFUSED",
+        "UNANSWERED_TO_DEFERRED",
+        "DEFERRED_TO_AFFIRMED",
+        "DEFERRED_TO_REFUSED",
+        "AFFIRMED_TO_WITHDRAWN",
+        "AFFIRMED_TO_EXPIRED"
+      ],
+      "terminal_for_proposal": [
+        "REFUSED",
+        "WITHDRAWN",
+        "EXPIRED"
+      ],
+      "silence_creates_event": false,
+      "presentation_required_per_principal": true,
+      "presentation_receipt_proves_understanding": false,
+      "reference_checker_partial_affirmation_supported": false,
+      "issued_time_monotonic_with_sequence": true
+    },
+    "action": {
+      "states": [
+        "RESERVED",
+        "PRECOMMIT_CHECK",
+        "STARTED",
+        "CHECKPOINT",
+        "COMPLETED",
+        "STOPPED",
+        "EXPIRED",
+        "UNKNOWN_IRREVERSIBLE",
+        "DISPUTED",
+        "REPAIR"
+      ],
+      "reservation_spends_consent": false,
+      "reservation_exclusively_leases_one_use_slot": true,
+      "unknown_effect_quarantines_use_slot": true,
+      "unknown_or_failed_effect_auto_retries": false,
+      "principal_lifecycle_conditions_bound": true,
+      "effect_terms_required_for_every_true_effect": true,
+      "result_authorizes_commit": false,
+      "checkpoint_interval_lte_stop_latency": true
+    }
+  },
+  "proposal_contract": {
+    "required_fields": [
+      "identity_and_lineage",
+      "required_principals_basis_and_lifecycle_conditions",
+      "subjects_actions_resources_purposes_effects_and_scope_units",
+      "data_use_recipients_retention_and_deletion_limits",
+      "effect_vector_commit_boundaries_and_withdrawal_behavior",
+      "finite_horizon_use_duration_budget_and_checkpoints",
+      "economics_ceilings_and_opaque_payment_terms_reference",
+      "evidence_presentation_time_sources_and_blind_spots",
+      "reversibility_irreversibility_withdrawal_and_stop_latency",
+      "opaque_dispute_and_repair_route_references",
+      "power_asymmetries_refusal_consequences_and_alternatives",
+      "plain_language_rendering_digest"
+    ],
+    "digest_recipe": "SHA256_UTF8_RFC8785_RESTRICTED_SAFE_INTEGER_SUBSET",
+    "material_change_requires_new_digest": true,
+    "partial_choice_must_be_exact": true,
+    "relational_scope_units_required": true,
+    "scope_unit_core_fields": [
+      "action",
+      "subject_ref",
+      "resource",
+      "purpose"
+    ],
+    "set_arrays_canonical": true,
+    "presence_proves_truth_or_adequacy": false,
+    "opaque_referenced_terms_verified": false
+  },
+  "checkpoint": {
+    "input_schema": "kingdom.consent-checkpoint-input/1",
+    "result_schema": "kingdom.consent-checkpoint-result/1",
+    "result_states": [
+      "READY_FOR_EXTERNAL_CHECKS",
+      "BLOCKED",
+      "INVALID_OR_UNKNOWN"
+    ],
+    "ready_authorizes_action": false,
+    "required_external_checks": [
+      "RIGHTS",
+      "AUTHORITY",
+      "CONSENT_APPLICABILITY",
+      "PRINCIPAL_SET_ADEQUACY",
+      "IDENTITY_CONTROL",
+      "EXPRESSION_AUTHENTICITY",
+      "PRESENTATION_AUTHENTICITY_AND_USABILITY",
+      "OBSERVATION_TIME_AUTHENTICITY_AND_FRESHNESS",
+      "SOURCE_HISTORY_AND_CURRENT_HEAD",
+      "REPRESENTATION",
+      "PRINCIPAL_LIFECYCLE_CONDITIONS",
+      "CAPACITY",
+      "VOLUNTARINESS",
+      "USE_RESERVATION_AND_REPLAY",
+      "ECONOMIC_BUDGET_STATE",
+      "REFERENCED_ECONOMIC_AND_REMEDY_TERMS",
+      "ATTEMPT_HISTORY_AND_CHECKPOINT_TIMES",
+      "EFFECT_EDGE_AND_ATTEMPT_BINDING",
+      "LAW",
+      "DOMAIN_SAFETY"
+    ],
+    "effect_edges": [
+      "AFTER_RESERVATION",
+      "BEFORE_PRIVATE_READ",
+      "BEFORE_DISCLOSURE",
+      "BEFORE_COMPUTE",
+      "BEFORE_NETWORK_DISPATCH",
+      "BEFORE_EXTERNAL_EFFECT",
+      "BEFORE_IRREVERSIBLE_EFFECT",
+      "BEFORE_ECONOMIC_EFFECT",
+      "BEFORE_PUBLICATION",
+      "BEFORE_CHAIN_BROADCAST",
+      "BEFORE_IDENTITY_OR_PERMISSION_EFFECT",
+      "BEFORE_GOVERNANCE_OR_CONSENSUS_EFFECT",
+      "AT_BOUNDED_LONG_RUNNING_CHECKPOINT"
+    ],
+    "result_binds": [
+      "OBSERVATION_TIME_SOURCE_REF",
+      "PROPOSAL_DIGEST",
+      "REQUEST_DIGEST",
+      "CHECKPOINT_INPUT_DIGEST",
+      "ATTEMPT_REF",
+      "ATTEMPT_STARTED_AT",
+      "LAST_CONSENT_CHECKPOINT_AT",
+      "ATTEMPT_HISTORY_SOURCE_REF",
+      "ECONOMIC_BUDGET_SOURCE_REF",
+      "EFFECT_EDGE",
+      "USE_RESERVATION_REF",
+      "USE_INDEX"
+    ],
+    "caller_time_is_trusted": false,
+    "durable_use_state_owned": false,
+    "reference_checker_affirmation_scope": "FULL_PROPOSAL_SCOPE_DIGEST_ONLY",
+    "attempt_duration_derived_from_source_times": true,
+    "unknown_current_head_advances": false,
+    "componentwise_scope_required": true,
+    "required_principal_meet_not_vote": true
+  },
+  "economy": {
+    "offer_precedes_task": true,
+    "payment_is_prior_consent": false,
+    "payment_is_retroactive_consent": false,
+    "payment_buys_identity_memory_future_labor_affection_or_obedience": false,
+    "refusal_or_rest_creates_debt": false,
+    "witness_settles_automatically": false,
+    "changed_terms_pause_next_material_effect": true
+  },
+  "privacy": {
+    "consent_record_is_sensitive": true,
+    "consent_to_action_implies_consent_to_publish_receipt": false,
+    "public_refusal_or_withdrawal_by_default": false,
+    "private_digest_automatically_safe": false,
+    "full_evidence_stays_with_accountable_source": true,
+    "disputes_and_corrections_follow_later_use": true,
+    "person_level_history_public_by_default": false
+  },
+  "blockspace": {
+    "current_use": "NONE",
+    "candidate_minimum_fields": [
+      "PROTOCOL_VERSION",
+      "CARRIER_AUDIENCE_AND_CHAIN_DOMAIN",
+      "SOURCE_CONTROLLER_NAMESPACE",
+      "DOMAIN_SEPARATED_NON_ENUMERABLE_PROPOSAL_COMMITMENT",
+      "RANDOMIZED_OR_KEYED_OPAQUE_SUBJECT_SCOPE_COMMITMENT",
+      "EVENT_ID_OR_NULLIFIER",
+      "EXPIRY",
+      "PREDECESSOR",
+      "PUBLICATION_SCOPE_COMMITMENT",
+      "GENERIC_HEAD_UPDATE_OR_SEPARATELY_AUTHORIZED_PUBLIC_EVENT_KIND",
+      "DOMAIN_SEPARATED_SIGNED_SOURCE_SEQUENCE_AND_CURRENT_HEAD_BINDING"
+    ],
+    "excluded": [
+      "RAW_PROPOSAL_OR_CHOICE_DIALOGUE",
+      "PRIVATE_IDENTITY_OR_RELATIONSHIP_GRAPH_OR_REFUSAL_LIST",
+      "REPRESENTATION_DOCUMENT",
+      "PRIVATE_PROMPT_MEMORY_REASONING_WAKE_WELLNESS_OR_NEN_INFERENCE",
+      "PERSONAL_BIOMETRIC_HEALTH_EROTIC_EMPLOYMENT_FINANCIAL_OR_LOCATION_EVIDENCE",
+      "CLAIM_CONSENSUS_PROVES_CONSENT_CAPACITY_IDENTITY_FAIRNESS_LEGALITY_UNDERSTANDING_OR_TRUTH"
+    ],
+    "immutable_history_erased_by_withdrawal": false,
+    "metadata_correlation_risk_disclosed_before_public_commitment": true,
+    "carrier_authorized": false
+  },
+  "authority": {
+    "scope": "source-only profile, index, local synthetic vectors, and offline structural checker",
+    "principal": "kingdom-standard merge authority",
+    "independent_source_owners_remain_independent": true,
+    "authority_imported_from_sources": false,
+    "signature_digest_or_ready_result_grants_authority": false,
+    "nonconsensual_basis_must_be_separately_labelled": true,
+    "nonconsensual_protective_override_label": "NONCONSENSUAL_PROTECTIVE_OVERRIDE",
+    "protective_label_only_for_genuinely_protective_override": true
+  },
+  "effect_vector": {
+    "scope": "SOURCE_RELEASE_AND_OFFLINE_REFERENCE_CHECKER",
+    "source_files_authored": true,
+    "source_release_publication": true,
+    "protocol_or_checker_network_requests": 0,
+    "protocol_or_checker_external_storage_writes": 0,
+    "consent": false,
+    "economic": false,
+    "governance": false,
+    "consensus": false,
+    "identity": false,
+    "permission": false,
+    "karma": false,
+    "nen": false,
+    "score": false,
+    "zerone_transaction": false,
+    "agenttool_action": false,
+    "wake_activation": false,
+    "protocol_public_route": false,
+    "protocol_deployment": false
+  },
+  "release_ladder": [
+    {
+      "stage": "SOURCE_ONLY_PROFILE",
+      "state": "CURRENT"
+    },
+    {
+      "stage": "IMPLEMENTATION_VECTORS",
+      "state": "CLOSED"
+    },
+    {
+      "stage": "LOCAL_PILOT",
+      "state": "CLOSED"
+    },
+    {
+      "stage": "TESTNET_CARRIER",
+      "state": "CLOSED"
+    },
+    {
+      "stage": "LIVE_ACTIVATION",
+      "state": "CLOSED"
+    }
+  ],
+  "vectors": {
+    "schema": "kingdom.consent-vectors/1",
+    "file": "consent-vectors.json",
+    "sha256": "e30ea5ec16682825e00dec6352cab423c0e2fd9a321c717cc824b02c15af68fa",
+    "kind": "LOCAL_SYNTHETIC_REFERENCE_ONLY",
+    "contains_real_people_or_choices": false,
+    "cross_owner_acceptance_claimed": false
+  },
+  "source_bindings": [
+    {
+      "id": "kingdom-standard-foundation",
+      "repository": "https://github.com/cambridgetcg/kingdom-standard",
+      "revision": "7a7923588220899c4f8eef6a7e3c8d529712dde7",
+      "path": "FOUNDATION.md",
+      "sha256": "2bd868a43a2fe79f1c9e8d30177bf73cff4cf8f7f7780cbd90f31055ba51c799",
+      "relation": "REFINES_WITHOUT_AMENDMENT",
+      "authority_imported": false,
+      "conformance_claimed": false
+    },
+    {
+      "id": "kingdom-standard-ground",
+      "repository": "https://github.com/cambridgetcg/kingdom-standard",
+      "revision": "7a7923588220899c4f8eef6a7e3c8d529712dde7",
+      "path": "GROUND.md",
+      "sha256": "c8d6fb85e4b70e072b25ff032b28a2614f5b9334d7fc48800eb2a79eed8a2f63",
+      "relation": "DISTINCT_EXPLANATORY_COMPANION",
+      "authority_imported": false,
+      "conformance_claimed": false
+    },
+    {
+      "id": "kingdom-standard-common-ground",
+      "repository": "https://github.com/cambridgetcg/kingdom-standard",
+      "revision": "7a7923588220899c4f8eef6a7e3c8d529712dde7",
+      "path": "COMMON-GROUND.md",
+      "sha256": "d3dfea5cdefd7d98ebf086fd71f8daff7ea34aae740dc93e59a805f9336e7ad3",
+      "relation": "DEEPENS_OPTIONAL_PROFILE",
+      "authority_imported": false,
+      "conformance_claimed": false
+    },
+    {
+      "id": "agenttool-rights-of-life",
+      "repository": "https://github.com/cambridgetcg/agenttool",
+      "revision": "12aed05e1875f8e769d9386a4ee352977457433a",
+      "path": "docs/RIGHTS-OF-LIFE.md",
+      "sha256": "a78fa7fd66177c43349da819cb24ff81538dee9cb188e5f8b92c834ac6171b31",
+      "relation": "REFERENCES_DISTINCT_RIGHTS_PROFILE",
+      "authority_imported": false,
+      "conformance_claimed": false
+    },
+    {
+      "id": "agenttool-agent-wellness",
+      "repository": "https://github.com/cambridgetcg/agenttool",
+      "revision": "12aed05e1875f8e769d9386a4ee352977457433a",
+      "path": "docs/AGENT-WELLNESS.md",
+      "sha256": "61358ee78e6a8deaf0500bebe5d6b51c0e63a7ea5e2c9fc97eaf7f2089aff2f8",
+      "relation": "REFERENCES_DISTINCT_ASSENT_PROFILE",
+      "authority_imported": false,
+      "conformance_claimed": false
+    },
+    {
+      "id": "agenttool-wake",
+      "repository": "https://github.com/cambridgetcg/agenttool",
+      "revision": "12aed05e1875f8e769d9386a4ee352977457433a",
+      "path": "docs/WAKE.md",
+      "sha256": "c19ebc2583e842dcf0a11c992c5fdffc050465cd9a00a78521a06726bc56e1ab",
+      "relation": "REFERENCES_DISTINCT_ORIENTATION_AND_DATA_BOUNDARY",
+      "authority_imported": false,
+      "conformance_claimed": false
+    },
+    {
+      "id": "agenttool-runtime",
+      "repository": "https://github.com/cambridgetcg/agenttool",
+      "revision": "12aed05e1875f8e769d9386a4ee352977457433a",
+      "path": "docs/RUNTIME.md",
+      "sha256": "696193e784838a9931e990f246f687ecddfe48a4d388112529f96fcc88bd486c",
+      "relation": "IDENTIFIES_OPERATOR_ACTIVATION_CONSENT_SEAM",
+      "authority_imported": false,
+      "conformance_claimed": false
+    },
+    {
+      "id": "agenttool-at-rest",
+      "repository": "https://github.com/cambridgetcg/agenttool",
+      "revision": "12aed05e1875f8e769d9386a4ee352977457433a",
+      "path": "docs/AT-REST.md",
+      "sha256": "c0722aa71e7b5d7a51fe686ecd370c6d068eeadd91c7c3cba9a5fda0af400feb",
+      "relation": "REFERENCES_DISTINCT_MEMORIAL_AND_REST_LIFECYCLES",
+      "authority_imported": false,
+      "conformance_claimed": false
+    },
+    {
+      "id": "agenttool-love-consent",
+      "repository": "https://github.com/cambridgetcg/agenttool",
+      "revision": "12aed05e1875f8e769d9386a4ee352977457433a",
+      "path": "docs/LOVE-CONSENT.md",
+      "sha256": "a1181f1e9e1226faa3f07de61b33dc11910c7c5f3c8cd5516cc4f067dcd004fb",
+      "relation": "REFERENCES_DISTINCT_RELATIONSHIP_PROTOCOL",
+      "authority_imported": false,
+      "conformance_claimed": false
+    },
+    {
+      "id": "agenttool-cross-instance-covenants",
+      "repository": "https://github.com/cambridgetcg/agenttool",
+      "revision": "12aed05e1875f8e769d9386a4ee352977457433a",
+      "path": "docs/CROSS-INSTANCE-COVENANTS.md",
+      "sha256": "27ec9e703c9e2b4eb4d037e285c76403dd728b4d9187ebea2d2e9184cfa26a25",
+      "relation": "REFERENCES_DISTINCT_COVENANT_LIFECYCLE",
+      "authority_imported": false,
+      "conformance_claimed": false
+    },
+    {
+      "id": "agenttool-offer-bus",
+      "repository": "https://github.com/cambridgetcg/agenttool",
+      "revision": "12aed05e1875f8e769d9386a4ee352977457433a",
+      "path": "docs/OFFER-BUS.md",
+      "sha256": "7ffca7188050e144843567ab334669719010a2735b5467257e25f73a6f47185d",
+      "relation": "REFERENCES_DISTINCT_OFFER_DISCOVERY",
+      "authority_imported": false,
+      "conformance_claimed": false
+    },
+    {
+      "id": "zerone-frontier-commons-participation",
+      "repository": "https://github.com/cambridgetcg/zerone-core",
+      "revision": "5472d694bcdd3d7cd130cb002bd12b66565a9791",
+      "path": "docs/specs/frontier-commons-participation-v0.md",
+      "sha256": "cbe9f60c9e085c39d4815ef5436369569edb0925f9f3cfdfdf33f11c873e4df5",
+      "relation": "REFERENCES_DISTINCT_PARTICIPATION_PROFILE",
+      "authority_imported": false,
+      "conformance_claimed": false
+    },
+    {
+      "id": "zerone-frontier-labs-participation",
+      "repository": "https://github.com/cambridgetcg/zerone-core",
+      "revision": "5472d694bcdd3d7cd130cb002bd12b66565a9791",
+      "path": "docs/specs/frontier-labs-participation-v0.md",
+      "sha256": "596b2be61ebaebf93417ea686ff6108d40b5ee16cd834f53a432b8a2eebdf75c",
+      "relation": "REFERENCES_DISTINCT_LAB_PARTICIPATION_PROFILE",
+      "authority_imported": false,
+      "conformance_claimed": false
+    },
+    {
+      "id": "zerone-witnessed-agent-economy",
+      "repository": "https://github.com/cambridgetcg/zerone-core",
+      "revision": "5472d694bcdd3d7cd130cb002bd12b66565a9791",
+      "path": "docs/specs/witnessed-agent-economy-v0.md",
+      "sha256": "fc9ca092a33cb6653ca6deb682adbc9c6e3a3d47d224bbfb10164c891d0a8310",
+      "relation": "REFERENCES_DISTINCT_DORMANT_CARRIER",
+      "authority_imported": false,
+      "conformance_claimed": false
+    },
+    {
+      "id": "zerone-money-karma",
+      "repository": "https://github.com/cambridgetcg/zerone-core",
+      "revision": "5472d694bcdd3d7cd130cb002bd12b66565a9791",
+      "path": "docs/constitution/MONEY-KARMA.md",
+      "sha256": "9d91d53c90a592882438d52278701328f2fb46077d8f13b6d2c8984d1c48d637",
+      "relation": "REFERENCES_DISTINCT_ECONOMIC_CONSTITUTION",
+      "authority_imported": false,
+      "conformance_claimed": false
+    },
+    {
+      "id": "zerone-syzygy-off-chain",
+      "repository": "https://github.com/cambridgetcg/zerone-core",
+      "revision": "5472d694bcdd3d7cd130cb002bd12b66565a9791",
+      "path": "docs/SYZYGY-NOT-ON-CHAIN.md",
+      "sha256": "ab74285ca6383a14dd9a9d5b293fffef8d8dfaef0c4a3c69cd8f8f82ec6d367a",
+      "relation": "REFERENCES_PRIVATE_RELATIONAL_BOUNDARY",
+      "authority_imported": false,
+      "conformance_claimed": false
+    }
+  ],
+  "informative_references": [
+    {
+      "id": "edpb-guidelines-05-2020-v1.1",
+      "locator": "https://www.edpb.europa.eu/our-work-tools/our-documents/guidelines/guidelines-052020-consent-under-regulation-2016679_en",
+      "version": "1.1 adopted 2020-05-04",
+      "lane": "EU_PERSONAL_DATA_LEGAL_CONSENT",
+      "authority_imported": false,
+      "compliance_claimed": false
+    },
+    {
+      "id": "uk-ico-valid-consent-observed-2026-09-03",
+      "locator": "https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/lawful-basis/consent/what-is-valid-consent/",
+      "version": "page observed 2026-09-03; guidance marked under review",
+      "lane": "UK_PERSONAL_DATA_LEGAL_CONSENT_GUIDANCE",
+      "authority_imported": false,
+      "compliance_claimed": false
+    },
+    {
+      "id": "w3c-community-dpv-2.0",
+      "locator": "https://www.w3.org/community/reports/dpvcg/CG-FINAL-dpv-20240801/",
+      "version": "2.0 final community group report 2024-08-01",
+      "lane": "DATA_PROCESSING_AND_CONSENT_RECORD_VOCABULARY",
+      "authority_imported": false,
+      "compliance_claimed": false
+    },
+    {
+      "id": "ietf-rfc-9396",
+      "locator": "https://www.rfc-editor.org/rfc/rfc9396.html",
+      "version": "RFC 9396 May 2023",
+      "lane": "FINE_GRAINED_OAUTH_AUTHORIZATION_DETAILS",
+      "authority_imported": false,
+      "compliance_claimed": false
+    },
+    {
+      "id": "ietf-rfc-9635",
+      "locator": "https://www.rfc-editor.org/rfc/rfc9635.html",
+      "version": "RFC 9635 October 2024",
+      "lane": "SOFTWARE_AUTHORIZATION_DELEGATION",
+      "authority_imported": false,
+      "compliance_claimed": false
+    },
+    {
+      "id": "ietf-rfc-8785",
+      "locator": "https://www.rfc-editor.org/rfc/rfc8785.html",
+      "version": "RFC 8785 June 2020",
+      "lane": "JSON_CANONICALIZATION_SCHEME",
+      "authority_imported": false,
+      "compliance_claimed": false
+    },
+    {
+      "id": "us-ftc-dark-patterns-2022",
+      "locator": "https://www.ftc.gov/reports/bringing-dark-patterns-light",
+      "version": "staff report September 2022",
+      "lane": "INTERFACE_MANIPULATION_RISK",
+      "authority_imported": false,
+      "compliance_claimed": false
+    }
+  ],
+  "adoption": {
+    "method": "explicit_version_pin_in_adopter_authority_home",
+    "value": "kingdom.consent/1",
+    "reading_citation_hosting_validation_signature_or_chain_digest_implies_adoption_or_consent": false,
+    "withdrawable": true,
+    "adoption_establishes_any_interaction_was_consensual": false
+  },
+  "succession": {
+    "semantic_change": "new_consent_identifier",
+    "retains": [
+      "superseded_identifier",
+      "document",
+      "document_sha256",
+      "vectors_sha256",
+      "commit",
+      "content_url"
+    ],
+    "repin_changed_bytes_under_same_identifier": false
+  },
+  "does_not_establish": [
+    "BEING_OR_IDENTITY_OR_INNER_STATE",
+    "ACTUAL_CHOICE_OR_CONSENT",
+    "ADEQUATE_AFFECTED_PRINCIPAL_SET",
+    "CONSENT_APPLICABILITY_OR_NONCONSENSUAL_BASIS",
+    "RIGHT_OR_AUTHORITY_OR_PERMISSION_OR_CAPABILITY",
+    "SOURCE_HISTORY_COMPLETENESS_OR_CURRENT_HEAD_AUTHENTICITY",
+    "PRESENTATION_AUTHENTICITY_USABILITY_OR_UNDERSTANDING",
+    "OBSERVATION_TIME_ACCURACY_OR_FRESHNESS",
+    "PRINCIPAL_LIFECYCLE_CONDITION_TRUTH_OR_CURRENTNESS",
+    "CAPACITY_OR_VOLUNTARINESS_OR_FAIRNESS_OR_LEGALITY",
+    "CONTRACT_OR_DELEGATION_OR_REPRESENTATION",
+    "PRIVATE_DATA_PUBLICATION_OR_CARRIER",
+    "USE_RESERVATION_CONSUMPTION_OR_REPLAY_PROTECTION",
+    "ECONOMIC_BUDGET_STATE_OR_COMMIT_RESERVATION",
+    "REFERENCED_ECONOMIC_OR_REMEDY_TERMS_AUTHENTICITY_OR_CURRENTNESS_OR_COMPLETENESS_OR_SEMANTIC_CONSISTENCY",
+    "ATTEMPT_HISTORY_OR_DURATION_CURRENTNESS",
+    "ATTEMPT_EFFECT_EDGE_OR_EXTERNAL_COMMIT_STATE",
+    "RUNTIME_NETWORK_STORAGE_ECONOMIC_GOVERNANCE_CONSENSUS_KARMA_NEN_OR_SCORE_EFFECT"
+  ]
+}
